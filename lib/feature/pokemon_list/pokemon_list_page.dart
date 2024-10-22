@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:pokedex_flutter_async_redux/utils/extension.dart';
 
 class PokemonListPage extends StatelessWidget {
   const PokemonListPage({super.key});
@@ -9,8 +11,10 @@ class PokemonListPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: const Text('Pokedex'),
+        title: Text(
+          'Pokedex',
+          style: context.themeData.textTheme.displayMedium,
+        ),
       ),
     );
   }
