@@ -24,3 +24,7 @@ extension PokemonExt on Pokemon {
         weightInDecimeters: weightInDecimeters ?? 0,
       );
 }
+
+extension PokemonDtoExt on PokemonDto {
+  String get imageUrl => sprites.otherSprites.officialArtwork.imageUrl;
+}

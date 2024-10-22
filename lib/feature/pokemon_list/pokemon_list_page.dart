@@ -1,18 +1,23 @@
 import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:pokedex_flutter_async_redux/feature/pokemon_list/widgets/pokemon_card.dart';
+import 'package:pokedex_flutter_async_redux/utils/const.dart';
 import 'package:pokedex_flutter_async_redux/utils/extension.dart';
 import 'package:pokedex_flutter_async_redux/utils/strings.dart';
+import 'package:pokedex_flutter_async_redux/utils/typedef.dart';
 
 class PokemonListPage extends StatelessWidget {
   const PokemonListPage({
     required this.savedThemeMode,
     required this.onSetTheme,
+    required this.pokemonList,
     super.key,
   });
 
   final ThemeMode savedThemeMode;
   final ValueChanged<ThemeMode> onSetTheme;
+  final PokemonList pokemonList;
 
   void _showThemeChoiceDialog(BuildContext context) => showDialog<void>(
         context: context,
@@ -49,7 +54,7 @@ class PokemonListPage extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           appTitle,
-          style: context.themeData.textTheme.displayMedium,
+          style: context.textTheme.displayMedium,
         ),
         actions: [
           PopupMenuButton(
@@ -64,6 +69,25 @@ class PokemonListPage extends StatelessWidget {
             ).toList(),
           ),
         ],
+      ),
+      body: Padding(
+        padding: pokemonListPagePadding,
+        child: CustomScrollView(
+          slivers: [
+            SliverGrid(
+              gridDelegate: pokemonGridDelegate,
+              delegate: SliverChildBuilderDelegate(
+                (_, index) => PokemonCard(
+                  pokemon: pokemonList[index],
+                  // TODO: Add function
+                  onTap: () {},
+                ),
+                childCount: pokemonList.length,
+              ),
+            ),
+            const SliverToBoxAdapter(child: SizedBox(height: pokemonListPageFooterHeight))
+          ],
+        ),
       ),
     );
   }
