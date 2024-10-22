@@ -11,9 +11,11 @@ dependencies:
     sdk: flutter
   async_redux: ^23.2.0
   cupertino_icons: ^1.0.8
+  dartx: ^1.2.0
   freezed: ^2.5.7
   freezed_annotation: ^2.4.4
   go_router: ^14.3.0
+  shared_preferences: ^2.3.2
 
 dev_dependencies:
   flutter_test:
