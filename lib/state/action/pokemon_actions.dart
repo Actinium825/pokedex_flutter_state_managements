@@ -11,7 +11,7 @@ class GetSimplePokemonListAction extends ReduxAction<AppState> {
 
     final simplePokemonList = state.simplePokemonList;
     final updatedSimplePokemonList = simplePokemonList.copyWith(
-      next: simplePokemonList.next,
+      next: receivedSimplePokemonList.next,
       simplePokemonList: [...simplePokemonList.simplePokemonList, ...receivedSimplePokemonList.simplePokemonList],
     );
 
