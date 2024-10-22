@@ -9,3 +9,7 @@ extension PokemonTypeExt on PokemonType {
         typeInfo: typeInfo?.toDto() ?? const PokemonInfoDto(),
       );
 }
+
+extension PokemonTypeDtoExt on PokemonTypeDto {
+  String get name => typeInfo.name;
+}

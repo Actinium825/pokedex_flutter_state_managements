@@ -18,6 +18,7 @@ class PokemonListConnector extends StatelessWidget {
       builder: (_, vm) => PokemonListPage(
         savedThemeMode: vm.savedThemeMode,
         onSetTheme: vm.onSetTheme,
+        pokemonList: vm.pokemonList,
       ),
     );
   }
