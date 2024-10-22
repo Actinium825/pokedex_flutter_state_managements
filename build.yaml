@@ -1,0 +1,10 @@
+targets:
+  $default:
+    builders:
+      freezed:
+        enabled: true
+        generate_for:
+          exclude:
+            - lib
+          include:
+            - lib/state/app_state.dart
