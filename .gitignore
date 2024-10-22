@@ -1,4 +1,5 @@
 # Build files
+*.g.dart
 *.freezed.dart
 
 # Miscellaneous
