@@ -19,6 +19,9 @@ class PokemonListConnector extends StatelessWidget {
         savedThemeMode: vm.savedThemeMode,
         onSetTheme: vm.onSetTheme,
         unionPageState: vm.unionPageState,
+        onGetMorePokemon: vm.onGetMorePokemon,
+        isGettingMorePokemon: vm.isGettingMorePokemon,
+        onRefreshPage: vm.onRefreshPage,
       ),
     );
   }

@@ -8,3 +8,5 @@ const pokemonNamePadding = EdgeInsets.symmetric(vertical: 8.0);
 const pokemonListPageFooterHeight = 100.0;
 const pokemonGridDelegate = SliverGridDelegateWithMaxCrossAxisExtent(maxCrossAxisExtent: 250, childAspectRatio: 3 / 2);
 const pokemonListPagePadding = EdgeInsets.symmetric(horizontal: 12.0);
+const morePokemonCount = 20;
+const progressIndicatorFooterPadding = EdgeInsets.all(12.0);

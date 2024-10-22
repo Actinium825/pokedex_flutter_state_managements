@@ -20,19 +20,20 @@ class InitPokemonListPageAction extends LoadingAction {
 }
 
 /// Gets the simple pokemon list to be used for getting all individual pokemon details
-/// Update the state's next property and add to existing simple pokemon list
+/// Use the provided [nextPageUrl] if getting the next page's list
+/// Clear the state's pokemon list if refreshing
 class GetSimplePokemonListAction extends ReduxAction<AppState> {
+  GetSimplePokemonListAction({this.nextPageUrl});
+
+  final String? nextPageUrl;
+
   @override
   Future<AppState> reduce() async {
-    final receivedSimplePokemonList = await ApiService.pokemonApi.getSimplePokemonList();
-
-    final simplePokemonList = state.simplePokemonList;
-    final updatedSimplePokemonList = simplePokemonList.copyWith(
-      next: receivedSimplePokemonList.next,
-      simplePokemonList: [...simplePokemonList.simplePokemonList, ...receivedSimplePokemonList.simplePokemonList],
+    final simplePokemonList = await ApiService.pokemonApi.getSimplePokemonList(nextPageUrl: nextPageUrl);
+    return state.copyWith(
+      simplePokemonList: simplePokemonList,
+      pokemonList: nextPageUrl == null ? List.empty() : state.pokemonList,
     );
-
-    return state.copyWith(simplePokemonList: updatedSimplePokemonList);
   }
 }
 
@@ -49,5 +50,23 @@ class GetPokemonListAction extends ReduxAction<AppState> {
     final updatedPokemonList = [...state.pokemonList, ...receivedPokemonList];
 
     return state.copyWith(pokemonList: updatedPokemonList);
+  }
+}
+
+/// Get more pokemon when reaching end of page
+/// Avoid dispatching when already getting more
+class GetMorePokemonAction extends LoadingAction {
+  GetMorePokemonAction() : super(actionKey: waitKey);
+
+  static const waitKey = 'get-more-pokemon';
+
+  @override
+  bool abortDispatch() => state.wait.isWaiting(waitKey);
+
+  @override
+  Future<AppState> reduce() async {
+    await dispatchAndWait(GetSimplePokemonListAction(nextPageUrl: state.simplePokemonList.next));
+    await dispatchAndWait(GetPokemonListAction(simplePokemonList: state.simplePokemonList.simplePokemonList));
+    return state;
   }
 }

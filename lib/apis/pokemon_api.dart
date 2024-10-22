@@ -12,9 +12,9 @@ class PokemonApi {
 
   PokemonApi(this.apiClient);
 
-  Future<SimplePokemonListDto> getSimplePokemonList() async {
-    final baseUrl = apiClient.baseUrl;
-    final response = await apiClient.dio.get<Json>('$baseUrl/pokemon');
+  Future<SimplePokemonListDto> getSimplePokemonList({String? nextPageUrl}) async {
+    final fetchUrl = nextPageUrl ?? '${apiClient.baseUrl}/pokemon';
+    final response = await apiClient.dio.get<Json>(fetchUrl);
     final simplePokemonList = SimplePokemonList.fromJson(response.data!);
 
     return simplePokemonList.toDto();
