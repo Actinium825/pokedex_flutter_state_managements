@@ -1,4 +1,5 @@
 import 'package:dartx/dartx.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pokedex_flutter_async_redux/feature/pokemon_list/widgets/pokemon_card.dart';
@@ -8,17 +9,42 @@ import 'package:pokedex_flutter_async_redux/utils/extension.dart';
 import 'package:pokedex_flutter_async_redux/utils/strings.dart';
 import 'package:pokedex_flutter_async_redux/utils/typedef.dart';
 
-class PokemonListPage extends StatelessWidget {
+class PokemonListPage extends StatefulWidget {
   const PokemonListPage({
     required this.savedThemeMode,
     required this.onSetTheme,
     required this.unionPageState,
+    required this.onGetMorePokemon,
+    required this.isGettingMorePokemon,
+    required this.onRefreshPage,
     super.key,
   });
 
   final ThemeMode savedThemeMode;
   final ValueChanged<ThemeMode> onSetTheme;
   final UnionPageState<PokemonList> unionPageState;
+  final VoidCallback onGetMorePokemon;
+  final bool isGettingMorePokemon;
+  final AsyncCallback onRefreshPage;
+
+  @override
+  State<PokemonListPage> createState() => _PokemonListPageState();
+}
+
+class _PokemonListPageState extends State<PokemonListPage> {
+  late final ScrollController _scrollController;
+
+  @override
+  void initState() {
+    _scrollController = ScrollController()..addListener(_onReachEnd);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
 
   void _showThemeChoiceDialog(BuildContext context) => showDialog<void>(
         context: context,
@@ -31,7 +57,7 @@ class PokemonListPage extends StatelessWidget {
                 return RadioListTile(
                   title: Text(themeMode.name.capitalize()),
                   value: themeMode,
-                  groupValue: savedThemeMode,
+                  groupValue: widget.savedThemeMode,
                   onChanged: (value) => _onSelectTheme(context, value),
                 );
               },
@@ -45,8 +71,13 @@ class PokemonListPage extends StatelessWidget {
   }
 
   void _onSelectTheme(BuildContext context, ThemeMode? themeMode) {
-    onSetTheme(themeMode ?? ThemeMode.system);
+    widget.onSetTheme(themeMode ?? ThemeMode.system);
     context.pop();
+  }
+
+  void _onReachEnd() {
+    final position = _scrollController.position;
+    if (position.pixels == position.maxScrollExtent) widget.onGetMorePokemon();
   }
 
   @override
@@ -71,27 +102,41 @@ class PokemonListPage extends StatelessWidget {
           ),
         ],
       ),
-      body: Padding(
-        padding: pokemonListPagePadding,
-        child: unionPageState.when(
-          (pokemonList) => CustomScrollView(
-            slivers: [
-              SliverGrid(
-                gridDelegate: pokemonGridDelegate,
-                delegate: SliverChildBuilderDelegate(
-                  (_, index) => PokemonCard(
-                    pokemon: pokemonList[index],
-                    // TODO: Add function
-                    onTap: () {},
+      body: RefreshIndicator(
+        onRefresh: widget.onRefreshPage,
+        child: Padding(
+          padding: pokemonListPagePadding,
+          child: widget.unionPageState.when(
+            (pokemonList) => CustomScrollView(
+              controller: _scrollController,
+              slivers: [
+                SliverGrid(
+                  gridDelegate: pokemonGridDelegate,
+                  delegate: SliverChildBuilderDelegate(
+                    (_, index) => PokemonCard(
+                      pokemon: pokemonList[index],
+                      // TODO: Add function
+                      onTap: () {},
+                    ),
+                    childCount: pokemonList.length,
                   ),
-                  childCount: pokemonList.length,
                 ),
-              ),
-              const SliverToBoxAdapter(child: SizedBox(height: pokemonListPageFooterHeight))
-            ],
+                if (widget.isGettingMorePokemon)
+                  const SliverToBoxAdapter(
+                    child: Center(
+                      child: Padding(
+                        padding: progressIndicatorFooterPadding,
+                        child: CircularProgressIndicator(),
+                      ),
+                    ),
+                  )
+                else
+                  const SliverToBoxAdapter(child: SizedBox(height: pokemonListPageFooterHeight))
+              ],
+            ),
+            loading: () => const Center(child: CircularProgressIndicator()),
+            error: (message) => AlertDialog(title: Text(message ?? '')),
           ),
-          loading: () => const Center(child: CircularProgressIndicator()),
-          error: (message) => AlertDialog(title: Text(message ?? '')),
         ),
       ),
     );
