@@ -1,5 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:pokedex_flutter_async_redux/apis/model/pokemon_info.dart';
+import 'package:pokedex_flutter_async_redux/utils/typedef.dart';
 
 part 'pokemon_ability.freezed.dart';
 part 'pokemon_ability.g.dart';
@@ -10,5 +11,5 @@ class PokemonAbility with _$PokemonAbility {
     @JsonKey(name: 'ability') PokemonInfo? abilityInfo,
   }) = _PokemonAbility;
 
-  factory PokemonAbility.fromJson(Map<String, dynamic> json) => _$PokemonAbilityFromJson(json);
+  factory PokemonAbility.fromJson(Json json) => _$PokemonAbilityFromJson(json);
 }

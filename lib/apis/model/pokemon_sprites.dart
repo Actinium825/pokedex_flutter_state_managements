@@ -1,5 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:pokedex_flutter_async_redux/apis/model/other_sprites.dart';
+import 'package:pokedex_flutter_async_redux/utils/typedef.dart';
 
 part 'pokemon_sprites.freezed.dart';
 part 'pokemon_sprites.g.dart';
@@ -11,5 +12,5 @@ class PokemonSprites with _$PokemonSprites {
     @JsonKey(name: 'other') OtherSprites? otherSprites,
   }) = _PokemonSprites;
 
-  factory PokemonSprites.fromJson(Map<String, dynamic> json) => _$PokemonSpritesFromJson(json);
+  factory PokemonSprites.fromJson(Json json) => _$PokemonSpritesFromJson(json);
 }

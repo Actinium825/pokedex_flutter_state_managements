@@ -5,6 +5,7 @@ import 'package:pokedex_flutter_async_redux/apis/model/pokemon_base_stat.dart';
 import 'package:pokedex_flutter_async_redux/apis/model/pokemon_move.dart';
 import 'package:pokedex_flutter_async_redux/apis/model/pokemon_sprites.dart';
 import 'package:pokedex_flutter_async_redux/apis/model/pokemon_type.dart';
+import 'package:pokedex_flutter_async_redux/utils/typedef.dart';
 
 part 'pokemon.freezed.dart';
 part 'pokemon.g.dart';
@@ -25,5 +26,5 @@ class Pokemon with _$Pokemon {
     @JsonKey(name: 'moves') List<PokemonMove>? moveList,
   }) = _Pokemon;
 
-  factory Pokemon.fromJson(Map<String, dynamic> json) => _$PokemonFromJson(json);
+  factory Pokemon.fromJson(Json json) => _$PokemonFromJson(json);
 }
