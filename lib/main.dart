@@ -9,7 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  final state = AppState();
+  final state = const AppState();
   final store = Store<AppState>(initialState: state);
 
   final prefs = await SharedPreferences.getInstance();
