@@ -2,6 +2,7 @@ import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pokedex_flutter_async_redux/feature/pokemon_list/widgets/pokemon_card.dart';
+import 'package:pokedex_flutter_async_redux/model/union_page_state.dart';
 import 'package:pokedex_flutter_async_redux/utils/const.dart';
 import 'package:pokedex_flutter_async_redux/utils/extension.dart';
 import 'package:pokedex_flutter_async_redux/utils/strings.dart';
@@ -11,13 +12,13 @@ class PokemonListPage extends StatelessWidget {
   const PokemonListPage({
     required this.savedThemeMode,
     required this.onSetTheme,
-    required this.pokemonList,
+    required this.unionPageState,
     super.key,
   });
 
   final ThemeMode savedThemeMode;
   final ValueChanged<ThemeMode> onSetTheme;
-  final PokemonList pokemonList;
+  final UnionPageState<PokemonList> unionPageState;
 
   void _showThemeChoiceDialog(BuildContext context) => showDialog<void>(
         context: context,
@@ -72,21 +73,25 @@ class PokemonListPage extends StatelessWidget {
       ),
       body: Padding(
         padding: pokemonListPagePadding,
-        child: CustomScrollView(
-          slivers: [
-            SliverGrid(
-              gridDelegate: pokemonGridDelegate,
-              delegate: SliverChildBuilderDelegate(
-                (_, index) => PokemonCard(
-                  pokemon: pokemonList[index],
-                  // TODO: Add function
-                  onTap: () {},
+        child: unionPageState.when(
+          (pokemonList) => CustomScrollView(
+            slivers: [
+              SliverGrid(
+                gridDelegate: pokemonGridDelegate,
+                delegate: SliverChildBuilderDelegate(
+                  (_, index) => PokemonCard(
+                    pokemon: pokemonList[index],
+                    // TODO: Add function
+                    onTap: () {},
+                  ),
+                  childCount: pokemonList.length,
                 ),
-                childCount: pokemonList.length,
               ),
-            ),
-            const SliverToBoxAdapter(child: SizedBox(height: pokemonListPageFooterHeight))
-          ],
+              const SliverToBoxAdapter(child: SizedBox(height: pokemonListPageFooterHeight))
+            ],
+          ),
+          loading: () => const Center(child: CircularProgressIndicator()),
+          error: (message) => AlertDialog(title: Text(message ?? '')),
         ),
       ),
     );

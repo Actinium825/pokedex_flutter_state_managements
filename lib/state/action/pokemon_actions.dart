@@ -1,11 +1,16 @@
 import 'package:async_redux/async_redux.dart';
 import 'package:pokedex_flutter_async_redux/apis/api_service.dart';
 import 'package:pokedex_flutter_async_redux/model/dto/simple_pokemon_dto.dart';
+import 'package:pokedex_flutter_async_redux/state/action/actions.dart';
 import 'package:pokedex_flutter_async_redux/state/app_state.dart';
 
 /// Gets the pokemon list at the start to display
 /// Gets the simple pokemon list first before getting each individual details
-class InitPokemonListPageAction extends ReduxAction<AppState> {
+class InitPokemonListPageAction extends LoadingAction {
+  InitPokemonListPageAction() : super(actionKey: waitKey);
+
+  static const waitKey = 'init-pokemon-list-page';
+
   @override
   Future<AppState> reduce() async {
     await dispatchAndWait(GetSimplePokemonListAction());

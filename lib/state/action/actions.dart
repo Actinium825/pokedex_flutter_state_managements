@@ -23,3 +23,16 @@ class SetThemeAction extends ReduxAction<AppState> {
     return state.copyWith(savedThemeMode: themeMode);
   }
 }
+
+/// Reusable loading page state for redux action
+abstract class LoadingAction extends ReduxAction<AppState> {
+  LoadingAction({required this.actionKey});
+
+  final String actionKey;
+
+  @override
+  void before() => dispatch(WaitAction.add(actionKey));
+
+  @override
+  void after() => dispatch(WaitAction.remove(actionKey));
+}
