@@ -18,4 +18,5 @@ targets:
           include:
             - lib/apis/model/*
             - lib/model/dto/*
+            - lib/model/*
             - lib/state/app_state.dart
