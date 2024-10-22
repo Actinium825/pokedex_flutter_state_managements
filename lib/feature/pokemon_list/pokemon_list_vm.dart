@@ -5,6 +5,7 @@ import 'package:pokedex_flutter_async_redux/model/union_page_state.dart';
 import 'package:pokedex_flutter_async_redux/state/action/actions.dart';
 import 'package:pokedex_flutter_async_redux/state/action/pokemon_actions.dart';
 import 'package:pokedex_flutter_async_redux/state/app_state.dart';
+import 'package:pokedex_flutter_async_redux/utils/strings.dart';
 import 'package:pokedex_flutter_async_redux/utils/typedef.dart';
 
 class PokemonListVmFactory extends VmFactory<AppState, PokemonListConnector, PokemonListVm> {
@@ -19,7 +20,7 @@ class PokemonListVmFactory extends VmFactory<AppState, PokemonListConnector, Pok
 
   UnionPageState<PokemonList> _getLoadingState() {
     if (state.wait.isWaiting(InitPokemonListPageAction.waitKey)) return const UnionPageState.loading();
-    if (state.pokemonList.isEmpty) return const UnionPageState.error('No Pokemon Found');
+    if (state.pokemonList.isEmpty) return const UnionPageState.error(emptyPokemonLabel);
     return UnionPageState(state.pokemonList);
   }
 }
