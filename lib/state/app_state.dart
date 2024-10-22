@@ -6,6 +6,6 @@ part 'app_state.freezed.dart';
 @freezed
 class AppState with _$AppState {
   factory AppState({
-    @Default(ThemeMode.system) ThemeMode themeMode,
+    @Default(ThemeMode.system) ThemeMode savedThemeMode,
   }) = _AppState;
 }
