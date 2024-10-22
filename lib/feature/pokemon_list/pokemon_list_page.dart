@@ -87,9 +87,8 @@ class _PokemonListPageState extends State<PokemonListPage> {
   }
 
   void _onPressSearch() {
-    final value = _isSearchingNotifier.value;
-    _isSearchingNotifier.value = !value;
-    if (value) _textEditingController.clear();
+    _isSearchingNotifier.value = !_isSearchingNotifier.value;
+    if (_textEditingController.text.isNotEmpty) _textEditingController.clear();
   }
 
   @override
