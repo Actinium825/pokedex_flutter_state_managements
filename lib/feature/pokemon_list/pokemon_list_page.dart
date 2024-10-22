@@ -33,16 +33,22 @@ class PokemonListPage extends StatefulWidget {
 
 class _PokemonListPageState extends State<PokemonListPage> {
   late final ScrollController _scrollController;
+  late final TextEditingController _textEditingController;
+  late final ValueNotifier<bool> _isSearchingNotifier;
 
   @override
   void initState() {
     _scrollController = ScrollController()..addListener(_onReachEnd);
+    _textEditingController = TextEditingController();
+    _isSearchingNotifier = ValueNotifier(false);
     super.initState();
   }
 
   @override
   void dispose() {
     _scrollController.dispose();
+    _textEditingController.dispose();
+    _isSearchingNotifier.dispose();
     super.dispose();
   }
 
@@ -80,15 +86,45 @@ class _PokemonListPageState extends State<PokemonListPage> {
     if (position.pixels == position.maxScrollExtent) widget.onGetMorePokemon();
   }
 
+  void _onPressSearch() {
+    final value = _isSearchingNotifier.value;
+    _isSearchingNotifier.value = !value;
+    if (value) _textEditingController.clear();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          appTitle,
-          style: context.textTheme.displayMedium,
+        title: ValueListenableBuilder<bool>(
+          valueListenable: _isSearchingNotifier,
+          builder: (_, isSearching, __) => isSearching
+              ? TextField(
+                  autofocus: true,
+                  controller: _textEditingController,
+                  decoration: const InputDecoration(
+                    prefixIcon: Icon(Icons.search),
+                    prefixIconConstraints: BoxConstraints(maxHeight: 20),
+                    hintText: searchFieldHintText,
+                  ),
+                )
+              : Text(
+                  appTitle,
+                  style: context.textTheme.displayMedium,
+                ),
         ),
         actions: [
+          IconButton(
+            onPressed: _onPressSearch,
+            icon: ValueListenableBuilder<bool>(
+              valueListenable: _isSearchingNotifier,
+              builder: (_, isSearching, __) => Icon(isSearching ? Icons.close : Icons.search),
+            ),
+          ),
+          IconButton(
+            onPressed: widget.onRefreshPage,
+            icon: const Icon(Icons.refresh),
+          ),
           PopupMenuButton(
             onSelected: (option) => _onSelectOption(context, option),
             itemBuilder: (_) => [chooseThemeMenuLabel].map(
