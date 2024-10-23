@@ -14,5 +14,6 @@ class AppState with _$AppState {
     @Default(Wait.empty) Wait wait,
     @Default(SimplePokemonListDto()) SimplePokemonListDto simplePokemonList,
     @Default(<PokemonDto>[]) PokemonList pokemonList,
+    @Default(<PokemonDto>[]) PokemonList searchResultList,
   }) = _AppState;
 }

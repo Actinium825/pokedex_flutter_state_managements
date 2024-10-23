@@ -70,3 +70,25 @@ class GetMorePokemonAction extends LoadingAction {
     return state;
   }
 }
+
+/// Search a pokemon with the provided [searchText]
+/// Avoid dispatching when already searching
+class SearchPokemonAction extends LoadingAction {
+  SearchPokemonAction({required this.searchText}) : super(actionKey: waitKey);
+
+  static const waitKey = 'search-pokemon';
+
+  final String searchText;
+
+  @override
+  bool abortDispatch() => state.wait.isWaiting(waitKey);
+
+  @override
+  Future<AppState> reduce() async {
+    if (searchText.isEmpty) return state.copyWith(searchResultList: List.empty());
+
+    final searchResultList = await ApiService.pokemonApi.searchPokemon(searchText.trim());
+
+    return state.copyWith(searchResultList: searchResultList);
+  }
+}

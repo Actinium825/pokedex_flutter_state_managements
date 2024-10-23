@@ -10,3 +10,4 @@ const pokemonGridDelegate = SliverGridDelegateWithMaxCrossAxisExtent(maxCrossAxi
 const pokemonListPagePadding = EdgeInsets.symmetric(horizontal: 12.0);
 const morePokemonCount = 20;
 const progressIndicatorFooterPadding = EdgeInsets.all(12.0);
+const debouncerDelayInMilliseconds = 300;
