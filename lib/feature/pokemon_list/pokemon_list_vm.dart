@@ -32,8 +32,8 @@ class PokemonListVmFactory extends VmFactory<AppState, PokemonListConnector, Pok
 
   UnionPageState<PokemonList> _getSearchingState() {
     if (state.wait.isWaiting(SearchPokemonAction.waitKey)) return const UnionPageState.loading();
-    final searchList = state.searchResultList;
-    return searchList.isEmpty ? const UnionPageState.error(emptyPokemonLabel) : UnionPageState(state.searchResultList);
+    final searchResultList = state.searchResultList;
+    return searchResultList.isEmpty ? const UnionPageState.error(emptyPokemonLabel) : UnionPageState(searchResultList);
   }
 
   void _onGetMorePokemon() => dispatch(GetMorePokemonAction());
