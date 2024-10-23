@@ -1,4 +1,5 @@
 import 'package:async_redux/async_redux.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:pokedex_flutter_async_redux/pokedex_app.dart';
 import 'package:pokedex_flutter_async_redux/state/action/actions.dart';
@@ -10,7 +11,10 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   const state = AppState();
-  final store = Store<AppState>(initialState: state);
+  final store = Store<AppState>(
+    initialState: state,
+    actionObservers: [if (kDebugMode) ConsoleActionObserver<AppState>()],
+  );
 
   final prefs = await SharedPreferences.getInstance();
   final savedThemeIndex = prefs.getInt(themeSharedPrefsKey) ?? ThemeMode.system.index;

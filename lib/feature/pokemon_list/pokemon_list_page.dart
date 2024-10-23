@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:dartx/dartx.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -14,18 +16,22 @@ class PokemonListPage extends StatefulWidget {
     required this.savedThemeMode,
     required this.onSetTheme,
     required this.unionPageState,
+    required this.unionSearchPageState,
     required this.onGetMorePokemon,
     required this.isGettingMorePokemon,
     required this.onRefreshPage,
+    required this.onSearchPokemon,
     super.key,
   });
 
   final ThemeMode savedThemeMode;
   final ValueChanged<ThemeMode> onSetTheme;
+  final ValueChanged<String> onSearchPokemon;
   final UnionPageState<PokemonList> unionPageState;
+  final UnionPageState<PokemonList> unionSearchPageState;
   final VoidCallback onGetMorePokemon;
-  final bool isGettingMorePokemon;
   final AsyncCallback onRefreshPage;
+  final bool isGettingMorePokemon;
 
   @override
   State<PokemonListPage> createState() => _PokemonListPageState();
@@ -35,11 +41,12 @@ class _PokemonListPageState extends State<PokemonListPage> {
   late final ScrollController _scrollController;
   late final TextEditingController _textEditingController;
   late final ValueNotifier<bool> _isSearchingNotifier;
+  Timer? _debouncer;
 
   @override
   void initState() {
     _scrollController = ScrollController()..addListener(_onReachEnd);
-    _textEditingController = TextEditingController();
+    _textEditingController = TextEditingController()..addListener(_onUpdateText);
     _isSearchingNotifier = ValueNotifier(false);
     super.initState();
   }
@@ -89,6 +96,14 @@ class _PokemonListPageState extends State<PokemonListPage> {
   void _onPressSearch() {
     _isSearchingNotifier.value = !_isSearchingNotifier.value;
     if (_textEditingController.text.isNotEmpty) _textEditingController.clear();
+  }
+
+  void _onUpdateText() {
+    _debouncer?.cancel();
+    _debouncer = Timer(
+      debouncerDelayInMilliseconds.milliseconds,
+      () => widget.onSearchPokemon(_textEditingController.text),
+    );
   }
 
   @override
@@ -141,7 +156,7 @@ class _PokemonListPageState extends State<PokemonListPage> {
         onRefresh: widget.onRefreshPage,
         child: Padding(
           padding: pokemonListPagePadding,
-          child: widget.unionPageState.when(
+          child: (_textEditingController.text.isNotEmpty ? widget.unionSearchPageState : widget.unionPageState).when(
             (pokemonList) => CustomScrollView(
               controller: _scrollController,
               slivers: [

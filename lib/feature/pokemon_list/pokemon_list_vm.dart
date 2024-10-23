@@ -15,44 +15,59 @@ class PokemonListVmFactory extends VmFactory<AppState, PokemonListConnector, Pok
         savedThemeMode: state.savedThemeMode,
         onSetTheme: _onSetTheme,
         unionPageState: _getLoadingState(),
+        unionSearchPageState: _getSearchingState(),
         onGetMorePokemon: _onGetMorePokemon,
         isGettingMorePokemon: state.wait.isWaiting(GetMorePokemonAction.waitKey),
         onRefreshPage: _onRefreshPage,
+        onSearchPokemon: _onSearchPokemon,
       );
 
   void _onSetTheme(ThemeMode themeMode) => dispatch(SetThemeAction(themeMode));
 
   UnionPageState<PokemonList> _getLoadingState() {
     if (state.wait.isWaiting(InitPokemonListPageAction.waitKey)) return const UnionPageState.loading();
-    if (state.pokemonList.isEmpty) return const UnionPageState.error(emptyPokemonLabel);
-    return UnionPageState(state.pokemonList);
+    final pokemonList = state.pokemonList;
+    return pokemonList.isEmpty ? const UnionPageState.error(emptyPokemonLabel) : UnionPageState(pokemonList);
+  }
+
+  UnionPageState<PokemonList> _getSearchingState() {
+    if (state.wait.isWaiting(SearchPokemonAction.waitKey)) return const UnionPageState.loading();
+    final searchResultList = state.searchResultList;
+    return searchResultList.isEmpty ? const UnionPageState.error(emptyPokemonLabel) : UnionPageState(searchResultList);
   }
 
   void _onGetMorePokemon() => dispatch(GetMorePokemonAction());
 
   Future<void> _onRefreshPage() async => dispatch(InitPokemonListPageAction());
+
+  void _onSearchPokemon(String searchText) => dispatch(SearchPokemonAction(searchText: searchText));
 }
 
 class PokemonListVm extends Vm {
   final ThemeMode savedThemeMode;
   final ValueChanged<ThemeMode> onSetTheme;
   final UnionPageState<PokemonList> unionPageState;
+  final UnionPageState<PokemonList> unionSearchPageState;
   final VoidCallback onGetMorePokemon;
   final bool isGettingMorePokemon;
   final AsyncCallback onRefreshPage;
+  final ValueChanged<String> onSearchPokemon;
 
   PokemonListVm({
     required this.savedThemeMode,
     required this.onSetTheme,
     required this.unionPageState,
+    required this.unionSearchPageState,
     required this.onGetMorePokemon,
     required this.isGettingMorePokemon,
     required this.onRefreshPage,
+    required this.onSearchPokemon,
   }) : super(
           equals: [
             savedThemeMode,
             unionPageState,
             isGettingMorePokemon,
+            unionSearchPageState,
           ],
         );
 }
