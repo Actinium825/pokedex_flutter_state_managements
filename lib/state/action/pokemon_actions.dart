@@ -6,6 +6,7 @@ import 'package:pokedex_flutter_async_redux/state/app_state.dart';
 
 /// Gets the pokemon list at the start to display
 /// Gets the simple pokemon list first before getting each individual details
+/// Clears the state's search result list for refreshing when searching
 class InitPokemonListPageAction extends LoadingAction {
   InitPokemonListPageAction() : super(actionKey: waitKey);
 
@@ -15,7 +16,7 @@ class InitPokemonListPageAction extends LoadingAction {
   Future<AppState> reduce() async {
     await dispatchAndWait(GetSimplePokemonListAction());
     await dispatchAndWait(GetPokemonListAction(simplePokemonList: state.simplePokemonList.simplePokemonList));
-    return state;
+    return state.copyWith(searchResultList: List.empty());
   }
 }
 

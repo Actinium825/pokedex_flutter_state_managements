@@ -95,7 +95,7 @@ class _PokemonListPageState extends State<PokemonListPage> {
 
   void _onPressSearch() {
     _isSearchingNotifier.value = !_isSearchingNotifier.value;
-    if (_textEditingController.text.isNotEmpty) _textEditingController.clear();
+    _onClearText();
   }
 
   void _onUpdateText() {
@@ -104,6 +104,16 @@ class _PokemonListPageState extends State<PokemonListPage> {
       debouncerDelayInMilliseconds.milliseconds,
       () => widget.onSearchPokemon(_textEditingController.text),
     );
+  }
+
+  Future<void> _onRefresh() async {
+    _onClearText();
+    if (_isSearchingNotifier.value) _isSearchingNotifier.value = false;
+    widget.onRefreshPage();
+  }
+
+  void _onClearText() {
+    if (_textEditingController.text.isNotEmpty) _textEditingController.clear();
   }
 
   @override
@@ -136,7 +146,7 @@ class _PokemonListPageState extends State<PokemonListPage> {
             ),
           ),
           IconButton(
-            onPressed: widget.onRefreshPage,
+            onPressed: _onRefresh,
             icon: const Icon(Icons.refresh),
           ),
           PopupMenuButton(
@@ -153,7 +163,7 @@ class _PokemonListPageState extends State<PokemonListPage> {
         ],
       ),
       body: RefreshIndicator(
-        onRefresh: widget.onRefreshPage,
+        onRefresh: _onRefresh,
         child: Padding(
           padding: pokemonListPagePadding,
           child: (_textEditingController.text.isNotEmpty ? widget.unionSearchPageState : widget.unionPageState).when(
