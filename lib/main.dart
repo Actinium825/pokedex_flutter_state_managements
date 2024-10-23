@@ -1,7 +1,7 @@
 import 'package:async_redux/async_redux.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:pokedex_flutter_async_redux/pokedex_app.dart';
+import 'package:pokedex_flutter_async_redux/pokedex_app_connector.dart';
 import 'package:pokedex_flutter_async_redux/state/action/actions.dart';
 import 'package:pokedex_flutter_async_redux/state/app_state.dart';
 import 'package:pokedex_flutter_async_redux/utils/strings.dart';
@@ -25,7 +25,7 @@ void main() async {
   runApp(
     StoreProvider<AppState>(
       store: store,
-      child: const PokedexApp(),
+      child: const PokedexAppConnector(),
     ),
   );
 }
