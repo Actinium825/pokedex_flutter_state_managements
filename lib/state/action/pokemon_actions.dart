@@ -99,7 +99,7 @@ class SearchPokemonAction extends LoadingAction {
 class SelectPokemonAction extends ReduxAction<AppState> {
   SelectPokemonAction({required this.selectedPokemon});
 
-  final PokemonDto selectedPokemon;
+  final PokemonDto? selectedPokemon;
 
   @override
   AppState reduce() => state.copyWith(selectedPokemon: selectedPokemon);

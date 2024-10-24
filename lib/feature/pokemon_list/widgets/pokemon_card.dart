@@ -1,12 +1,10 @@
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
 import 'package:pokedex_flutter_async_redux/extensions/pokemon_ext.dart';
-import 'package:pokedex_flutter_async_redux/extensions/pokemon_type_ext.dart';
-import 'package:pokedex_flutter_async_redux/feature/pokemon_list/widgets/pokemon_type_name.dart';
 import 'package:pokedex_flutter_async_redux/model/dto/pokemon_dto.dart';
 import 'package:pokedex_flutter_async_redux/utils/const.dart';
 import 'package:pokedex_flutter_async_redux/utils/extension.dart';
+import 'package:pokedex_flutter_async_redux/widgets/pokemon_image.dart';
+import 'package:pokedex_flutter_async_redux/widgets/pokemon_type_list.dart';
 
 class PokemonCard extends StatelessWidget {
   const PokemonCard({
@@ -20,7 +18,6 @@ class PokemonCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final typeList = pokemon.typeList;
     return GestureDetector(
       onTap: onTap,
       child: Card(
@@ -35,32 +32,20 @@ class PokemonCard extends StatelessWidget {
                   Padding(
                     padding: pokemonNamePadding,
                     child: Text(
-                      pokemon.name.capitalize(),
+                      pokemon.capitalizedNamed,
                       style: context.textTheme.headlineMedium,
                     ),
                   ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      PokemonTypeName(name: pokemon.firstTypeName),
-                      if (typeList.length > 1) PokemonTypeName(name: typeList.second.name),
-                    ],
-                  )
+                  PokemonTypeList(pokemon: pokemon),
                 ],
               ),
             ),
             Positioned(
               bottom: 0.0,
               right: 0.0,
-              child: Hero(
-                tag: pokemon.id,
-                child: Container(
-                  width: pokemonCardSize,
-                  height: pokemonCardSize,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(image: CachedNetworkImageProvider(pokemon.imageUrl)),
-                  ),
-                ),
+              child: PokemonImage(
+                pokemon: pokemon,
+                size: pokemonCardSize,
               ),
             ),
           ],
