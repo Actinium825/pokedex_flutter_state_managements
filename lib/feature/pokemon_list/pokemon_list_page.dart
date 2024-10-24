@@ -4,7 +4,9 @@ import 'package:dartx/dartx.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:pokedex_flutter_async_redux/feature/pokemon_info/pokemon_info_connector.dart';
 import 'package:pokedex_flutter_async_redux/feature/pokemon_list/widgets/pokemon_card.dart';
+import 'package:pokedex_flutter_async_redux/model/dto/pokemon_dto.dart';
 import 'package:pokedex_flutter_async_redux/model/union_page_state.dart';
 import 'package:pokedex_flutter_async_redux/utils/const.dart';
 import 'package:pokedex_flutter_async_redux/utils/extension.dart';
@@ -21,12 +23,14 @@ class PokemonListPage extends StatefulWidget {
     required this.isGettingMorePokemon,
     required this.onRefreshPage,
     required this.onSearchPokemon,
+    required this.onSelectPokemon,
     super.key,
   });
 
   final ThemeMode savedThemeMode;
   final ValueChanged<ThemeMode> onSetTheme;
   final ValueChanged<String> onSearchPokemon;
+  final ValueChanged<PokemonDto> onSelectPokemon;
   final UnionPageState<PokemonList> unionPageState;
   final UnionPageState<PokemonList> unionSearchPageState;
   final VoidCallback onGetMorePokemon;
@@ -59,7 +63,7 @@ class _PokemonListPageState extends State<PokemonListPage> {
     super.dispose();
   }
 
-  void _showThemeChoiceDialog(BuildContext context) => showDialog<void>(
+  void _showThemeChoiceDialog() => showDialog<void>(
         context: context,
         builder: (context) => AlertDialog(
           title: const Text(chooseThemeMenuLabel),
@@ -71,7 +75,7 @@ class _PokemonListPageState extends State<PokemonListPage> {
                   title: Text(themeMode.name.capitalize()),
                   value: themeMode,
                   groupValue: widget.savedThemeMode,
-                  onChanged: (value) => _onSelectTheme(context, value),
+                  onChanged: _onSelectTheme,
                 );
               },
             ).toList(),
@@ -79,11 +83,11 @@ class _PokemonListPageState extends State<PokemonListPage> {
         ),
       );
 
-  void _onSelectOption(BuildContext context, String option) {
-    if (option == chooseThemeMenuLabel) _showThemeChoiceDialog(context);
+  void _onSelectOption(String option) {
+    if (option == chooseThemeMenuLabel) _showThemeChoiceDialog();
   }
 
-  void _onSelectTheme(BuildContext context, ThemeMode? themeMode) {
+  void _onSelectTheme(ThemeMode? themeMode) {
     widget.onSetTheme(themeMode ?? ThemeMode.system);
     context.pop();
   }
@@ -114,6 +118,11 @@ class _PokemonListPageState extends State<PokemonListPage> {
 
   void _onClearText() {
     if (_textEditingController.text.isNotEmpty) _textEditingController.clear();
+  }
+
+  void _onTapPokemonCard(PokemonDto selectedPokemon) {
+    widget.onSelectPokemon(selectedPokemon);
+    context.pushNamed(PokemonInfoConnector.route);
   }
 
   @override
@@ -150,7 +159,7 @@ class _PokemonListPageState extends State<PokemonListPage> {
             icon: const Icon(Icons.refresh),
           ),
           PopupMenuButton(
-            onSelected: (option) => _onSelectOption(context, option),
+            onSelected: _onSelectOption,
             itemBuilder: (_) => [chooseThemeMenuLabel].map(
               (choice) {
                 return PopupMenuItem(
@@ -173,11 +182,13 @@ class _PokemonListPageState extends State<PokemonListPage> {
                 SliverGrid(
                   gridDelegate: pokemonGridDelegate,
                   delegate: SliverChildBuilderDelegate(
-                    (_, index) => PokemonCard(
-                      pokemon: pokemonList[index],
-                      // TODO: Add function
-                      onTap: () {},
-                    ),
+                    (_, index) {
+                      final pokemon = pokemonList[index];
+                      return PokemonCard(
+                        pokemon: pokemon,
+                        onTap: () => _onTapPokemonCard(pokemon),
+                      );
+                    },
                     childCount: pokemonList.length,
                   ),
                 ),

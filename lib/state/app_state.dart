@@ -15,5 +15,6 @@ class AppState with _$AppState {
     @Default(SimplePokemonListDto()) SimplePokemonListDto simplePokemonList,
     @Default(<PokemonDto>[]) PokemonList pokemonList,
     @Default(<PokemonDto>[]) PokemonList searchResultList,
+    @Default(null) PokemonDto? selectedPokemon,
   }) = _AppState;
 }
