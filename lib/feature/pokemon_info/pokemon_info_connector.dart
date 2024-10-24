@@ -2,6 +2,7 @@ import 'package:async_redux/async_redux.dart';
 import 'package:flutter/material.dart';
 import 'package:pokedex_flutter_async_redux/feature/pokemon_info/pokemon_info_page.dart';
 import 'package:pokedex_flutter_async_redux/feature/pokemon_info/pokemon_info_vm.dart';
+import 'package:pokedex_flutter_async_redux/state/action/pokemon_actions.dart';
 import 'package:pokedex_flutter_async_redux/state/app_state.dart';
 
 class PokemonInfoConnector extends StatelessWidget {
@@ -13,6 +14,7 @@ class PokemonInfoConnector extends StatelessWidget {
   Widget build(BuildContext context) {
     return StoreConnector<AppState, PokemonInfoVm>(
       vm: PokemonInfoVmFactory.new,
+      onDispose: (store) => store.dispatch(SelectPokemonAction(selectedPokemon: null)),
       builder: (_, vm) => PokemonInfoPage(selectedPokemon: vm.selectedPokemon),
     );
   }

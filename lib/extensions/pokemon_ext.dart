@@ -1,3 +1,4 @@
+import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
 import 'package:pokedex_flutter_async_redux/apis/model/pokemon.dart';
 import 'package:pokedex_flutter_async_redux/extensions/pokemon_info_ext.dart';
@@ -28,9 +29,9 @@ extension PokemonExt on Pokemon {
 }
 
 extension PokemonDtoExt on PokemonDto {
-  String get imageUrl => sprites.otherSprites.officialArtwork.imageUrl;
+  Color get primaryColor => PokemonColorPicker.getColor(primaryTypeName);
 
-  Color get primaryColor => PokemonColorPicker.getColor(firstTypeName);
+  String get primaryTypeName => typeList.firstOrNull?.name ?? '';
 
-  String get firstTypeName => typeList.firstOrNull?.name ?? '';
+  String get capitalizedNamed => name.capitalize();
 }
