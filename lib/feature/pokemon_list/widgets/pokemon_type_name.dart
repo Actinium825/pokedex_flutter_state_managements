@@ -2,6 +2,7 @@ import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
 import 'package:pokedex_flutter_async_redux/utils/const.dart';
 import 'package:pokedex_flutter_async_redux/utils/extension.dart';
+import 'package:pokedex_flutter_async_redux/utils/pokemon_color_picker.dart';
 
 class PokemonTypeName extends StatelessWidget {
   const PokemonTypeName({
@@ -13,14 +14,6 @@ class PokemonTypeName extends StatelessWidget {
   final String name;
   final Color? primaryColor;
 
-  Color _typeDecorationColor() {
-    final color = primaryColor ?? Colors.transparent;
-    final hsl = HSLColor.fromColor(color);
-    final hslLight = hsl.withLightness(hsl.lightness + lightnessAddition);
-
-    return hslLight.toColor();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -29,7 +22,7 @@ class PokemonTypeName extends StatelessWidget {
       decoration: primaryColor == null
           ? null
           : BoxDecoration(
-              color: _typeDecorationColor(),
+              color: PokemonColorPicker.typeDecorationColor(primaryColor ?? Colors.transparent),
               border: Border.all(color: Colors.transparent),
               borderRadius: BorderRadius.circular(typeNameRadius),
             ),
