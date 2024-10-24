@@ -24,6 +24,7 @@ class PokemonListConnector extends StatelessWidget {
         isGettingMorePokemon: vm.isGettingMorePokemon,
         onRefreshPage: vm.onRefreshPage,
         onSearchPokemon: vm.onSearchPokemon,
+        onSelectPokemon: vm.onSelectPokemon,
       ),
     );
   }

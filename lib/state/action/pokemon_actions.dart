@@ -1,5 +1,6 @@
 import 'package:async_redux/async_redux.dart';
 import 'package:pokedex_flutter_async_redux/apis/api_service.dart';
+import 'package:pokedex_flutter_async_redux/model/dto/pokemon_dto.dart';
 import 'package:pokedex_flutter_async_redux/model/dto/simple_pokemon_dto.dart';
 import 'package:pokedex_flutter_async_redux/state/action/actions.dart';
 import 'package:pokedex_flutter_async_redux/state/app_state.dart';
@@ -92,4 +93,14 @@ class SearchPokemonAction extends LoadingAction {
 
     return state.copyWith(searchResultList: searchResultList);
   }
+}
+
+/// Selects the provided [selectedPokemon] to be viewed on the pokemon info page
+class SelectPokemonAction extends ReduxAction<AppState> {
+  SelectPokemonAction({required this.selectedPokemon});
+
+  final PokemonDto selectedPokemon;
+
+  @override
+  AppState reduce() => state.copyWith(selectedPokemon: selectedPokemon);
 }

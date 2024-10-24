@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:pokedex_flutter_async_redux/apis/model/pokemon.dart';
 import 'package:pokedex_flutter_async_redux/extensions/pokemon_info_ext.dart';
 import 'package:pokedex_flutter_async_redux/extensions/pokemon_ability_ext.dart';
@@ -8,6 +9,7 @@ import 'package:pokedex_flutter_async_redux/extensions/pokemon_type_ext.dart';
 import 'package:pokedex_flutter_async_redux/model/dto/pokemon_info_dto.dart';
 import 'package:pokedex_flutter_async_redux/model/dto/pokemon_dto.dart';
 import 'package:pokedex_flutter_async_redux/model/dto/pokemon_sprites_dto.dart';
+import 'package:pokedex_flutter_async_redux/utils/pokemon_color_picker.dart';
 
 extension PokemonExt on Pokemon {
   PokemonDto toDto() => PokemonDto(
@@ -27,4 +29,8 @@ extension PokemonExt on Pokemon {
 
 extension PokemonDtoExt on PokemonDto {
   String get imageUrl => sprites.otherSprites.officialArtwork.imageUrl;
+
+  Color get primaryColor => PokemonColorPicker.getColor(firstTypeName);
+
+  String get firstTypeName => typeList.firstOrNull?.name ?? '';
 }

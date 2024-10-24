@@ -7,7 +7,6 @@ import 'package:pokedex_flutter_async_redux/feature/pokemon_list/widgets/pokemon
 import 'package:pokedex_flutter_async_redux/model/dto/pokemon_dto.dart';
 import 'package:pokedex_flutter_async_redux/utils/const.dart';
 import 'package:pokedex_flutter_async_redux/utils/extension.dart';
-import 'package:pokedex_flutter_async_redux/utils/pokemon_color_picker.dart';
 
 class PokemonCard extends StatelessWidget {
   const PokemonCard({
@@ -22,12 +21,10 @@ class PokemonCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final typeList = pokemon.typeList;
-    final firstTypeName = typeList.firstOrNull?.name ?? '';
-
     return GestureDetector(
       onTap: onTap,
       child: Card(
-        color: PokemonColorPicker.getColor(firstTypeName),
+        color: pokemon.primaryColor,
         child: Stack(
           children: [
             Padding(
@@ -45,7 +42,7 @@ class PokemonCard extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      PokemonTypeName(name: firstTypeName),
+                      PokemonTypeName(name: pokemon.firstTypeName),
                       if (typeList.length > 1) PokemonTypeName(name: typeList.second.name),
                     ],
                   )

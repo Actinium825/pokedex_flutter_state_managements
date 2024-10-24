@@ -2,6 +2,7 @@ import 'package:async_redux/async_redux.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:pokedex_flutter_async_redux/feature/pokemon_list/pokemon_list_connector.dart';
+import 'package:pokedex_flutter_async_redux/model/dto/pokemon_dto.dart';
 import 'package:pokedex_flutter_async_redux/model/union_page_state.dart';
 import 'package:pokedex_flutter_async_redux/state/action/actions.dart';
 import 'package:pokedex_flutter_async_redux/state/action/pokemon_actions.dart';
@@ -20,6 +21,7 @@ class PokemonListVmFactory extends VmFactory<AppState, PokemonListConnector, Pok
         isGettingMorePokemon: state.wait.isWaiting(GetMorePokemonAction.waitKey),
         onRefreshPage: _onRefreshPage,
         onSearchPokemon: _onSearchPokemon,
+        onSelectPokemon: _onSelectPokemon,
       );
 
   void _onSetTheme(ThemeMode themeMode) => dispatch(SetThemeAction(themeMode));
@@ -41,17 +43,20 @@ class PokemonListVmFactory extends VmFactory<AppState, PokemonListConnector, Pok
   Future<void> _onRefreshPage() async => dispatch(InitPokemonListPageAction());
 
   void _onSearchPokemon(String searchText) => dispatch(SearchPokemonAction(searchText: searchText));
+
+  void _onSelectPokemon(PokemonDto selectedPokemon) => dispatch(SelectPokemonAction(selectedPokemon: selectedPokemon));
 }
 
 class PokemonListVm extends Vm {
   final ThemeMode savedThemeMode;
   final ValueChanged<ThemeMode> onSetTheme;
+  final ValueChanged<String> onSearchPokemon;
+  final ValueChanged<PokemonDto> onSelectPokemon;
   final UnionPageState<PokemonList> unionPageState;
   final UnionPageState<PokemonList> unionSearchPageState;
   final VoidCallback onGetMorePokemon;
   final bool isGettingMorePokemon;
   final AsyncCallback onRefreshPage;
-  final ValueChanged<String> onSearchPokemon;
 
   PokemonListVm({
     required this.savedThemeMode,
@@ -62,6 +67,7 @@ class PokemonListVm extends Vm {
     required this.isGettingMorePokemon,
     required this.onRefreshPage,
     required this.onSearchPokemon,
+    required this.onSelectPokemon,
   }) : super(
           equals: [
             savedThemeMode,
