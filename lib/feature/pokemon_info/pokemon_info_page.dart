@@ -3,6 +3,8 @@ import 'package:pokedex_flutter_async_redux/extensions/pokemon_ext.dart';
 import 'package:pokedex_flutter_async_redux/model/dto/pokemon_dto.dart';
 import 'package:pokedex_flutter_async_redux/utils/const.dart';
 import 'package:pokedex_flutter_async_redux/utils/extension.dart';
+import 'package:pokedex_flutter_async_redux/utils/pokemon_color_picker.dart';
+import 'package:pokedex_flutter_async_redux/utils/strings.dart';
 import 'package:pokedex_flutter_async_redux/widgets/pokemon_image.dart';
 import 'package:pokedex_flutter_async_redux/widgets/pokemon_type_list.dart';
 
@@ -17,7 +19,9 @@ class PokemonInfoPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final primaryColor = selectedPokemon.primaryColor;
+    final typeDecorationColor = PokemonColorPicker.typeDecorationColor(primaryColor, isDarkened: true);
     final textTheme = context.textTheme;
+    final themeData = context.themeData;
 
     return Scaffold(
       appBar: AppBar(backgroundColor: primaryColor),
@@ -49,6 +53,37 @@ class PokemonInfoPage extends StatelessWidget {
                   size: infoPageImageSize,
                 ),
               ],
+            ),
+          ),
+          Expanded(
+            child: Container(
+              padding: infoPageModalPadding,
+              decoration: BoxDecoration(
+                color: themeData.primaryColor,
+                borderRadius: infoPageModalRadius,
+              ),
+              child: DefaultTabController(
+                length: tabLabels.length,
+                child: Column(
+                  children: [
+                    TabBar(
+                      labelColor: typeDecorationColor,
+                      indicatorColor: typeDecorationColor,
+                      unselectedLabelColor: themeData.unselectedWidgetColor,
+                      tabs: tabLabels.map((tabLabel) => Tab(text: tabLabel)).toList(),
+                    ),
+                    const Expanded(
+                      child: TabBarView(
+                        children: [
+                          SizedBox(),
+                          SizedBox(),
+                          SizedBox(),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ),
           ),
         ],
