@@ -104,3 +104,18 @@ class SelectPokemonAction extends ReduxAction<AppState> {
   @override
   AppState reduce() => state.copyWith(selectedPokemon: selectedPokemon);
 }
+
+/// Gets the species of the state's selected pokemon
+class GetPokemonSpeciesAction extends LoadingAction {
+  GetPokemonSpeciesAction() : super(actionKey: waitKey);
+
+  static const waitKey = 'get-pokemon-species';
+
+  @override
+  Future<AppState> reduce() async {
+    final speciesUrl = state.selectedPokemon?.speciesInfo.detailsUrl ?? '';
+    final species = await ApiService.pokemonApi.getPokemonSpecies(speciesUrl);
+
+    return state.copyWith(pokemonSpecies: species);
+  }
+}

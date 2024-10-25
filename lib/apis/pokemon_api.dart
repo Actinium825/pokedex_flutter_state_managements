@@ -1,9 +1,12 @@
 import 'package:dio/dio.dart';
 import 'package:pokedex_flutter_async_redux/apis/api_client.dart';
 import 'package:pokedex_flutter_async_redux/apis/model/pokemon.dart';
+import 'package:pokedex_flutter_async_redux/apis/model/pokemon_species.dart';
 import 'package:pokedex_flutter_async_redux/apis/model/simple_pokemon_list.dart';
 import 'package:pokedex_flutter_async_redux/extensions/pokemon_ext.dart';
+import 'package:pokedex_flutter_async_redux/extensions/pokemon_species_ext.dart';
 import 'package:pokedex_flutter_async_redux/extensions/simple_pokemon_list_ext.dart';
+import 'package:pokedex_flutter_async_redux/model/dto/pokemon_species_dto.dart';
 import 'package:pokedex_flutter_async_redux/model/dto/simple_pokemon_dto.dart';
 import 'package:pokedex_flutter_async_redux/model/dto/simple_pokemon_list_dto.dart';
 import 'package:pokedex_flutter_async_redux/utils/typedef.dart';
@@ -47,5 +50,12 @@ class PokemonApi {
     } on DioException catch (_) {
       return List.empty();
     }
+  }
+
+  Future<PokemonSpeciesDto> getPokemonSpecies(String speciesUrl) async {
+    final response = await apiClient.dio.get<Json>(speciesUrl);
+    final pokemonSpecies = PokemonSpecies.fromJson(response.data!);
+
+    return pokemonSpecies.toDto();
   }
 }
