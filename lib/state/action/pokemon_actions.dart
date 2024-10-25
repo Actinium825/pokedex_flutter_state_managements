@@ -1,6 +1,7 @@
 import 'package:async_redux/async_redux.dart';
 import 'package:pokedex_flutter_async_redux/apis/api_service.dart';
 import 'package:pokedex_flutter_async_redux/model/dto/pokemon_dto.dart';
+import 'package:pokedex_flutter_async_redux/model/dto/pokemon_evolution_chain_dto.dart';
 import 'package:pokedex_flutter_async_redux/model/dto/simple_pokemon_dto.dart';
 import 'package:pokedex_flutter_async_redux/state/action/actions.dart';
 import 'package:pokedex_flutter_async_redux/state/app_state.dart';
@@ -48,7 +49,7 @@ class GetPokemonListAction extends ReduxAction<AppState> {
 
   @override
   Future<AppState> reduce() async {
-    final receivedPokemonList = await ApiService.pokemonApi.getPokemonList(simplePokemonList);
+    final receivedPokemonList = await ApiService.pokemonApi.getPokemonList(simplePokemonList: simplePokemonList);
     final updatedPokemonList = [...state.pokemonList, ...receivedPokemonList];
 
     return state.copyWith(pokemonList: updatedPokemonList);
@@ -89,7 +90,7 @@ class SearchPokemonAction extends LoadingAction {
   Future<AppState> reduce() async {
     if (searchText.isEmpty) return state.copyWith(searchResultList: List.empty());
 
-    final searchResultList = await ApiService.pokemonApi.searchPokemon(searchText.trim());
+    final searchResultList = await ApiService.pokemonApi.searchPokemon(pokemonName: searchText.trim());
 
     return state.copyWith(searchResultList: searchResultList);
   }
@@ -99,23 +100,69 @@ class SearchPokemonAction extends LoadingAction {
 class SelectPokemonAction extends ReduxAction<AppState> {
   SelectPokemonAction({required this.selectedPokemon});
 
-  final PokemonDto? selectedPokemon;
+  final PokemonDto selectedPokemon;
 
   @override
   AppState reduce() => state.copyWith(selectedPokemon: selectedPokemon);
 }
 
-/// Gets the species of the state's selected pokemon
-class GetPokemonSpeciesAction extends LoadingAction {
-  GetPokemonSpeciesAction() : super(actionKey: waitKey);
+/// Gets all the details needed for pokemon info page
+class InitPokemonInfoPageAction extends LoadingAction {
+  InitPokemonInfoPageAction() : super(actionKey: waitKey);
 
-  static const waitKey = 'get-pokemon-species';
+  static const waitKey = 'init-pokemon-info-page';
 
   @override
   Future<AppState> reduce() async {
+    await dispatchAndWait(GetPokemonSpeciesAction());
+    await dispatchAndWait(GetPokemonEvolutionChainAction());
+    await dispatchAndWait(GetPokemonEvolutionListAction());
+    return state;
+  }
+}
+
+/// Gets the species of the state's selected pokemon
+/// Used to show flavor text in about tab and for getting the pokemon evolution chain
+class GetPokemonSpeciesAction extends ReduxAction<AppState> {
+  @override
+  Future<AppState> reduce() async {
     final speciesUrl = state.selectedPokemon?.speciesInfo.detailsUrl ?? '';
-    final species = await ApiService.pokemonApi.getPokemonSpecies(speciesUrl);
+    final species = await ApiService.pokemonApi.getSpecies(speciesUrl: speciesUrl);
 
     return state.copyWith(pokemonSpecies: species);
   }
+}
+
+/// Gets the evolution chain of the state's selected pokemon
+/// Used for showing evolutions in about tab and getting the evolution list of the pokemon
+class GetPokemonEvolutionChainAction extends ReduxAction<AppState> {
+  @override
+  Future<AppState> reduce() async {
+    final evolutionChainUrl = state.pokemonSpecies?.evolutionChainInfo.url ?? '';
+    final evolutionChain = await ApiService.pokemonApi.getEvolutionChain(evolutionChainUrl: evolutionChainUrl);
+
+    return state.copyWith(pokemonEvolutionChain: evolutionChain);
+  }
+}
+
+/// Gets all the pokemon of the state's evolution chain
+class GetPokemonEvolutionListAction extends ReduxAction<AppState> {
+  @override
+  Future<AppState> reduce() async {
+    final evolutionChain = state.pokemonEvolutionChain ?? const PokemonEvolutionChainDto();
+    final evolutionList = await ApiService.pokemonApi.getEvolutionList(evolutionChain: evolutionChain);
+
+    return state.copyWith(pokemonEvolutionList: evolutionList);
+  }
+}
+
+/// Clears all the details used on the pokemon info page from state
+class ClearPokemonInfoPageAction extends ReduxAction<AppState> {
+  @override
+  AppState reduce() => state.copyWith(
+        selectedPokemon: null,
+        pokemonSpecies: null,
+        pokemonEvolutionChain: null,
+        pokemonEvolutionList: [],
+      );
 }

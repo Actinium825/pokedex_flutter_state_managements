@@ -14,8 +14,8 @@ class PokemonInfoConnector extends StatelessWidget {
   Widget build(BuildContext context) {
     return StoreConnector<AppState, PokemonInfoVm>(
       vm: PokemonInfoVmFactory.new,
-      onInit: (store) => store.dispatch(GetPokemonSpeciesAction()),
-      onDispose: (store) => store.dispatch(SelectPokemonAction(selectedPokemon: null)),
+      onInit: (store) => store.dispatch(InitPokemonInfoPageAction()),
+      onDispose: (store) => store.dispatch(ClearPokemonInfoPageAction()),
       builder: (_, vm) => PokemonInfoPage(
         selectedPokemon: vm.selectedPokemon,
         isLoading: vm.isLoading,
