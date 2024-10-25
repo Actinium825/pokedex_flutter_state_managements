@@ -10,4 +10,3 @@ extension PokemonSpeciesExt on PokemonSpecies {
         flavorTextEntries: [...?flavorTextEntries?.map((flavorTextEntry) => flavorTextEntry.toDto())],
       );
 }
-
