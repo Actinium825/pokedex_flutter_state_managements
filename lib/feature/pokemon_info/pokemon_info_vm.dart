@@ -9,7 +9,7 @@ class PokemonInfoVmFactory extends VmFactory<AppState, PokemonInfoConnector, Pok
   @override
   PokemonInfoVm fromStore() => PokemonInfoVm(
         selectedPokemon: state.selectedPokemon ?? const PokemonDto(),
-        isLoading: state.wait.isWaiting(GetPokemonSpeciesAction.waitKey),
+        isLoading: state.wait.isWaiting(InitPokemonInfoPageAction.waitKey),
         pokemonSpecies: state.pokemonSpecies ?? const PokemonSpeciesDto(),
       );
 }
