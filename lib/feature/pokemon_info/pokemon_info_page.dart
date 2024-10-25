@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:pokedex_flutter_async_redux/extensions/pokemon_ext.dart';
+import 'package:pokedex_flutter_async_redux/extensions/pokemon_species_ext.dart';
+import 'package:pokedex_flutter_async_redux/feature/pokemon_info/widgets/about_tab.dart';
 import 'package:pokedex_flutter_async_redux/model/dto/pokemon_dto.dart';
+import 'package:pokedex_flutter_async_redux/model/dto/pokemon_species_dto.dart';
 import 'package:pokedex_flutter_async_redux/utils/const.dart';
 import 'package:pokedex_flutter_async_redux/utils/extension.dart';
 import 'package:pokedex_flutter_async_redux/utils/pokemon_color_picker.dart';
@@ -11,10 +14,14 @@ import 'package:pokedex_flutter_async_redux/widgets/pokemon_type_list.dart';
 class PokemonInfoPage extends StatelessWidget {
   const PokemonInfoPage({
     required this.selectedPokemon,
+    required this.pokemonSpecies,
+    required this.isLoading,
     super.key,
   });
 
   final PokemonDto selectedPokemon;
+  final PokemonSpeciesDto pokemonSpecies;
+  final bool isLoading;
 
   @override
   Widget build(BuildContext context) {
@@ -64,25 +71,30 @@ class PokemonInfoPage extends StatelessWidget {
               ),
               child: DefaultTabController(
                 length: tabLabels.length,
-                child: Column(
-                  children: [
-                    TabBar(
-                      labelColor: typeDecorationColor,
-                      indicatorColor: typeDecorationColor,
-                      unselectedLabelColor: themeData.unselectedWidgetColor,
-                      tabs: tabLabels.map((tabLabel) => Tab(text: tabLabel)).toList(),
-                    ),
-                    const Expanded(
-                      child: TabBarView(
+                child: isLoading
+                    ? Center(child: CircularProgressIndicator(color: typeDecorationColor))
+                    : Column(
                         children: [
-                          SizedBox(),
-                          SizedBox(),
-                          SizedBox(),
+                          TabBar(
+                            labelColor: typeDecorationColor,
+                            indicatorColor: typeDecorationColor,
+                            unselectedLabelColor: themeData.unselectedWidgetColor,
+                            tabs: tabLabels.map((tabLabel) => Tab(text: tabLabel)).toList(),
+                          ),
+                          Expanded(
+                            child: TabBarView(
+                              children: [
+                                AboutTab(
+                                  selectedPokemon: selectedPokemon,
+                                  flavorTextEnglish: pokemonSpecies.flavorTextEnglish,
+                                ),
+                                const SizedBox(),
+                                const SizedBox(),
+                              ],
+                            ),
+                          ),
                         ],
                       ),
-                    ),
-                  ],
-                ),
               ),
             ),
           ),

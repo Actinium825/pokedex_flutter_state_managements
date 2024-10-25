@@ -9,3 +9,4 @@ const searchFieldHintText = 'Search Pokemon';
 
 // Pokemon Info Page
 const tabLabels = ['About', 'Evolution', 'Moves'];
+const english = 'en';
