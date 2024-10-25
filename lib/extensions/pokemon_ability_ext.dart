@@ -6,3 +6,7 @@ import 'package:pokedex_flutter_async_redux/model/dto/pokemon_ability_dto.dart';
 extension PokemonAbilityExt on PokemonAbility {
   PokemonAbilityDto toDto() => PokemonAbilityDto(abilityInfo: abilityInfo?.toDto() ?? const PokemonInfoDto());
 }
+
+extension PokemonAbilityDtoExt on PokemonAbilityDto {
+  String get name => abilityInfo.name;
+}
