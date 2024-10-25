@@ -72,7 +72,6 @@ class PokemonApi {
   }
 
   Future<PokemonList> getEvolutionList({required PokemonEvolutionChainDto evolutionChain}) async {
-    final evolutionList = <PokemonDto>[];
     final futures = <Future<Response<Json>>>[];
     final dio = apiClient.dio;
     final baseUrl = '${apiClient.baseUrl}/pokemon';
@@ -91,8 +90,9 @@ class PokemonApi {
     }
 
     final responses = await Future.wait(futures);
-
+    final evolutionList = <PokemonDto>[];
     final pokemon = Pokemon.fromJson(responses.first.data!);
+
     evolutionList.add(pokemon.toDto());
 
     for (final stage2Evolution in responses.sublist(1)) {
