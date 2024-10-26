@@ -6,17 +6,19 @@ class PokemonImage extends StatelessWidget {
   const PokemonImage({
     required this.pokemon,
     required this.size,
+    this.tag,
     super.key,
   });
 
   final PokemonDto pokemon;
   final double size;
+  final Object? tag;
 
   @override
   Widget build(BuildContext context) {
     return Center(
       child: Hero(
-        tag: pokemon.id,
+        tag: tag ?? pokemon.id,
         child: Container(
           width: size,
           height: size,

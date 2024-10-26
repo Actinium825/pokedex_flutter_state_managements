@@ -10,6 +10,7 @@ import 'package:pokedex_flutter_async_redux/extensions/pokemon_type_ext.dart';
 import 'package:pokedex_flutter_async_redux/model/dto/pokemon_info_dto.dart';
 import 'package:pokedex_flutter_async_redux/model/dto/pokemon_dto.dart';
 import 'package:pokedex_flutter_async_redux/model/dto/pokemon_sprites_dto.dart';
+import 'package:pokedex_flutter_async_redux/utils/const.dart';
 import 'package:pokedex_flutter_async_redux/utils/pokemon_color_picker.dart';
 
 extension PokemonExt on Pokemon {
@@ -34,4 +35,6 @@ extension PokemonDtoExt on PokemonDto {
   String get primaryTypeName => typeList.firstOrNull?.name ?? '';
 
   String get capitalizedNamed => name.capitalize();
+
+  String formatId() => '#${id.toString().padLeft(idNumberPadWidth, '0')}';
 }
