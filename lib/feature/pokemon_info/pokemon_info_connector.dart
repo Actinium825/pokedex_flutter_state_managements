@@ -20,6 +20,8 @@ class PokemonInfoConnector extends StatelessWidget {
         selectedPokemon: vm.selectedPokemon,
         isLoading: vm.isLoading,
         pokemonSpecies: vm.pokemonSpecies,
+        pokemonEvolutionChain: vm.pokemonEvolutionChain,
+        pokemonEvolutionList: vm.pokemonEvolutionList,
       ),
     );
   }

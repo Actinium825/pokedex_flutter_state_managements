@@ -70,7 +70,7 @@ class PokedexTheme {
         fontWeight: FontWeight.bold,
         fontSize: 14.0,
       ),
-      bodyLarge: TextStyle(color: _textColorDarkMode),
+      bodyLarge: TextStyle(color: _textColorWhite),
       bodyMedium: TextStyle(
         fontSize: 18.0,
         color: _textColorDarkMode,

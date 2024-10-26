@@ -25,3 +25,7 @@ const infoPageModalRadius = BorderRadius.vertical(top: Radius.circular(20.0));
 const aboutTabPadding = EdgeInsets.all(16.0);
 const flavorTextPadding = EdgeInsets.only(top: 8.0, bottom: 16.0);
 const tableLabelPadding = EdgeInsets.all(4.0);
+const evolutionGridCrossAxisCount = 3;
+const evolutionTabMargin = EdgeInsets.only(top: 32.0);
+const evolutionGridCount = 9;
+const evolutionCardImageSize = 50.0;

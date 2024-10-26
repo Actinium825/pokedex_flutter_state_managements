@@ -2,12 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:pokedex_flutter_async_redux/extensions/pokemon_ext.dart';
 import 'package:pokedex_flutter_async_redux/extensions/pokemon_species_ext.dart';
 import 'package:pokedex_flutter_async_redux/feature/pokemon_info/widgets/about_tab.dart';
+import 'package:pokedex_flutter_async_redux/feature/pokemon_info/widgets/evolution_tab.dart';
 import 'package:pokedex_flutter_async_redux/model/dto/pokemon_dto.dart';
+import 'package:pokedex_flutter_async_redux/model/dto/pokemon_evolution_chain_dto.dart';
 import 'package:pokedex_flutter_async_redux/model/dto/pokemon_species_dto.dart';
 import 'package:pokedex_flutter_async_redux/utils/const.dart';
 import 'package:pokedex_flutter_async_redux/utils/extension.dart';
 import 'package:pokedex_flutter_async_redux/utils/pokemon_color_picker.dart';
 import 'package:pokedex_flutter_async_redux/utils/strings.dart';
+import 'package:pokedex_flutter_async_redux/utils/typedef.dart';
 import 'package:pokedex_flutter_async_redux/widgets/pokemon_image.dart';
 import 'package:pokedex_flutter_async_redux/widgets/pokemon_type_list.dart';
 
@@ -16,11 +19,15 @@ class PokemonInfoPage extends StatelessWidget {
     required this.selectedPokemon,
     required this.pokemonSpecies,
     required this.isLoading,
+    required this.pokemonEvolutionChain,
+    required this.pokemonEvolutionList,
     super.key,
   });
 
   final PokemonDto selectedPokemon;
+  final PokemonList pokemonEvolutionList;
   final PokemonSpeciesDto pokemonSpecies;
+  final PokemonEvolutionChainDto pokemonEvolutionChain;
   final bool isLoading;
 
   @override
@@ -47,7 +54,7 @@ class PokemonInfoPage extends StatelessWidget {
                 Align(
                   alignment: Alignment.centerRight,
                   child: Text(
-                    '#${selectedPokemon.id.toString().padLeft(idNumberPadWidth, '0')}',
+                    selectedPokemon.formatId(),
                     style: textTheme.displaySmall,
                   ),
                 ),
@@ -88,7 +95,10 @@ class PokemonInfoPage extends StatelessWidget {
                                   selectedPokemon: selectedPokemon,
                                   flavorTextEnglish: pokemonSpecies.flavorTextEnglish,
                                 ),
-                                const SizedBox(),
+                                EvolutionTab(
+                                  pokemonEvolutionChain: pokemonEvolutionChain,
+                                  pokemonEvolutionList: pokemonEvolutionList,
+                                ),
                                 const SizedBox(),
                               ],
                             ),
