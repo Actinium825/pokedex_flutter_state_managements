@@ -10,5 +10,5 @@
 - [ ] Evolution Arrows
 - [ ] UI Responsiveness
 - [ ] Moves Tab
-- [ ] iOS/Android Widgets
+- [x] iOS/Android Widgets
 - [ ] Screenshots
