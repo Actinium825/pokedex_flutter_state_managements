@@ -9,6 +9,7 @@ class PokedexTheme {
   static ThemeData themeRegular = ThemeData(
     brightness: Brightness.light,
     primaryColor: Colors.white,
+    useMaterial3: true,
     unselectedWidgetColor: _unselectedWidgetColor,
     indicatorColor: _indicatorColor,
     visualDensity: VisualDensity.adaptivePlatformDensity,
@@ -39,13 +40,12 @@ class PokedexTheme {
         color: _textColorWhite,
       ),
     ),
-    cardTheme: CardTheme(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0))),
-    appBarTheme: const AppBarTheme(elevation: 0.0),
   );
 
   static ThemeData themeDark = ThemeData(
     brightness: Brightness.dark,
     primaryColor: const Color.fromARGB(255, 77, 72, 72),
+    useMaterial3: true,
     unselectedWidgetColor: _unselectedWidgetColor,
     indicatorColor: _indicatorColor,
     visualDensity: VisualDensity.adaptivePlatformDensity,
@@ -76,7 +76,5 @@ class PokedexTheme {
         color: _textColorDarkMode,
       ),
     ),
-    cardTheme: CardTheme(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0))),
-    appBarTheme: const AppBarTheme(elevation: 0.0),
   );
 }

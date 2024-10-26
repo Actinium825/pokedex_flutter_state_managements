@@ -6,7 +6,7 @@ import 'package:pokedex_flutter_async_redux/feature/pokemon_info/widgets/table_l
 import 'package:pokedex_flutter_async_redux/model/dto/pokemon_dto.dart';
 import 'package:pokedex_flutter_async_redux/utils/const.dart';
 import 'package:pokedex_flutter_async_redux/utils/extension.dart';
-import 'package:pokedex_flutter_async_redux/utils/pokemon_color_picker.dart';
+import 'package:pokedex_flutter_async_redux/classes/pokemon_color_picker.dart';
 import 'package:pokedex_flutter_async_redux/utils/strings.dart';
 import 'package:sprintf/sprintf.dart';
 
