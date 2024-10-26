@@ -5,13 +5,17 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pokedex_flutter_async_redux/feature/pokemon_info/pokemon_info_connector.dart';
+import 'package:pokedex_flutter_async_redux/feature/pokemon_list/widgets/list_scaffold.dart';
 import 'package:pokedex_flutter_async_redux/feature/pokemon_list/widgets/pokemon_card.dart';
+import 'package:pokedex_flutter_async_redux/feature/pokemon_list/widgets/search_field.dart';
+import 'package:pokedex_flutter_async_redux/feature/pokemon_list/widgets/theme_choice_dialog.dart';
 import 'package:pokedex_flutter_async_redux/model/dto/pokemon_dto.dart';
 import 'package:pokedex_flutter_async_redux/model/union_page_state.dart';
 import 'package:pokedex_flutter_async_redux/utils/const.dart';
 import 'package:pokedex_flutter_async_redux/utils/extension.dart';
 import 'package:pokedex_flutter_async_redux/utils/strings.dart';
 import 'package:pokedex_flutter_async_redux/utils/typedef.dart';
+import 'package:pokedex_flutter_async_redux/widgets/loading_indicator.dart';
 
 class PokemonListPage extends StatefulWidget {
   const PokemonListPage({
@@ -65,21 +69,9 @@ class _PokemonListPageState extends State<PokemonListPage> {
 
   void _showThemeChoiceDialog() => showDialog<void>(
         context: context,
-        builder: (context) => AlertDialog(
-          title: const Text(chooseThemeMenuLabel),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: ThemeMode.values.map(
-              (themeMode) {
-                return RadioListTile(
-                  title: Text(themeMode.name.capitalize()),
-                  value: themeMode,
-                  groupValue: widget.savedThemeMode,
-                  onChanged: _onSelectTheme,
-                );
-              },
-            ).toList(),
-          ),
+        builder: (_) => ThemeChoiceDialog(
+          savedThemeMode: widget.savedThemeMode,
+          onSelectTheme: _onSelectTheme,
         ),
       );
 
@@ -127,50 +119,40 @@ class _PokemonListPageState extends State<PokemonListPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: ValueListenableBuilder<bool>(
-          valueListenable: _isSearchingNotifier,
-          builder: (_, isSearching, __) => isSearching
-              ? TextField(
-                  autofocus: true,
-                  controller: _textEditingController,
-                  decoration: const InputDecoration(
-                    prefixIcon: Icon(Icons.search),
-                    prefixIconConstraints: BoxConstraints(maxHeight: 20),
-                    hintText: searchFieldHintText,
-                  ),
-                )
-              : Text(
-                  appTitle,
-                  style: context.textTheme.displayMedium,
-                ),
-        ),
-        actions: [
-          IconButton(
-            onPressed: _onPressSearch,
-            icon: ValueListenableBuilder<bool>(
-              valueListenable: _isSearchingNotifier,
-              builder: (_, isSearching, __) => Icon(isSearching ? Icons.close : Icons.search),
-            ),
-          ),
-          IconButton(
-            onPressed: _onRefresh,
-            icon: const Icon(Icons.refresh),
-          ),
-          PopupMenuButton(
-            onSelected: _onSelectOption,
-            itemBuilder: (_) => [chooseThemeMenuLabel].map(
-              (choice) {
-                return PopupMenuItem(
-                  value: choice,
-                  child: Text(choice),
-                );
-              },
-            ).toList(),
-          ),
-        ],
+    return ListScaffold(
+      appBarLeading: ValueListenableBuilder<bool>(
+        valueListenable: _isSearchingNotifier,
+        builder: (_, isSearching, __) => isSearching
+            ? SearchField(textEditingController: _textEditingController)
+            : Text(
+                appTitle,
+                style: context.textTheme.displayMedium,
+              ),
       ),
+      appBarActions: [
+        IconButton(
+          onPressed: _onPressSearch,
+          icon: ValueListenableBuilder<bool>(
+            valueListenable: _isSearchingNotifier,
+            builder: (_, isSearching, __) => Icon(isSearching ? Icons.close : Icons.search),
+          ),
+        ),
+        IconButton(
+          onPressed: _onRefresh,
+          icon: const Icon(Icons.refresh),
+        ),
+        PopupMenuButton(
+          onSelected: _onSelectOption,
+          itemBuilder: (_) => [chooseThemeMenuLabel].map(
+            (choice) {
+              return PopupMenuItem(
+                value: choice,
+                child: Text(choice),
+              );
+            },
+          ).toList(),
+        ),
+      ],
       body: RefreshIndicator(
         onRefresh: _onRefresh,
         child: Padding(
@@ -194,18 +176,16 @@ class _PokemonListPageState extends State<PokemonListPage> {
                 ),
                 if (widget.isGettingMorePokemon)
                   const SliverToBoxAdapter(
-                    child: Center(
-                      child: Padding(
-                        padding: progressIndicatorFooterPadding,
-                        child: CircularProgressIndicator(),
-                      ),
+                    child: Padding(
+                      padding: progressIndicatorFooterPadding,
+                      child: LoadingIndicator(),
                     ),
                   )
                 else
                   const SliverToBoxAdapter(child: SizedBox(height: pokemonListPageFooterHeight))
               ],
             ),
-            loading: () => const Center(child: CircularProgressIndicator()),
+            loading: () => const LoadingIndicator(),
             error: (message) => AlertDialog(title: Text(message ?? '')),
           ),
         ),

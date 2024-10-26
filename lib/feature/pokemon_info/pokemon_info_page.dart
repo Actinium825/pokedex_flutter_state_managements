@@ -8,9 +8,10 @@ import 'package:pokedex_flutter_async_redux/model/dto/pokemon_evolution_chain_dt
 import 'package:pokedex_flutter_async_redux/model/dto/pokemon_species_dto.dart';
 import 'package:pokedex_flutter_async_redux/utils/const.dart';
 import 'package:pokedex_flutter_async_redux/utils/extension.dart';
-import 'package:pokedex_flutter_async_redux/utils/pokemon_color_picker.dart';
+import 'package:pokedex_flutter_async_redux/classes/pokemon_color_picker.dart';
 import 'package:pokedex_flutter_async_redux/utils/strings.dart';
 import 'package:pokedex_flutter_async_redux/utils/typedef.dart';
+import 'package:pokedex_flutter_async_redux/widgets/loading_indicator.dart';
 import 'package:pokedex_flutter_async_redux/widgets/pokemon_image.dart';
 import 'package:pokedex_flutter_async_redux/widgets/pokemon_type_list.dart';
 
@@ -79,7 +80,7 @@ class PokemonInfoPage extends StatelessWidget {
               child: DefaultTabController(
                 length: tabLabels.length,
                 child: isLoading
-                    ? Center(child: CircularProgressIndicator(color: typeDecorationColor))
+                    ? LoadingIndicator(color: typeDecorationColor)
                     : Column(
                         children: [
                           TabBar(

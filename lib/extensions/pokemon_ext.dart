@@ -11,7 +11,7 @@ import 'package:pokedex_flutter_async_redux/model/dto/pokemon_info_dto.dart';
 import 'package:pokedex_flutter_async_redux/model/dto/pokemon_dto.dart';
 import 'package:pokedex_flutter_async_redux/model/dto/pokemon_sprites_dto.dart';
 import 'package:pokedex_flutter_async_redux/utils/const.dart';
-import 'package:pokedex_flutter_async_redux/utils/pokemon_color_picker.dart';
+import 'package:pokedex_flutter_async_redux/classes/pokemon_color_picker.dart';
 
 extension PokemonExt on Pokemon {
   PokemonDto toDto() => PokemonDto(

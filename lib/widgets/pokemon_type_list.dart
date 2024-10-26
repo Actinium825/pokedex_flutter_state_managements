@@ -4,7 +4,7 @@ import 'package:pokedex_flutter_async_redux/extensions/pokemon_ext.dart';
 import 'package:pokedex_flutter_async_redux/extensions/pokemon_type_ext.dart';
 import 'package:pokedex_flutter_async_redux/feature/pokemon_list/widgets/pokemon_type_name.dart';
 import 'package:pokedex_flutter_async_redux/model/dto/pokemon_dto.dart';
-import 'package:pokedex_flutter_async_redux/utils/pokemon_color_picker.dart';
+import 'package:pokedex_flutter_async_redux/classes/pokemon_color_picker.dart';
 
 class PokemonTypeList extends StatelessWidget {
   const PokemonTypeList({
