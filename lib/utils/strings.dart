@@ -1,5 +1,6 @@
 const themeSharedPrefsKey = 'theme';
 const baseUrl = 'https://pokeapi.co/api/v2';
+const downloadDirectory = '/storage/emulated/0/Download';
 
 // Pokemon List Page
 const appTitle = 'Pokedex';

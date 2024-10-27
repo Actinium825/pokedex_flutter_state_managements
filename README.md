@@ -6,10 +6,66 @@
 3. Run `flutter pub run build_runner build --delete-conflicting-outputs`
 4. Run `dart format -l 120 --set-exit-if-changed .`
 
+## Features
+- Show Pokemon from RESTful PokeAPI
+- Infinite scrolling for additional Pokemon
+- Search individual Pokemon
+- View individual Pokemon's details, evolution chain, and moves
+- Async Redux / Shared Preferences state management
+- Dark/Light theme mode
+- Landscape/Portrait responsiveness
+- iOS/Android widgets adaptiveness
+- Freezed
+- Go Router
+- Cached Network Image
+
+## Credits
+- PokeAPI - https://pokeapi.co/
+
 ## Todo
 - [x] Evolution Arrows
 - [x] UI Responsiveness
 - [x] Moves Tab
 - [x] iOS/Android Widgets
 - [x] Landscape
-- [ ] Screenshots
+- [x] Screenshots
+
+## Screenshots
+
+### List Page
+| Light                                 | Dark                                 |
+|---------------------------------------|--------------------------------------|
+| ![](/screenshots/list_page_light.png) | ![](/screenshots/list_page_dark.png) |
+
+### About
+| Light                             | Dark                             |
+|-----------------------------------|----------------------------------|
+| ![](/screenshots/about_light.png) | ![](/screenshots/about_dark.png) |
+
+### Evolution
+| Light                                 | Dark                                 |
+|---------------------------------------|--------------------------------------|
+| ![](/screenshots/evolution_light.png) | ![](/screenshots/evolution_dark.png) |
+
+### Moves
+| Light                             | Dark                             |
+|-----------------------------------|----------------------------------|
+| ![](/screenshots/moves_light.png) | ![](/screenshots/moves_dark.png) |
+
+### Search
+<img src="/screenshots/search.png" style="width:50%; height:auto" alt="Search">
+
+### Choose Theme
+<img src="/screenshots/choose_theme.png" style="width:50%; height:auto" alt="Choose Theme">
+
+### List Page (Landscape)
+<img src="/screenshots/list_page_landscape.png" style="width:50%; height:auto" alt="List Page Landscape">
+
+### About (Landscape)
+<img src="/screenshots/about_landscape.png" style="width:50%; height:auto" alt="About Landscape">
+
+### Evolution (Landscape)
+<img src="/screenshots/evolution_landscape.png" style="width:50%; height:auto" alt="Evolution Landscape">
+
+### Moves (Landscape)
+<img src="/screenshots/moves_landscape.png" style="width:50%; height:auto" alt="Moves Landscape">
