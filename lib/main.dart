@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:async_redux/async_redux.dart';
 import 'package:device_preview_screenshot/device_preview_screenshot.dart';
 import 'package:flutter/foundation.dart';
@@ -26,7 +28,13 @@ void main() async {
   runApp(
     StoreProvider<AppState>(
       store: store,
-      child: DevicePreview(builder: (_) => const PokedexAppConnector()),
+      child: DevicePreview(
+        tools: [
+          ...DevicePreview.defaultTools,
+          DevicePreviewScreenshot(onScreenshot: screenshotAsFiles(Directory(downloadDirectory))),
+        ],
+        builder: (_) => const PokedexAppConnector(),
+      ),
     ),
   );
 }
