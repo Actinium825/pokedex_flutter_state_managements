@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 class PokedexTheme {
   static const _unselectedWidgetColor = Colors.grey;
   static const _indicatorColor = Colors.transparent;
-  static const _textColorWhite = Colors.white;
-  static const _textColorDarkMode = Colors.black38;
+  static const textColorWhite = Colors.white;
+  static const textColorDarkMode = Colors.black38;
 
   static ThemeData themeRegular = ThemeData(
     brightness: Brightness.light,
@@ -15,7 +15,7 @@ class PokedexTheme {
     visualDensity: VisualDensity.adaptivePlatformDensity,
     textTheme: const TextTheme(
       displayLarge: TextStyle(
-        color: _textColorWhite,
+        color: textColorWhite,
         fontWeight: FontWeight.bold,
         fontSize: 32.0,
       ),
@@ -25,19 +25,19 @@ class PokedexTheme {
         fontSize: 24.0,
       ),
       displaySmall: TextStyle(
-        color: _textColorWhite,
+        color: textColorWhite,
         fontWeight: FontWeight.bold,
         fontSize: 16.0,
       ),
       headlineMedium: TextStyle(
-        color: _textColorWhite,
+        color: textColorWhite,
         fontWeight: FontWeight.bold,
         fontSize: 14.0,
       ),
       bodyLarge: TextStyle(color: Colors.black),
       bodyMedium: TextStyle(
         fontSize: 18.0,
-        color: _textColorWhite,
+        color: textColorWhite,
       ),
     ),
   );
@@ -51,29 +51,29 @@ class PokedexTheme {
     visualDensity: VisualDensity.adaptivePlatformDensity,
     textTheme: const TextTheme(
       displayLarge: TextStyle(
-        color: _textColorDarkMode,
+        color: textColorDarkMode,
         fontWeight: FontWeight.bold,
         fontSize: 32.0,
       ),
       displayMedium: TextStyle(
-        color: _textColorWhite,
+        color: textColorWhite,
         fontWeight: FontWeight.bold,
         fontSize: 24.0,
       ),
       displaySmall: TextStyle(
-        color: _textColorDarkMode,
+        color: textColorDarkMode,
         fontWeight: FontWeight.bold,
         fontSize: 16.0,
       ),
       headlineMedium: TextStyle(
-        color: _textColorDarkMode,
+        color: textColorDarkMode,
         fontWeight: FontWeight.bold,
         fontSize: 14.0,
       ),
-      bodyLarge: TextStyle(color: _textColorWhite),
+      bodyLarge: TextStyle(color: textColorWhite),
       bodyMedium: TextStyle(
         fontSize: 18.0,
-        color: _textColorDarkMode,
+        color: textColorDarkMode,
       ),
     ),
   );

@@ -29,3 +29,6 @@ const evolutionGridCrossAxisCount = 3;
 const evolutionTabMargin = EdgeInsets.only(top: 32.0);
 const evolutionGridCount = 9;
 const evolutionCardImageSize = 50.0;
+const movesTabPadding = EdgeInsets.only(top: 8.0, left: 4.0, right: 4.0);
+const movesSpacing = 3.0;
+const movesPadding = EdgeInsets.all(8.0);
