@@ -1,4 +1,5 @@
 import 'package:async_redux/async_redux.dart';
+import 'package:device_preview_screenshot/device_preview_screenshot.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:pokedex_flutter_async_redux/pokedex_app_connector.dart';
@@ -25,7 +26,7 @@ void main() async {
   runApp(
     StoreProvider<AppState>(
       store: store,
-      child: const PokedexAppConnector(),
+      child: DevicePreview(builder: (_) => const PokedexAppConnector()),
     ),
   );
 }

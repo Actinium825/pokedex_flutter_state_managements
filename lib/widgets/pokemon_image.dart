@@ -6,17 +6,20 @@ class PokemonImage extends StatelessWidget {
   const PokemonImage({
     required this.pokemon,
     required this.size,
+    this.alignment = Alignment.center,
     this.tag,
     super.key,
   });
 
   final PokemonDto pokemon;
   final double size;
+  final Alignment alignment;
   final Object? tag;
 
   @override
   Widget build(BuildContext context) {
-    return Center(
+    return Align(
+      alignment: alignment,
       child: Hero(
         tag: tag ?? pokemon.id,
         child: Container(
