@@ -39,8 +39,7 @@ class AboutTab extends StatelessWidget {
 
     return Padding(
       padding: aboutTabPadding,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: ListView(
         children: [
           Padding(
             padding: flavorTextPadding,

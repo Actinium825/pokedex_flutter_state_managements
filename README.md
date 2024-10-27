@@ -11,4 +11,5 @@
 - [ ] UI Responsiveness
 - [x] Moves Tab
 - [x] iOS/Android Widgets
+- [x] Landscape
 - [ ] Screenshots
