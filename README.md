@@ -8,7 +8,7 @@
 
 ## Todo
 - [ ] Evolution Arrows
-- [ ] UI Responsiveness
+- [x] UI Responsiveness
 - [x] Moves Tab
 - [x] iOS/Android Widgets
 - [x] Landscape

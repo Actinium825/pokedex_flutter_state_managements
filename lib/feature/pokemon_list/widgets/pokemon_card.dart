@@ -22,28 +22,30 @@ class PokemonCard extends StatelessWidget {
       onTap: onTap,
       child: Card(
         color: pokemon.primaryColor,
-        child: Stack(
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
-              padding: pokemonCardPadding,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: pokemonNamePadding,
-                    child: Text(
-                      pokemon.capitalizedNamed,
-                      style: context.textTheme.headlineMedium,
+            FittedBox(
+              child: Padding(
+                padding: pokemonCardPadding,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: pokemonNamePadding,
+                      child: Text(
+                        pokemon.capitalizedNamed,
+                        style: context.textTheme.headlineMedium,
+                      ),
                     ),
-                  ),
-                  PokemonTypeList(pokemon: pokemon),
-                ],
+                    PokemonTypeList(pokemon: pokemon),
+                  ],
+                ),
               ),
             ),
-            Positioned(
-              bottom: 0.0,
-              right: 0.0,
+            Expanded(
               child: PokemonImage(
+                alignment: Alignment.bottomRight,
                 pokemon: pokemon,
                 size: pokemonCardSize,
               ),

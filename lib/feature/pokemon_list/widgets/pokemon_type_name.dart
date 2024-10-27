@@ -22,8 +22,7 @@ class PokemonTypeName extends StatelessWidget {
       decoration: primaryColor == null
           ? null
           : BoxDecoration(
-              color: PokemonColorPicker.typeDecorationColor(primaryColor ?? Colors.transparent),
-              border: Border.all(color: Colors.transparent),
+              color: PokemonColorPicker.typeDecorationColor(primaryColor!),
               borderRadius: BorderRadius.circular(typeNameRadius),
             ),
       child: Text(
