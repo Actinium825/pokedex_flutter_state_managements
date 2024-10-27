@@ -9,6 +9,6 @@
 ## Todo
 - [ ] Evolution Arrows
 - [ ] UI Responsiveness
-- [ ] Moves Tab
+- [x] Moves Tab
 - [x] iOS/Android Widgets
 - [ ] Screenshots

@@ -4,6 +4,7 @@ import 'package:pokedex_flutter_async_redux/extensions/pokemon_species_ext.dart'
 import 'package:pokedex_flutter_async_redux/feature/pokemon_info/widgets/about_tab.dart';
 import 'package:pokedex_flutter_async_redux/feature/pokemon_info/widgets/evolution_tab.dart';
 import 'package:pokedex_flutter_async_redux/feature/pokemon_info/widgets/info_scaffold.dart';
+import 'package:pokedex_flutter_async_redux/feature/pokemon_info/widgets/moves_tab.dart';
 import 'package:pokedex_flutter_async_redux/model/dto/pokemon_dto.dart';
 import 'package:pokedex_flutter_async_redux/model/dto/pokemon_evolution_chain_dto.dart';
 import 'package:pokedex_flutter_async_redux/model/dto/pokemon_species_dto.dart';
@@ -100,7 +101,7 @@ class PokemonInfoPage extends StatelessWidget {
                                   pokemonEvolutionChain: pokemonEvolutionChain,
                                   pokemonEvolutionList: pokemonEvolutionList,
                                 ),
-                                const SizedBox(),
+                                MovesTab(selectedPokemon: selectedPokemon),
                               ],
                             ),
                           ),
