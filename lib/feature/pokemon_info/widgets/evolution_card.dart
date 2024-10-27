@@ -21,6 +21,12 @@ class EvolutionCard extends StatelessWidget {
   final bool isEevee;
   final int? index;
 
+  CrossAxisAlignment get _crossAxisAlignment => switch (index) {
+        1 || 2 => CrossAxisAlignment.end,
+        7 || 8 => CrossAxisAlignment.start,
+        _ => CrossAxisAlignment.center,
+      };
+
   @override
   Widget build(BuildContext context) {
     final style = context.textTheme.bodyLarge?.copyWith(
@@ -39,11 +45,7 @@ class EvolutionCard extends StatelessWidget {
       children: [
         if (isEevee) const EeveeArrows(pi: -pi),
         Row(
-          crossAxisAlignment: index == 1 || index == 2
-              ? CrossAxisAlignment.end
-              : index == 7 || index == 8
-                  ? CrossAxisAlignment.start
-                  : CrossAxisAlignment.center,
+          crossAxisAlignment: _crossAxisAlignment,
           children: [
             if (arrowAngle != null || isEevee)
               Transform.rotate(
