@@ -33,3 +33,4 @@ const evolutionCardImageSize = 50.0;
 const movesTabPadding = EdgeInsets.symmetric(vertical: 8.0, horizontal: 4.0);
 const movesSpacing = 3.0;
 const movesPadding = EdgeInsets.all(8.0);
+const eeveeArrowsDivisors = [1.25, 2, 4];
