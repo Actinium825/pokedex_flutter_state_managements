@@ -1,23 +1,24 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pokedex_flutter_async_redux/classes/adaptive_stateless_widget.dart';
+import 'package:pokedex_flutter_async_redux/utils/extension.dart';
 
 class InfoScaffold extends AdaptiveStatelessWidget {
   const InfoScaffold({
-    required this.child,
+    required this.children,
     required this.color,
     super.key,
   });
 
   final Color color;
-  final Widget child;
+  final List<Widget> children;
 
   @override
   Widget buildAndroid(BuildContext context) {
     return Scaffold(
       appBar: AppBar(backgroundColor: color),
       backgroundColor: color,
-      body: child,
+      body: context.isPortrait ? Column(children: children) : Row(children: children),
     );
   }
 
@@ -29,7 +30,7 @@ class InfoScaffold extends AdaptiveStatelessWidget {
         border: const Border(),
       ),
       backgroundColor: color,
-      child: child,
+      child: context.isPortrait ? Column(children: children) : Row(children: children),
     );
   }
 }

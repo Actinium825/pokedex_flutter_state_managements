@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:pokedex_flutter_async_redux/extensions/pokemon_evolution_chain_ext.dart';
 import 'package:pokedex_flutter_async_redux/feature/pokemon_info/widgets/evolution_card.dart';
 import 'package:pokedex_flutter_async_redux/model/dto/pokemon_evolution_chain_dto.dart';
@@ -82,12 +83,12 @@ class EvolutionTab extends StatelessWidget {
   Widget build(BuildContext context) {
     final children = List<Widget>.generate(evolutionGridCount, (_) => const SizedBox());
     _updateGrid(children);
-    return Padding(
+    return AlignedGridView.count(
+      itemCount: evolutionGridCount,
       padding: evolutionTabMargin,
-      child: GridView.count(
-        crossAxisCount: evolutionGridCrossAxisCount,
-        children: children,
-      ),
+      crossAxisCount: evolutionGridCrossAxisCount,
+      mainAxisSpacing: evolutionGridMainAxisSpacing,
+      itemBuilder: (_, index) => children[index],
     );
   }
 }
