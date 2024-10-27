@@ -7,7 +7,7 @@
 4. Run `dart format -l 120 --set-exit-if-changed .`
 
 ## Todo
-- [ ] Evolution Arrows
+- [x] Evolution Arrows
 - [x] UI Responsiveness
 - [x] Moves Tab
 - [x] iOS/Android Widgets

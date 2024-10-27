@@ -20,7 +20,13 @@ class EvolutionTab extends StatelessWidget {
     for (final gridIndex in gridIndices) {
       children
         ..removeAt(gridIndex)
-        ..insert(gridIndex, EvolutionCard(pokemon: pokemonEvolutionList[pokemonIndex++]));
+        ..insert(
+          gridIndex,
+          EvolutionCard(
+            pokemon: pokemonEvolutionList[pokemonIndex++],
+            index: gridIndex,
+          ),
+        );
     }
   }
 
@@ -30,52 +36,39 @@ class EvolutionTab extends StatelessWidget {
       pokemonEvolutionList.length,
       pokemonEvolutionList.sublist(1).map((pokemon) => EvolutionCard(pokemon: pokemon)),
     )
-    ..insert(4, EvolutionCard(pokemon: pokemonEvolutionList.first));
+    ..insert(
+      4,
+      EvolutionCard(
+        pokemon: pokemonEvolutionList.first,
+        isEevee: true,
+      ),
+    );
 
   void _updateGrid(List<Widget> children) {
     int index = 0;
 
-    // No Evolution
-    if (pokemonEvolutionList.length == 1) {
-      _replaceWidget(children, [4], index++);
-      // Only Stage 2 Evolution
-    } else if (pokemonEvolutionChain.stage3Evolutions.isEmpty) {
-      _replaceWidget(children, [3], index++);
+    if (pokemonEvolutionList.length == 1) return _replaceWidget(children, [4], index++);
 
-      // Number of Stage 2 Evolutions
-      switch (pokemonEvolutionChain.stage2Evolutions.length) {
-        case 1:
-          _replaceWidget(children, [5], index++);
-        case 2:
-          _replaceWidget(children, [2, 8], index++);
-        case 3:
-          _replaceWidget(children, [2, 5, 8], index++);
-        case 8:
-          _handleEeveeCase(children);
-      }
-      // Stage 3 Evolutions
-    } else {
-      _replaceWidget(children, [3], index++);
+    _replaceWidget(children, [3], index++);
 
-      // Number of Stage 2 Evolutions
-      switch (pokemonEvolutionChain.stage2Evolutions.length) {
-        case 1:
-          _replaceWidget(children, [4], index++);
-        case 2:
-          _replaceWidget(children, [1, 7], index++);
-        case 3:
-          _replaceWidget(children, [1, 4, 7], index++);
-      }
+    switch (pokemonEvolutionChain.stage2Evolutions.length) {
+      case 1:
+        _replaceWidget(children, [4], index++);
+      case 2:
+        _replaceWidget(children, [1, 7], index++);
+      case 3:
+        _replaceWidget(children, [1, 4, 7], index++);
+      case 8:
+        _handleEeveeCase(children);
+    }
 
-      // Number of Stage 3 Evolutions
-      switch (pokemonEvolutionChain.stage3Evolutions.length) {
-        case 1:
-          _replaceWidget(children, [5], index++);
-        case 2:
-          _replaceWidget(children, [2, 8], index++);
-        case 3:
-          _replaceWidget(children, [2, 5, 8], index++);
-      }
+    switch (pokemonEvolutionChain.stage3Evolutions.length) {
+      case 1:
+        _replaceWidget(children, [5], index++);
+      case 2:
+        _replaceWidget(children, [2, 8], index++);
+      case 3:
+        _replaceWidget(children, [2, 5, 8], index++);
     }
   }
 
