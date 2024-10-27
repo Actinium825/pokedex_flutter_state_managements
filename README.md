@@ -59,13 +59,23 @@
 <img src="/screenshots/choose_theme.png" style="width:50%; height:auto" alt="Choose Theme">
 
 ### List Page (Landscape)
-<img src="/screenshots/list_page_landscape.png" style="width:50%; height:auto" alt="List Page Landscape">
+<img src="/screenshots/list_page_landscape.png" style="height:50%; width:auto" alt="List Page Landscape">
 
 ### About (Landscape)
-<img src="/screenshots/about_landscape.png" style="width:50%; height:auto" alt="About Landscape">
+<img src="/screenshots/about_landscape.png" style="height:50%; width:auto" alt="About Landscape">
 
 ### Evolution (Landscape)
-<img src="/screenshots/evolution_landscape.png" style="width:50%; height:auto" alt="Evolution Landscape">
+<img src="/screenshots/evolution_landscape.png" style="height:50%; width:auto" alt="Evolution Landscape">
 
 ### Moves (Landscape)
-<img src="/screenshots/moves_landscape.png" style="width:50%; height:auto" alt="Moves Landscape">
+<img src="/screenshots/moves_landscape.png" style="height:50%; width:auto" alt="Moves Landscape">
+
+### Special Evolution Cases
+
+| No Evolution                  | Stage 2 Evolution             | Stage 3 Evolution                    |
+|-------------------------------|-------------------------------|--------------------------------------|
+| ![](/screenshots/groudon.png) | ![](/screenshots/rattata.png) | ![](/screenshots/evolution_dark.png) |
+
+| Gardevoir                       | Snorunt                       | Eevee                       |
+|---------------------------------|-------------------------------|-----------------------------|
+| ![](/screenshots/gardevoir.png) | ![](/screenshots/snorunt.png) | ![](/screenshots/eevee.png) |

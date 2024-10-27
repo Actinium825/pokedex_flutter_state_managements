@@ -17,6 +17,7 @@ class EvolutionTab extends StatelessWidget {
   final PokemonEvolutionChainDto pokemonEvolutionChain;
 
   void _replaceWidget(List<Widget> children, List<int> gridIndices, int pokemonIndex) {
+    final hasNoEvolution = pokemonEvolutionList.length == 1;
     for (final gridIndex in gridIndices) {
       children
         ..removeAt(gridIndex)
@@ -24,7 +25,7 @@ class EvolutionTab extends StatelessWidget {
           gridIndex,
           EvolutionCard(
             pokemon: pokemonEvolutionList[pokemonIndex++],
-            index: gridIndex,
+            index: hasNoEvolution ? null : gridIndex,
           ),
         );
     }
