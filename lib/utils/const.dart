@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-const morePokemonCount = 20;
-
 // Pokemon List Page
 const pokemonTypeNamePadding = EdgeInsets.symmetric(vertical: 4.0, horizontal: 12.0);
 const pokemonTypeNameMargin = EdgeInsets.only(bottom: 4.0, right: 8.0);
