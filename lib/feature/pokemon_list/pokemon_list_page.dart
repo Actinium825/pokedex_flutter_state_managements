@@ -185,7 +185,7 @@ class _PokemonListPageState extends State<PokemonListPage> {
                   const SliverToBoxAdapter(child: SizedBox(height: pokemonListPageFooterHeight))
               ],
             ),
-            loading: () => const LoadingIndicator(),
+            loading: LoadingIndicator.new,
             error: (message) => AlertDialog(title: Text(message ?? '')),
           ),
         ),
