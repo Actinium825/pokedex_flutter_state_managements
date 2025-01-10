@@ -50,7 +50,7 @@ class GetPokemonListAction extends ReduxAction<AppState> {
   @override
   Future<AppState> reduce() async {
     final receivedPokemonList = await ApiService.pokemonApi.getPokemonList(simplePokemonList: simplePokemonList);
-    final updatedPokemonList = [...state.pokemonList, ...receivedPokemonList];
+    final updatedPokemonList = state.pokemonList.followedBy(receivedPokemonList).toList();
 
     return state.copyWith(pokemonList: updatedPokemonList);
   }

@@ -29,10 +29,9 @@ void main() async {
     StoreProvider<AppState>(
       store: store,
       child: DevicePreview(
-        tools: [
-          ...DevicePreview.defaultTools,
+        tools: DevicePreview.defaultTools.followedBy([
           DevicePreviewScreenshot(onScreenshot: screenshotAsFiles(Directory(downloadDirectory))),
-        ],
+        ]).toList(),
         builder: (_) => const PokedexAppConnector(),
       ),
     ),
