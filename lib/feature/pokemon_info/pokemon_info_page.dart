@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pokedex_flutter_async_redux/classes/pokemon_color_picker.dart';
 import 'package:pokedex_flutter_async_redux/extensions/pokemon_ext.dart';
 import 'package:pokedex_flutter_async_redux/extensions/pokemon_species_ext.dart';
 import 'package:pokedex_flutter_async_redux/feature/pokemon_info/widgets/about_tab.dart';
@@ -10,7 +11,6 @@ import 'package:pokedex_flutter_async_redux/model/dto/pokemon_evolution_chain_dt
 import 'package:pokedex_flutter_async_redux/model/dto/pokemon_species_dto.dart';
 import 'package:pokedex_flutter_async_redux/utils/const.dart';
 import 'package:pokedex_flutter_async_redux/utils/extension.dart';
-import 'package:pokedex_flutter_async_redux/classes/pokemon_color_picker.dart';
 import 'package:pokedex_flutter_async_redux/utils/strings.dart';
 import 'package:pokedex_flutter_async_redux/utils/typedef.dart';
 import 'package:pokedex_flutter_async_redux/widgets/loading_indicator.dart';
@@ -80,35 +80,38 @@ class PokemonInfoPage extends StatelessWidget {
               color: themeData.primaryColor,
               borderRadius: infoPageModalRadius,
             ),
-            child: DefaultTabController(
-              length: tabLabels.length,
-              child: isLoading
-                  ? LoadingIndicator(color: typeDecorationColor)
-                  : Column(
-                      children: [
-                        TabBar(
-                          labelColor: typeDecorationColor,
-                          indicatorColor: typeDecorationColor,
-                          unselectedLabelColor: themeData.unselectedWidgetColor,
-                          tabs: tabLabels.map((tabLabel) => Tab(text: tabLabel)).toList(),
-                        ),
-                        Expanded(
-                          child: TabBarView(
-                            children: [
-                              AboutTab(
-                                selectedPokemon: selectedPokemon,
-                                flavorTextEnglish: pokemonSpecies.flavorTextEnglish,
-                              ),
-                              EvolutionTab(
-                                pokemonEvolutionChain: pokemonEvolutionChain,
-                                pokemonEvolutionList: pokemonEvolutionList,
-                              ),
-                              MovesTab(selectedPokemon: selectedPokemon),
-                            ],
+            child: Material(
+              color: Colors.transparent,
+              child: DefaultTabController(
+                length: tabLabels.length,
+                child: isLoading
+                    ? LoadingIndicator(color: typeDecorationColor)
+                    : Column(
+                        children: [
+                          TabBar(
+                            labelColor: typeDecorationColor,
+                            indicatorColor: typeDecorationColor,
+                            unselectedLabelColor: themeData.unselectedWidgetColor,
+                            tabs: tabLabels.map((tabLabel) => Tab(text: tabLabel)).toList(),
                           ),
-                        ),
-                      ],
-                    ),
+                          Expanded(
+                            child: TabBarView(
+                              children: [
+                                AboutTab(
+                                  selectedPokemon: selectedPokemon,
+                                  flavorTextEnglish: pokemonSpecies.flavorTextEnglish,
+                                ),
+                                EvolutionTab(
+                                  pokemonEvolutionChain: pokemonEvolutionChain,
+                                  pokemonEvolutionList: pokemonEvolutionList,
+                                ),
+                                MovesTab(selectedPokemon: selectedPokemon),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+              ),
             ),
           ),
         ),
