@@ -29,6 +29,7 @@ void main() async {
     StoreProvider<AppState>(
       store: store,
       child: DevicePreview(
+        enabled: false,
         tools: DevicePreview.defaultTools.followedBy([
           DevicePreviewScreenshot(onScreenshot: screenshotAsFiles(Directory(downloadDirectory))),
         ]).toList(),
