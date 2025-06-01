@@ -6,7 +6,7 @@ part 'pokemon_move.freezed.dart';
 part 'pokemon_move.g.dart';
 
 @freezed
-class PokemonMove with _$PokemonMove {
+abstract class PokemonMove with _$PokemonMove {
   const factory PokemonMove({
     @JsonKey(name: 'move') PokemonInfo? moveInfo,
   }) = _PokemonMove;

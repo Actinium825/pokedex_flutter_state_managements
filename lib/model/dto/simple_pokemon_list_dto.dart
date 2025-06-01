@@ -4,7 +4,7 @@ import 'package:pokedex_flutter_async_redux/model/dto/simple_pokemon_dto.dart';
 part 'simple_pokemon_list_dto.freezed.dart';
 
 @freezed
-class SimplePokemonListDto with _$SimplePokemonListDto {
+abstract class SimplePokemonListDto with _$SimplePokemonListDto {
   const factory SimplePokemonListDto({
     @Default('') String next,
     @Default(<SimplePokemonDto>[]) List<SimplePokemonDto> simplePokemonList,

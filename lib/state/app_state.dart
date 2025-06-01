@@ -10,7 +10,7 @@ import 'package:pokedex_flutter_async_redux/utils/typedef.dart';
 part 'app_state.freezed.dart';
 
 @freezed
-class AppState with _$AppState {
+abstract class AppState with _$AppState {
   const factory AppState({
     @Default(ThemeMode.system) ThemeMode savedThemeMode,
     @Default(Wait.empty) Wait wait,

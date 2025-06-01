@@ -9,7 +9,7 @@ import 'package:pokedex_flutter_async_redux/model/dto/pokemon_type_dto.dart';
 part 'pokemon_dto.freezed.dart';
 
 @freezed
-class PokemonDto with _$PokemonDto {
+abstract class PokemonDto with _$PokemonDto {
   const factory PokemonDto({
     @Default(0) int id,
     @Default('') String name,
