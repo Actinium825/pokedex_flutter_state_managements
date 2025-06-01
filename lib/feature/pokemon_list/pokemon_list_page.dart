@@ -157,37 +157,37 @@ class _PokemonListPageState extends State<PokemonListPage> {
         onRefresh: _onRefresh,
         child: Padding(
           padding: pokemonListPagePadding,
-          child: (_textEditingController.text.isNotEmpty ? widget.unionSearchPageState : widget.unionPageState).when(
-            (pokemonList) => CustomScrollView(
-              controller: _scrollController,
-              slivers: [
-                SliverGrid(
-                  gridDelegate: pokemonGridDelegate,
-                  delegate: SliverChildBuilderDelegate(
-                    (_, index) {
-                      final pokemon = pokemonList[index];
-                      return PokemonCard(
-                        pokemon: pokemon,
-                        onTap: () => _onTapPokemonCard(pokemon),
-                      );
-                    },
-                    childCount: pokemonList.length,
-                  ),
-                ),
-                if (widget.isGettingMorePokemon)
-                  const SliverToBoxAdapter(
-                    child: Padding(
-                      padding: progressIndicatorFooterPadding,
-                      child: LoadingIndicator(),
+          child: switch (_textEditingController.text.isNotEmpty ? widget.unionSearchPageState : widget.unionPageState) {
+            Data<PokemonList>(:final value) => CustomScrollView(
+                controller: _scrollController,
+                slivers: [
+                  SliverGrid(
+                    gridDelegate: pokemonGridDelegate,
+                    delegate: SliverChildBuilderDelegate(
+                      (_, index) {
+                        final pokemon = value[index];
+                        return PokemonCard(
+                          pokemon: pokemon,
+                          onTap: () => _onTapPokemonCard(pokemon),
+                        );
+                      },
+                      childCount: value.length,
                     ),
-                  )
-                else
-                  const SliverToBoxAdapter(child: SizedBox(height: pokemonListPageFooterHeight))
-              ],
-            ),
-            loading: LoadingIndicator.new,
-            error: (message) => AlertDialog(title: Text(message ?? '')),
-          ),
+                  ),
+                  if (widget.isGettingMorePokemon)
+                    const SliverToBoxAdapter(
+                      child: Padding(
+                        padding: progressIndicatorFooterPadding,
+                        child: LoadingIndicator(),
+                      ),
+                    )
+                  else
+                    const SliverToBoxAdapter(child: SizedBox(height: pokemonListPageFooterHeight))
+                ],
+              ),
+            Loading<PokemonList>() => const LoadingIndicator(),
+            Error<PokemonList>(:final message) => AlertDialog(title: Text(message ?? '')),
+          },
         ),
       ),
     );

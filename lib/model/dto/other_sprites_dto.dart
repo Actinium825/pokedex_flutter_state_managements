@@ -4,7 +4,7 @@ import 'package:pokedex_flutter_async_redux/model/dto/official_artwork_dto.dart'
 part 'other_sprites_dto.freezed.dart';
 
 @freezed
-class OtherSpritesDto with _$OtherSpritesDto {
+abstract class OtherSpritesDto with _$OtherSpritesDto {
   const factory OtherSpritesDto({
     @Default(OfficialArtworkDto()) OfficialArtworkDto officialArtwork,
   }) = _OtherSpritesDto;

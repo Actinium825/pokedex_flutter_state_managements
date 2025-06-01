@@ -5,7 +5,7 @@ import 'package:pokedex_flutter_async_redux/utils/typedef.dart';
 part 'evolves_to_dto.freezed.dart';
 
 @freezed
-class EvolvesToDto with _$EvolvesToDto {
+abstract class EvolvesToDto with _$EvolvesToDto {
   const factory EvolvesToDto({
     @Default(PokemonInfoDto()) PokemonInfoDto speciesInfo,
     @Default(<EvolvesToDto>[]) EvolvesToList evolutions,
