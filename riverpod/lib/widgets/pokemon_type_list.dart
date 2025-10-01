@@ -1,9 +1,9 @@
 import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
+import 'package:pokedex_flutter_riverpod/apis/model/pokemon.dart';
 import 'package:pokedex_flutter_riverpod/classes/pokemon_color_picker.dart';
 import 'package:pokedex_flutter_riverpod/extensions/pokemon_ext.dart';
 import 'package:pokedex_flutter_riverpod/extensions/pokemon_type_ext.dart';
-import 'package:pokedex_flutter_riverpod/model/dto/pokemon_dto.dart';
 import 'package:pokedex_flutter_riverpod/widgets/pokemon_type_name.dart';
 
 class PokemonTypeList extends StatelessWidget {
@@ -13,7 +13,7 @@ class PokemonTypeList extends StatelessWidget {
     super.key,
   });
 
-  final PokemonDto pokemon;
+  final Pokemon pokemon;
   final bool isDecorationShown;
 
   @override

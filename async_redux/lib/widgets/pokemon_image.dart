@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:pokedex_flutter_async_redux/model/dto/pokemon_dto.dart';
+import 'package:pokedex_flutter_async_redux/apis/model/pokemon.dart';
 
 class PokemonImage extends StatelessWidget {
   const PokemonImage({
@@ -11,7 +11,7 @@ class PokemonImage extends StatelessWidget {
     super.key,
   });
 
-  final PokemonDto pokemon;
+  final Pokemon pokemon;
   final double size;
   final Alignment alignment;
   final Object? tag;

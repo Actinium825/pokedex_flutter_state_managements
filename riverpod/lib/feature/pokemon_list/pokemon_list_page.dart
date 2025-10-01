@@ -4,12 +4,12 @@ import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:pokedex_flutter_riverpod/apis/model/pokemon.dart';
 import 'package:pokedex_flutter_riverpod/feature/pokemon_info/pokemon_info_page.dart';
 import 'package:pokedex_flutter_riverpod/feature/pokemon_list/widgets/infinite_list.dart';
 import 'package:pokedex_flutter_riverpod/feature/pokemon_list/widgets/list_scaffold.dart';
 import 'package:pokedex_flutter_riverpod/feature/pokemon_list/widgets/search_field.dart';
 import 'package:pokedex_flutter_riverpod/feature/pokemon_list/widgets/theme_choice_dialog.dart';
-import 'package:pokedex_flutter_riverpod/model/dto/pokemon_dto.dart';
 import 'package:pokedex_flutter_riverpod/providers/pokemon_list_provider.dart';
 import 'package:pokedex_flutter_riverpod/providers/search_text_provider.dart';
 import 'package:pokedex_flutter_riverpod/providers/selected_pokemon_provider.dart';
@@ -68,7 +68,7 @@ class _PokemonListPageState extends ConsumerState<PokemonListPage> {
 
   void _onReachEnd() {
     final position = _scrollController.position;
-    if (position.pixels == position.maxScrollExtent) ref.read(pokemonListProvider.notifier).getMorePokemon();
+    if (position.pixels == position.maxScrollExtent) ref.read(pokemonListRefProvider.notifier).getMorePokemon();
   }
 
   void _onPressSearch() {
@@ -87,14 +87,14 @@ class _PokemonListPageState extends ConsumerState<PokemonListPage> {
   Future<void> _onRefresh() async {
     _onClearText();
     if (_isSearchingNotifier.value) _isSearchingNotifier.value = false;
-    ref.read(pokemonListProvider.notifier).initPokemonListPage();
+    ref.read(pokemonListRefProvider.notifier).initPokemonListPage();
   }
 
   void _onClearText() {
     if (_textEditingController.text.isNotEmpty) _textEditingController.clear();
   }
 
-  void _onTapPokemonCard(PokemonDto selectedPokemon) {
+  void _onTapPokemonCard(Pokemon selectedPokemon) {
     ref.watch(selectedPokemonProvider.notifier).state = selectedPokemon;
     context.pushNamed(PokemonInfoPage.route);
   }

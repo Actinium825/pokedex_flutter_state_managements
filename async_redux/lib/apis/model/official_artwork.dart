@@ -7,7 +7,7 @@ part 'official_artwork.g.dart';
 @freezed
 abstract class OfficialArtwork with _$OfficialArtwork {
   const factory OfficialArtwork({
-    @JsonKey(name: 'front_default') String? imageUrl,
+    @Default('') @JsonKey(name: 'front_default') String imageUrl,
   }) = _OfficialArtwork;
 
   factory OfficialArtwork.fromJson(Json json) => _$OfficialArtworkFromJson(json);

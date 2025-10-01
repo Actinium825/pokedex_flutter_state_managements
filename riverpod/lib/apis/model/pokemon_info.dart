@@ -5,10 +5,10 @@ part 'pokemon_info.freezed.dart';
 part 'pokemon_info.g.dart';
 
 @freezed
-sealed class PokemonInfo with _$PokemonInfo {
+abstract class PokemonInfo with _$PokemonInfo {
   const factory PokemonInfo({
-    @JsonKey(name: 'name') String? name,
-    @JsonKey(name: 'url') String? detailsUrl,
+    @Default('') @JsonKey(name: 'name') String name,
+    @Default('') @JsonKey(name: 'url') String detailsUrl,
   }) = _PokemonInfo;
 
   factory PokemonInfo.fromJson(Json json) => _$PokemonInfoFromJson(json);

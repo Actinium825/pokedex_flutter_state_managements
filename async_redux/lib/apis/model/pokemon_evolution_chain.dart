@@ -8,7 +8,7 @@ part 'pokemon_evolution_chain.g.dart';
 @freezed
 abstract class PokemonEvolutionChain with _$PokemonEvolutionChain {
   const factory PokemonEvolutionChain({
-    @JsonKey(name: 'chain') EvolvesTo? chain,
+    @Default(EvolvesTo()) @JsonKey(name: 'chain') EvolvesTo chain,
   }) = _PokemonEvolutionChain;
 
   factory PokemonEvolutionChain.fromJson(Json json) => _$PokemonEvolutionChainFromJson(json);

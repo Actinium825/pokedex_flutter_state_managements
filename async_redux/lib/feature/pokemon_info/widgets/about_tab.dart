@@ -1,10 +1,10 @@
 import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
+import 'package:pokedex_flutter_async_redux/apis/model/pokemon.dart';
 import 'package:pokedex_flutter_async_redux/classes/pokemon_color_picker.dart';
 import 'package:pokedex_flutter_async_redux/extensions/pokemon_ability_ext.dart';
 import 'package:pokedex_flutter_async_redux/extensions/pokemon_ext.dart';
 import 'package:pokedex_flutter_async_redux/feature/pokemon_info/widgets/table_label.dart';
-import 'package:pokedex_flutter_async_redux/model/dto/pokemon_dto.dart';
 import 'package:pokedex_flutter_async_redux/utils/const.dart';
 import 'package:pokedex_flutter_async_redux/utils/extension.dart';
 import 'package:pokedex_flutter_async_redux/utils/strings.dart';
@@ -17,7 +17,7 @@ class AboutTab extends StatelessWidget {
     super.key,
   });
 
-  final PokemonDto selectedPokemon;
+  final Pokemon selectedPokemon;
   final String flavorTextEnglish;
 
   List<MapEntry<Color, String>> get _table {

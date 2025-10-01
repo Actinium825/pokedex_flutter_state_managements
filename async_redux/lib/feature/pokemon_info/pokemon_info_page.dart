@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:pokedex_flutter_async_redux/apis/model/pokemon.dart';
+import 'package:pokedex_flutter_async_redux/apis/model/pokemon_evolution_chain.dart';
+import 'package:pokedex_flutter_async_redux/apis/model/pokemon_species.dart';
 import 'package:pokedex_flutter_async_redux/classes/pokemon_color_picker.dart';
 import 'package:pokedex_flutter_async_redux/extensions/pokemon_ext.dart';
 import 'package:pokedex_flutter_async_redux/extensions/pokemon_species_ext.dart';
@@ -6,9 +9,6 @@ import 'package:pokedex_flutter_async_redux/feature/pokemon_info/widgets/about_t
 import 'package:pokedex_flutter_async_redux/feature/pokemon_info/widgets/evolution_tab.dart';
 import 'package:pokedex_flutter_async_redux/feature/pokemon_info/widgets/info_scaffold.dart';
 import 'package:pokedex_flutter_async_redux/feature/pokemon_info/widgets/moves_tab.dart';
-import 'package:pokedex_flutter_async_redux/model/dto/pokemon_dto.dart';
-import 'package:pokedex_flutter_async_redux/model/dto/pokemon_evolution_chain_dto.dart';
-import 'package:pokedex_flutter_async_redux/model/dto/pokemon_species_dto.dart';
 import 'package:pokedex_flutter_async_redux/utils/const.dart';
 import 'package:pokedex_flutter_async_redux/utils/extension.dart';
 import 'package:pokedex_flutter_async_redux/utils/strings.dart';
@@ -27,10 +27,10 @@ class PokemonInfoPage extends StatelessWidget {
     super.key,
   });
 
-  final PokemonDto selectedPokemon;
+  final Pokemon selectedPokemon;
   final PokemonList pokemonEvolutionList;
-  final PokemonSpeciesDto pokemonSpecies;
-  final PokemonEvolutionChainDto pokemonEvolutionChain;
+  final PokemonSpecies pokemonSpecies;
+  final PokemonEvolutionChain pokemonEvolutionChain;
   final bool isLoading;
 
   @override

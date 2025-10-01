@@ -1,10 +1,10 @@
 import 'package:async_redux/async_redux.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:pokedex_flutter_async_redux/model/dto/pokemon_dto.dart';
-import 'package:pokedex_flutter_async_redux/model/dto/pokemon_evolution_chain_dto.dart';
-import 'package:pokedex_flutter_async_redux/model/dto/pokemon_species_dto.dart';
-import 'package:pokedex_flutter_async_redux/model/dto/simple_pokemon_list_dto.dart';
+import 'package:pokedex_flutter_async_redux/apis/model/pokemon.dart';
+import 'package:pokedex_flutter_async_redux/apis/model/pokemon_evolution_chain.dart';
+import 'package:pokedex_flutter_async_redux/apis/model/pokemon_species.dart';
+import 'package:pokedex_flutter_async_redux/apis/model/simple_pokemon_list.dart';
 import 'package:pokedex_flutter_async_redux/utils/typedef.dart';
 
 part 'app_state.freezed.dart';
@@ -14,12 +14,12 @@ abstract class AppState with _$AppState {
   const factory AppState({
     @Default(ThemeMode.system) ThemeMode savedThemeMode,
     @Default(Wait.empty) Wait wait,
-    @Default(SimplePokemonListDto()) SimplePokemonListDto simplePokemonList,
-    @Default(<PokemonDto>[]) PokemonList pokemonList,
-    @Default(<PokemonDto>[]) PokemonList searchResultList,
-    @Default(null) PokemonDto? selectedPokemon,
-    @Default(null) PokemonSpeciesDto? pokemonSpecies,
-    @Default(null) PokemonEvolutionChainDto? pokemonEvolutionChain,
-    @Default(<PokemonDto>[]) PokemonList pokemonEvolutionList,
+    @Default(SimplePokemonList()) SimplePokemonList simplePokemonList,
+    @Default(<Pokemon>[]) PokemonList pokemonList,
+    @Default(<Pokemon>[]) PokemonList searchResultList,
+    @Default(null) Pokemon? selectedPokemon,
+    @Default(null) PokemonSpecies? pokemonSpecies,
+    @Default(null) PokemonEvolutionChain? pokemonEvolutionChain,
+    @Default(<Pokemon>[]) PokemonList pokemonEvolutionList,
   }) = _AppState;
 }

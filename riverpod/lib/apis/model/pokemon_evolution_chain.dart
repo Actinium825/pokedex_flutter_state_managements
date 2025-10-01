@@ -6,9 +6,9 @@ part 'pokemon_evolution_chain.freezed.dart';
 part 'pokemon_evolution_chain.g.dart';
 
 @freezed
-sealed class PokemonEvolutionChain with _$PokemonEvolutionChain {
+abstract class PokemonEvolutionChain with _$PokemonEvolutionChain {
   const factory PokemonEvolutionChain({
-    @JsonKey(name: 'chain') EvolvesTo? chain,
+    @Default(EvolvesTo()) @JsonKey(name: 'chain') EvolvesTo chain,
   }) = _PokemonEvolutionChain;
 
   factory PokemonEvolutionChain.fromJson(Json json) => _$PokemonEvolutionChainFromJson(json);

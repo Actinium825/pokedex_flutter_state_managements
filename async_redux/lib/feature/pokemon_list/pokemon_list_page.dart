@@ -4,12 +4,12 @@ import 'package:dartx/dartx.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:pokedex_flutter_async_redux/apis/model/pokemon.dart';
 import 'package:pokedex_flutter_async_redux/feature/pokemon_info/pokemon_info_connector.dart';
 import 'package:pokedex_flutter_async_redux/feature/pokemon_list/widgets/list_scaffold.dart';
 import 'package:pokedex_flutter_async_redux/feature/pokemon_list/widgets/pokemon_card.dart';
 import 'package:pokedex_flutter_async_redux/feature/pokemon_list/widgets/search_field.dart';
 import 'package:pokedex_flutter_async_redux/feature/pokemon_list/widgets/theme_choice_dialog.dart';
-import 'package:pokedex_flutter_async_redux/model/dto/pokemon_dto.dart';
 import 'package:pokedex_flutter_async_redux/model/union_page_state.dart';
 import 'package:pokedex_flutter_async_redux/utils/const.dart';
 import 'package:pokedex_flutter_async_redux/utils/extension.dart';
@@ -34,7 +34,7 @@ class PokemonListPage extends StatefulWidget {
   final ThemeMode savedThemeMode;
   final ValueChanged<ThemeMode> onSetTheme;
   final ValueChanged<String> onSearchPokemon;
-  final ValueChanged<PokemonDto> onSelectPokemon;
+  final ValueChanged<Pokemon> onSelectPokemon;
   final UnionPageState<PokemonList> unionPageState;
   final UnionPageState<PokemonList> unionSearchPageState;
   final VoidCallback onGetMorePokemon;
@@ -112,7 +112,7 @@ class _PokemonListPageState extends State<PokemonListPage> {
     if (_textEditingController.text.isNotEmpty) _textEditingController.clear();
   }
 
-  void _onTapPokemonCard(PokemonDto selectedPokemon) {
+  void _onTapPokemonCard(Pokemon selectedPokemon) {
     widget.onSelectPokemon(selectedPokemon);
     context.pushNamed(PokemonInfoConnector.route);
   }

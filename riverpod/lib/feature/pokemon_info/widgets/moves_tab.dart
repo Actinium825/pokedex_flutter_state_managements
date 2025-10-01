@@ -1,7 +1,7 @@
 import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
+import 'package:pokedex_flutter_riverpod/apis/model/pokemon.dart';
 import 'package:pokedex_flutter_riverpod/extensions/pokemon_ext.dart';
-import 'package:pokedex_flutter_riverpod/model/dto/pokemon_dto.dart';
 import 'package:pokedex_flutter_riverpod/utils/const.dart';
 import 'package:pokedex_flutter_riverpod/utils/extension.dart';
 import 'package:pokedex_flutter_riverpod/utils/themes.dart';
@@ -12,7 +12,7 @@ class MovesTab extends StatelessWidget {
     super.key,
   });
 
-  final PokemonDto selectedPokemon;
+  final Pokemon selectedPokemon;
 
   @override
   Widget build(BuildContext context) {

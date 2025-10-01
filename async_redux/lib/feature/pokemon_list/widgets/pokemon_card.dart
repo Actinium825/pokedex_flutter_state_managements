@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:pokedex_flutter_async_redux/apis/model/pokemon.dart';
 import 'package:pokedex_flutter_async_redux/extensions/pokemon_ext.dart';
-import 'package:pokedex_flutter_async_redux/model/dto/pokemon_dto.dart';
 import 'package:pokedex_flutter_async_redux/utils/const.dart';
 import 'package:pokedex_flutter_async_redux/utils/extension.dart';
 import 'package:pokedex_flutter_async_redux/widgets/pokemon_image.dart';
@@ -13,7 +13,7 @@ class PokemonCard extends StatelessWidget {
     super.key,
   });
 
-  final PokemonDto pokemon;
+  final Pokemon pokemon;
   final VoidCallback onTap;
 
   @override
