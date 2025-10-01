@@ -50,16 +50,16 @@ jobs:
       matrix:
         include:
           - folder_name: 'Bloc'
-            condition: ${{ needs.filter_changes.outputs.bloc == 'true' }}
+            run_check: ${{ needs.filter_changes.outputs.bloc }}
             working_dir: 'bloc'
           - folder_name: 'Async Redux'
-            condition: ${{ needs.filter_changes.outputs.async_redux == 'true' }}
+            run_check: ${{ needs.filter_changes.outputs.async_redux }}
             working_dir: 'async redux'
           - folder_name: 'Riverpod'
-            condition: ${{ needs.filter_changes.outputs.riverpod == 'true' }}
+            run_check: ${{ needs.filter_changes.outputs.riverpod }}
             working_dir: 'riverpod'
 
-    if: ${{ matrix.condition }}
+    if: ${{ matrix.run_check == 'true' }}
 
     defaults:
       run:
