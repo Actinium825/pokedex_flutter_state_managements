@@ -1,0 +1,88 @@
+name: Review
+
+on:
+  pull_request:
+    branches:
+      - master
+    paths:
+      - 'bloc/**'
+      - 'async redux/**'
+      - 'riverpod/**'
+
+  workflow_dispatch:
+
+concurrency:
+  group: review-${{ github.base_ref }}-${{ github.head_ref }}
+  cancel-in-progress: true
+
+jobs:
+  filter_changes:
+    name: Check Paths
+    runs-on: ubuntu-latest
+    outputs:
+      bloc: ${{ steps.changes.outputs.bloc }}
+      async_redux: ${{ steps.changes.outputs.async_redux }}
+      riverpod: ${{ steps.changes.outputs.riverpod }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Get Changed Files
+        id: changes
+        uses: dorny/paths-filter@v3.0.2
+        with:
+          filters: |
+            bloc:
+              - 'bloc/**'
+            async_redux:
+              - 'async redux/**'
+            riverpod:
+              - 'riverpod/**'
+
+  review:
+    name: Review ${{ matrix.folder_name }}
+    needs: filter_changes
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        include:
+          - folder_name: 'Bloc'
+            condition: ${{ needs.filter_changes.outputs.bloc == 'true' }}
+            working_dir: 'bloc'
+          - folder_name: 'Async Redux'
+            condition: ${{ needs.filter_changes.outputs.async_redux == 'true' }}
+            working_dir: 'async redux'
+          - folder_name: 'Riverpod'
+            condition: ${{ needs.filter_changes.outputs.riverpod == 'true' }}
+            working_dir: 'riverpod'
+
+    if: ${{ matrix.condition }}
+
+    defaults:
+      run:
+        working-directory: ${{ matrix.working_dir }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Flutter Setup
+        uses: subosito/flutter-action@v2.21.0
+        with:
+          channel: 'stable'
+          cache: true
+
+      - name: Install Dependencies
+        run: flutter pub get
+
+      - name: Check Format
+        run: dart format -l 120 --set-exit-if-changed .
+
+      - name: Generate
+        run: dart run build_runner build --delete-conflicting-outputs
+
+      - name: Analyze
+        run: flutter analyze .
