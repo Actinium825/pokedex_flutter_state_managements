@@ -6,12 +6,12 @@ part 'simple_pokemon_list.freezed.dart';
 part 'simple_pokemon_list.g.dart';
 
 @freezed
-sealed class SimplePokemonList with _$SimplePokemonList {
+abstract class SimplePokemonList with _$SimplePokemonList {
   const factory SimplePokemonList({
-    @JsonKey(name: 'count') int? count,
-    @JsonKey(name: 'next') String? next,
-    @JsonKey(name: 'previous') String? previous,
-    @JsonKey(name: 'results') List<SimplePokemon>? simplePokemonList,
+    @Default(0) @JsonKey(name: 'count') int count,
+    @Default('') @JsonKey(name: 'next') String next,
+    @Default('') @JsonKey(name: 'previous') String previous,
+    @Default(<SimplePokemon>[]) @JsonKey(name: 'results') List<SimplePokemon> simplePokemonList,
   }) = _SimplePokemonList;
 
   factory SimplePokemonList.fromJson(Json json) => _$SimplePokemonListFromJson(json);

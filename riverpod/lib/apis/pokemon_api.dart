@@ -3,17 +3,10 @@ import 'package:pokedex_flutter_riverpod/apis/apis_client.dart';
 import 'package:pokedex_flutter_riverpod/apis/model/pokemon.dart';
 import 'package:pokedex_flutter_riverpod/apis/model/pokemon_evolution_chain.dart';
 import 'package:pokedex_flutter_riverpod/apis/model/pokemon_species.dart';
+import 'package:pokedex_flutter_riverpod/apis/model/simple_pokemon.dart';
 import 'package:pokedex_flutter_riverpod/apis/model/simple_pokemon_list.dart';
 import 'package:pokedex_flutter_riverpod/extensions/evolves_to_ext.dart';
 import 'package:pokedex_flutter_riverpod/extensions/pokemon_evolution_chain_ext.dart';
-import 'package:pokedex_flutter_riverpod/extensions/pokemon_ext.dart';
-import 'package:pokedex_flutter_riverpod/extensions/pokemon_species_ext.dart';
-import 'package:pokedex_flutter_riverpod/extensions/simple_pokemon_list_ext.dart';
-import 'package:pokedex_flutter_riverpod/model/dto/pokemon_dto.dart';
-import 'package:pokedex_flutter_riverpod/model/dto/pokemon_evolution_chain_dto.dart';
-import 'package:pokedex_flutter_riverpod/model/dto/pokemon_species_dto.dart';
-import 'package:pokedex_flutter_riverpod/model/dto/simple_pokemon_dto.dart';
-import 'package:pokedex_flutter_riverpod/model/dto/simple_pokemon_list_dto.dart';
 import 'package:pokedex_flutter_riverpod/utils/typedef.dart';
 
 class PokemonApi {
@@ -21,15 +14,15 @@ class PokemonApi {
 
   PokemonApi(this.apiClient);
 
-  Future<SimplePokemonListDto> getSimplePokemonList({String? nextPageUrl}) async {
+  Future<SimplePokemonList> getSimplePokemonList({String? nextPageUrl}) async {
     final fetchUrl = nextPageUrl ?? '${apiClient.baseUrl}/pokemon';
     final response = await apiClient.dio.get<Json>(fetchUrl);
     final simplePokemonList = SimplePokemonList.fromJson(response.data!);
 
-    return simplePokemonList.toDto();
+    return simplePokemonList;
   }
 
-  Future<List<PokemonDto>> getPokemonList({required List<SimplePokemonDto> simplePokemonList}) async {
+  Future<List<Pokemon>> getPokemonList({required List<SimplePokemon> simplePokemonList}) async {
     final dio = apiClient.dio;
 
     final futures = simplePokemonList.map((simplePokemon) {
@@ -40,34 +33,34 @@ class PokemonApi {
 
     final responses = await Future.wait(futures);
 
-    return responses.map((response) => Pokemon.fromJson(response.data!).toDto()).toList();
+    return responses.map((response) => Pokemon.fromJson(response.data!)).toList();
   }
 
-  Future<List<PokemonDto>> searchPokemon({required String pokemonName}) async {
+  Future<List<Pokemon>> searchPokemon({required String pokemonName}) async {
     final baseUrl = apiClient.baseUrl;
     final fetchUrl = '$baseUrl/pokemon/$pokemonName';
 
     final response = await apiClient.dio.get<Json>(fetchUrl);
     final pokemon = Pokemon.fromJson(response.data!);
 
-    return [pokemon.toDto()];
+    return [pokemon];
   }
 
-  Future<PokemonSpeciesDto> getSpecies({required String speciesUrl}) async {
+  Future<PokemonSpecies> getSpecies({required String speciesUrl}) async {
     final response = await apiClient.dio.get<Json>(speciesUrl);
     final pokemonSpecies = PokemonSpecies.fromJson(response.data!);
 
-    return pokemonSpecies.toDto();
+    return pokemonSpecies;
   }
 
-  Future<PokemonEvolutionChainDto> getEvolutionChain({required String evolutionChainUrl}) async {
+  Future<PokemonEvolutionChain> getEvolutionChain({required String evolutionChainUrl}) async {
     final response = await apiClient.dio.get<Json>(evolutionChainUrl);
     final evolutionChain = PokemonEvolutionChain.fromJson(response.data!);
 
-    return evolutionChain.toDto();
+    return evolutionChain;
   }
 
-  Future<List<PokemonDto>> getEvolutionList({required PokemonEvolutionChainDto evolutionChain}) async {
+  Future<List<Pokemon>> getEvolutionList({required PokemonEvolutionChain evolutionChain}) async {
     final futures = <Future<Response<Json>>>[];
     final dio = apiClient.dio;
     final baseUrl = '${apiClient.baseUrl}/pokemon';
@@ -86,19 +79,19 @@ class PokemonApi {
     }
 
     final responses = await Future.wait(futures);
-    final evolutionList = <PokemonDto>[];
+    final evolutionList = <Pokemon>[];
     final pokemon = Pokemon.fromJson(responses.first.data!);
 
-    evolutionList.add(pokemon.toDto());
+    evolutionList.add(pokemon);
 
     for (final stage2Evolution in responses.sublist(1)) {
       final pokemon = Pokemon.fromJson(stage2Evolution.data!);
-      evolutionList.add(pokemon.toDto());
+      evolutionList.add(pokemon);
     }
 
     for (final stage3Evolution in responses.sublist(evolutionList.length)) {
       final pokemon = Pokemon.fromJson(stage3Evolution.data!);
-      evolutionList.add(pokemon.toDto());
+      evolutionList.add(pokemon);
     }
 
     return evolutionList;

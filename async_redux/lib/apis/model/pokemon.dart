@@ -13,17 +13,17 @@ part 'pokemon.g.dart';
 @freezed
 abstract class Pokemon with _$Pokemon {
   const factory Pokemon({
-    @JsonKey(name: 'id') int? id,
-    @JsonKey(name: 'name') String? name,
-    @JsonKey(name: 'sprites') PokemonSprites? sprites,
-    @JsonKey(name: 'types') List<PokemonType>? typeList,
-    @JsonKey(name: 'abilities') List<PokemonAbility>? abilityList,
-    @JsonKey(name: 'height') int? heightInDecimeters,
-    @JsonKey(name: 'weight') int? weightInDecimeters,
-    @JsonKey(name: 'base_experience') int? baseExperience,
-    @JsonKey(name: 'stats') List<PokemonBaseStat>? baseStatList,
-    @JsonKey(name: 'species') PokemonInfo? speciesInfo,
-    @JsonKey(name: 'moves') List<PokemonMove>? moveList,
+    @Default(0) @JsonKey(name: 'id') int id,
+    @Default('') @JsonKey(name: 'name') String name,
+    @Default(PokemonSprites()) @JsonKey(name: 'sprites') PokemonSprites sprites,
+    @Default(<PokemonType>[]) @JsonKey(name: 'types') List<PokemonType> typeList,
+    @Default(<PokemonAbility>[]) @JsonKey(name: 'abilities') List<PokemonAbility> abilityList,
+    @Default(0) @JsonKey(name: 'height') int heightInDecimeters,
+    @Default(0) @JsonKey(name: 'weight') int weightInDecimeters,
+    @Default(0) @JsonKey(name: 'base_experience') int baseExperience,
+    @Default(<PokemonBaseStat>[]) @JsonKey(name: 'stats') List<PokemonBaseStat> baseStatList,
+    @Default(PokemonInfo()) @JsonKey(name: 'species') PokemonInfo speciesInfo,
+    @Default(<PokemonMove>[]) @JsonKey(name: 'moves') List<PokemonMove> moveList,
   }) = _Pokemon;
 
   factory Pokemon.fromJson(Json json) => _$PokemonFromJson(json);

@@ -6,10 +6,10 @@ part 'pokemon_type.freezed.dart';
 part 'pokemon_type.g.dart';
 
 @freezed
-sealed class PokemonType with _$PokemonType {
+abstract class PokemonType with _$PokemonType {
   const factory PokemonType({
-    @JsonKey(name: 'slot') int? slot,
-    @JsonKey(name: 'type') PokemonInfo? typeInfo,
+    @Default(0) @JsonKey(name: 'slot') int slot,
+    @Default(PokemonInfo()) @JsonKey(name: 'type') PokemonInfo typeInfo,
   }) = _PokemonType;
 
   factory PokemonType.fromJson(Json json) => _$PokemonTypeFromJson(json);

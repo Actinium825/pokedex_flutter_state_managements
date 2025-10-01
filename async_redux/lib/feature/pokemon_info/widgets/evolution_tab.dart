@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:pokedex_flutter_async_redux/apis/model/pokemon_evolution_chain.dart';
 import 'package:pokedex_flutter_async_redux/extensions/pokemon_evolution_chain_ext.dart';
 import 'package:pokedex_flutter_async_redux/feature/pokemon_info/widgets/evolution_card.dart';
-import 'package:pokedex_flutter_async_redux/model/dto/pokemon_evolution_chain_dto.dart';
 import 'package:pokedex_flutter_async_redux/utils/const.dart';
 import 'package:pokedex_flutter_async_redux/utils/typedef.dart';
 
@@ -14,7 +14,7 @@ class EvolutionTab extends StatelessWidget {
   });
 
   final PokemonList pokemonEvolutionList;
-  final PokemonEvolutionChainDto pokemonEvolutionChain;
+  final PokemonEvolutionChain pokemonEvolutionChain;
 
   void _replaceWidget(List<Widget> children, List<int> gridIndices, int pokemonIndex) {
     final hasNoEvolution = pokemonEvolutionList.length == 1;

@@ -7,10 +7,10 @@ part 'pokemon_species.freezed.dart';
 part 'pokemon_species.g.dart';
 
 @freezed
-sealed class PokemonSpecies with _$PokemonSpecies {
+abstract class PokemonSpecies with _$PokemonSpecies {
   const factory PokemonSpecies({
-    @JsonKey(name: 'evolution_chain') EvolutionChainInfo? evolutionChainInfo,
-    @JsonKey(name: 'flavor_text_entries') List<FlavorTextEntry>? flavorTextEntries,
+    @Default(EvolutionChainInfo()) @JsonKey(name: 'evolution_chain') EvolutionChainInfo evolutionChainInfo,
+    @Default(<FlavorTextEntry>[]) @JsonKey(name: 'flavor_text_entries') List<FlavorTextEntry> flavorTextEntries,
   }) = _PokemonSpecies;
 
   factory PokemonSpecies.fromJson(Json json) => _$PokemonSpeciesFromJson(json);

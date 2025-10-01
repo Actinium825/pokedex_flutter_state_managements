@@ -9,8 +9,8 @@ part 'pokemon_species.g.dart';
 @freezed
 abstract class PokemonSpecies with _$PokemonSpecies {
   const factory PokemonSpecies({
-    @JsonKey(name: 'evolution_chain') EvolutionChainInfo? evolutionChainInfo,
-    @JsonKey(name: 'flavor_text_entries') List<FlavorTextEntry>? flavorTextEntries,
+    @Default(EvolutionChainInfo()) @JsonKey(name: 'evolution_chain') EvolutionChainInfo evolutionChainInfo,
+    @Default(<FlavorTextEntry>[]) @JsonKey(name: 'flavor_text_entries') List<FlavorTextEntry> flavorTextEntries,
   }) = _PokemonSpecies;
 
   factory PokemonSpecies.fromJson(Json json) => _$PokemonSpeciesFromJson(json);

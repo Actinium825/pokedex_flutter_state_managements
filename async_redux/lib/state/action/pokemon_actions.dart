@@ -1,8 +1,8 @@
 import 'package:async_redux/async_redux.dart';
 import 'package:pokedex_flutter_async_redux/apis/api_service.dart';
-import 'package:pokedex_flutter_async_redux/model/dto/pokemon_dto.dart';
-import 'package:pokedex_flutter_async_redux/model/dto/pokemon_evolution_chain_dto.dart';
-import 'package:pokedex_flutter_async_redux/model/dto/simple_pokemon_dto.dart';
+import 'package:pokedex_flutter_async_redux/apis/model/pokemon.dart';
+import 'package:pokedex_flutter_async_redux/apis/model/pokemon_evolution_chain.dart';
+import 'package:pokedex_flutter_async_redux/apis/model/simple_pokemon.dart';
 import 'package:pokedex_flutter_async_redux/state/action/actions.dart';
 import 'package:pokedex_flutter_async_redux/state/app_state.dart';
 
@@ -45,7 +45,7 @@ class GetSimplePokemonListAction extends ReduxAction<AppState> {
 class GetPokemonListAction extends ReduxAction<AppState> {
   GetPokemonListAction({required this.simplePokemonList});
 
-  final List<SimplePokemonDto> simplePokemonList;
+  final List<SimplePokemon> simplePokemonList;
 
   @override
   Future<AppState> reduce() async {
@@ -100,7 +100,7 @@ class SearchPokemonAction extends LoadingAction {
 class SelectPokemonAction extends ReduxAction<AppState> {
   SelectPokemonAction({required this.selectedPokemon});
 
-  final PokemonDto selectedPokemon;
+  final Pokemon selectedPokemon;
 
   @override
   AppState reduce() => state.copyWith(selectedPokemon: selectedPokemon);
@@ -149,7 +149,7 @@ class GetPokemonEvolutionChainAction extends ReduxAction<AppState> {
 class GetPokemonEvolutionListAction extends ReduxAction<AppState> {
   @override
   Future<AppState> reduce() async {
-    final evolutionChain = state.pokemonEvolutionChain ?? const PokemonEvolutionChainDto();
+    final evolutionChain = state.pokemonEvolutionChain ?? const PokemonEvolutionChain();
     final evolutionList = await ApiService.pokemonApi.getEvolutionList(evolutionChain: evolutionChain);
 
     return state.copyWith(pokemonEvolutionList: evolutionList);

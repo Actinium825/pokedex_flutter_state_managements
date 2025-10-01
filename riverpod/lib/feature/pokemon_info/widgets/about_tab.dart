@@ -1,12 +1,12 @@
 import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pokedex_flutter_riverpod/apis/model/pokemon.dart';
 import 'package:pokedex_flutter_riverpod/classes/pokemon_color_picker.dart';
 import 'package:pokedex_flutter_riverpod/extensions/pokemon_ability_ext.dart';
 import 'package:pokedex_flutter_riverpod/extensions/pokemon_ext.dart';
 import 'package:pokedex_flutter_riverpod/extensions/pokemon_species_ext.dart';
 import 'package:pokedex_flutter_riverpod/feature/pokemon_info/widgets/table_label.dart';
-import 'package:pokedex_flutter_riverpod/model/dto/pokemon_dto.dart';
 import 'package:pokedex_flutter_riverpod/providers/pokemon_species_provider.dart';
 import 'package:pokedex_flutter_riverpod/utils/const.dart';
 import 'package:pokedex_flutter_riverpod/utils/extension.dart';
@@ -19,7 +19,7 @@ class AboutTab extends ConsumerWidget {
     super.key,
   });
 
-  final PokemonDto selectedPokemon;
+  final Pokemon selectedPokemon;
 
   List<MapEntry<Color, String>> get _table {
     final primaryColor = selectedPokemon.primaryColor;
@@ -45,7 +45,7 @@ class AboutTab extends ConsumerWidget {
           Padding(
             padding: flavorTextPadding,
             child: Text(
-              ref.read(pokemonSpeciesProvider).flavorTextEnglish,
+              ref.read(pokemonSpeciesRefProvider).flavorTextEnglish,
               textAlign: TextAlign.center,
               style: context.textTheme.bodyMedium?.copyWith(
                 color: PokemonColorPicker.typeDecorationColor(primaryColor, isDarkened: true),

@@ -8,7 +8,7 @@ part 'other_sprites.g.dart';
 @freezed
 abstract class OtherSprites with _$OtherSprites {
   const factory OtherSprites({
-    @JsonKey(name: 'official-artwork') OfficialArtwork? officialArtwork,
+    @Default(OfficialArtwork()) @JsonKey(name: 'official-artwork') OfficialArtwork officialArtwork,
   }) = _OtherSprites;
 
   factory OtherSprites.fromJson(Json json) => _$OtherSpritesFromJson(json);

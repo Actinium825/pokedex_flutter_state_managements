@@ -36,7 +36,7 @@ class InfoTabBody extends ConsumerWidget {
               children: [
                 AboutTab(selectedPokemon: selectedPokemon),
                 EvolutionTab(
-                  pokemonEvolutionChain: ref.read(pokemonEvolutionChainProvider),
+                  pokemonEvolutionChain: ref.read(pokemonEvolutionChainRefProvider),
                   pokemonEvolutionList: ref.read(pokemonEvolutionListProvider),
                 ),
                 MovesTab(selectedPokemon: selectedPokemon),

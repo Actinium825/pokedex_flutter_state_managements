@@ -5,9 +5,9 @@ part 'evolution_chain_info.freezed.dart';
 part 'evolution_chain_info.g.dart';
 
 @freezed
-sealed class EvolutionChainInfo with _$EvolutionChainInfo {
+abstract class EvolutionChainInfo with _$EvolutionChainInfo {
   const factory EvolutionChainInfo({
-    @JsonKey(name: 'url') String? url,
+    @Default('') @JsonKey(name: 'url') String url,
   }) = _EvolutionChainInfo;
 
   factory EvolutionChainInfo.fromJson(Json json) => _$EvolutionChainInfoFromJson(json);

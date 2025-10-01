@@ -6,7 +6,7 @@ on:
       - master
     paths:
       - 'bloc/**'
-      - 'async redux/**'
+      - 'async_redux/**'
       - 'riverpod/**'
 
   workflow_dispatch:
@@ -38,7 +38,7 @@ jobs:
             bloc:
               - 'bloc/**'
             async_redux:
-              - 'async redux/**'
+              - 'async_redux/**'
             riverpod:
               - 'riverpod/**'
 
@@ -55,7 +55,7 @@ jobs:
             working_dir: 'bloc'
           - folder_name: 'Async Redux'
             run_check: ${{ needs.changes.outputs.async_redux }}
-            working_dir: 'async redux'
+            working_dir: 'async_redux'
           - folder_name: 'Riverpod'
             run_check: ${{ needs.changes.outputs.riverpod }}
             working_dir: 'riverpod'

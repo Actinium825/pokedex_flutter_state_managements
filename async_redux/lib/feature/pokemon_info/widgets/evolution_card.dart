@@ -2,9 +2,9 @@ import 'dart:math';
 
 import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
+import 'package:pokedex_flutter_async_redux/apis/model/pokemon.dart';
 import 'package:pokedex_flutter_async_redux/extensions/pokemon_ext.dart';
 import 'package:pokedex_flutter_async_redux/feature/pokemon_info/widgets/eevee_arrows.dart';
-import 'package:pokedex_flutter_async_redux/model/dto/pokemon_dto.dart';
 import 'package:pokedex_flutter_async_redux/utils/const.dart';
 import 'package:pokedex_flutter_async_redux/utils/extension.dart';
 import 'package:pokedex_flutter_async_redux/widgets/pokemon_image.dart';
@@ -17,7 +17,7 @@ class EvolutionCard extends StatelessWidget {
     super.key,
   });
 
-  final PokemonDto pokemon;
+  final Pokemon pokemon;
   final bool isEevee;
   final int? index;
 

@@ -6,9 +6,9 @@ part 'pokemon_ability.freezed.dart';
 part 'pokemon_ability.g.dart';
 
 @freezed
-sealed class PokemonAbility with _$PokemonAbility {
+abstract class PokemonAbility with _$PokemonAbility {
   const factory PokemonAbility({
-    @JsonKey(name: 'ability') PokemonInfo? abilityInfo,
+    @Default(PokemonInfo()) @JsonKey(name: 'ability') PokemonInfo abilityInfo,
   }) = _PokemonAbility;
 
   factory PokemonAbility.fromJson(Json json) => _$PokemonAbilityFromJson(json);
