@@ -1,0 +1,93 @@
+name: Review
+
+on:
+  pull_request:
+    branches:
+      - master
+    paths:
+      - 'bloc/**'
+      - 'async redux/**'
+      - 'riverpod/**'
+
+  workflow_dispatch:
+
+concurrency:
+  group: review-${{ github.base_ref }}-${{ github.head_ref }}
+  cancel-in-progress: true
+
+jobs:
+  changes:
+    name: Detect Changes
+    runs-on: ubuntu-latest
+    outputs:
+      bloc: ${{ steps.filter.outputs.bloc }}
+      async_redux: ${{ steps.filter.outputs.async_redux }}
+      riverpod: ${{ steps.filter.outputs.riverpod }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Filter
+        id: filter
+        uses: dorny/paths-filter@v3.0.2
+        with:
+          filters: |
+            bloc:
+              - 'bloc/**'
+            async_redux:
+              - 'async redux/**'
+            riverpod:
+              - 'riverpod/**'
+
+  review:
+    needs: changes
+    name: Review ${{ matrix.folder_name }}
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        include:
+          - folder_name: 'Bloc'
+            run_check: ${{ needs.changes.outputs.bloc }}
+            working_dir: 'bloc'
+          - folder_name: 'Async Redux'
+            run_check: ${{ needs.changes.outputs.async_redux }}
+            working_dir: 'async redux'
+          - folder_name: 'Riverpod'
+            run_check: ${{ needs.changes.outputs.riverpod }}
+            working_dir: 'riverpod'
+
+    defaults:
+      run:
+        working-directory: ${{ matrix.working_dir }}
+
+    steps:
+      - name: Checkout
+        if: ${{ matrix.run_check == 'true' }}
+        uses: actions/checkout@v5
+
+      - name: Flutter Setup
+        if: ${{ matrix.run_check == 'true' }}
+        uses: subosito/flutter-action@v2.21.0
+        with:
+          channel: 'stable'
+          cache: true
+
+      - name: Install Dependencies
+        if: ${{ matrix.run_check == 'true' }}
+        run: flutter pub get
+
+      - name: Check Format
+        if: ${{ matrix.run_check == 'true' }}
+        run: dart format -l 120 --set-exit-if-changed .
+
+      - name: Generate
+        if: ${{ matrix.run_check == 'true' }}
+        run: dart run build_runner build --delete-conflicting-outputs
+
+      - name: Analyze
+        if: ${{ matrix.run_check == 'true' }}
+        run: flutter analyze .
