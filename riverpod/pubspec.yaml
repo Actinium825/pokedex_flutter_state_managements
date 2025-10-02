@@ -31,6 +31,7 @@ dev_dependencies:
   json_serializable: ^6.11.1
   riverpod_generator: ^3.0.0
   riverpod_lint: ^3.0.0
+  go_router_builder: ^4.1.0
 
 dependency_overrides:
   analyzer_plugin: ^0.13.1

@@ -4,27 +4,33 @@ import 'package:go_router/go_router.dart';
 import 'package:pokedex_flutter_async_redux/feature/pokemon_info/pokemon_info_connector.dart';
 import 'package:pokedex_flutter_async_redux/feature/pokemon_list/pokemon_list_connector.dart';
 
-final navigatorKey = GlobalKey<NavigatorState>();
+part 'router.g.dart';
 
 final router = GoRouter(
-  routes: [
-    GoRoute(
-      path: PokemonListConnector.route,
-      builder: (_, __) => const PokemonListConnector(),
-      routes: [
-        GoRoute(
-          path: PokemonInfoConnector.route,
-          name: PokemonInfoConnector.route,
-          builder: (_, __) => const PokemonInfoConnector(),
-        ),
-      ],
-    ),
-  ],
-  initialLocation: PokemonListConnector.route,
+  routes: $appRoutes,
   debugLogDiagnostics: kDebugMode,
   errorBuilder: (_, __) => const PokemonListConnector(),
-  observers: [routeObserver],
-  navigatorKey: navigatorKey,
+  observers: [RouteObserver<ModalRoute<void>>()],
 );
 
-final routeObserver = RouteObserver<ModalRoute<void>>();
+@TypedGoRoute<PokemonListRoute>(
+  path: '/',
+  routes: [
+    TypedGoRoute<PokemonInfoRoute>(
+      path: 'pokemon-info',
+    )
+  ],
+)
+class PokemonListRoute extends GoRouteData with $PokemonListRoute {
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return const PokemonListConnector();
+  }
+}
+
+class PokemonInfoRoute extends GoRouteData with $PokemonInfoRoute {
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return const PokemonInfoConnector();
+  }
+}

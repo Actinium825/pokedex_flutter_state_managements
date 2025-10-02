@@ -5,7 +5,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pokedex_flutter_async_redux/apis/model/pokemon.dart';
-import 'package:pokedex_flutter_async_redux/feature/pokemon_info/pokemon_info_connector.dart';
 import 'package:pokedex_flutter_async_redux/feature/pokemon_list/widgets/list_scaffold.dart';
 import 'package:pokedex_flutter_async_redux/feature/pokemon_list/widgets/pokemon_card.dart';
 import 'package:pokedex_flutter_async_redux/feature/pokemon_list/widgets/search_field.dart';
@@ -13,6 +12,7 @@ import 'package:pokedex_flutter_async_redux/feature/pokemon_list/widgets/theme_c
 import 'package:pokedex_flutter_async_redux/model/union_page_state.dart';
 import 'package:pokedex_flutter_async_redux/utils/const.dart';
 import 'package:pokedex_flutter_async_redux/utils/extension.dart';
+import 'package:pokedex_flutter_async_redux/utils/router.dart';
 import 'package:pokedex_flutter_async_redux/utils/strings.dart';
 import 'package:pokedex_flutter_async_redux/utils/typedef.dart';
 import 'package:pokedex_flutter_async_redux/widgets/loading_indicator.dart';
@@ -113,7 +113,7 @@ class _PokemonListPageState extends State<PokemonListPage> {
 
   void _onTapPokemonCard(Pokemon selectedPokemon) {
     widget.onSelectPokemon(selectedPokemon);
-    context.pushNamed(PokemonInfoConnector.route);
+    PokemonInfoRoute().go(context);
   }
 
   @override

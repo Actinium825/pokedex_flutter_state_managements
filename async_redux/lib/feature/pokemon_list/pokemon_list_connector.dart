@@ -8,8 +8,6 @@ import 'package:pokedex_flutter_async_redux/state/app_state.dart';
 class PokemonListConnector extends StatelessWidget {
   const PokemonListConnector({super.key});
 
-  static const route = '/';
-
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, PokemonListVm>(
