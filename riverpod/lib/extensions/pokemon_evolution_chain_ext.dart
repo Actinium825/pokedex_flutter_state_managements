@@ -1,5 +1,6 @@
 import 'package:pokedex_flutter_riverpod/apis/model/evolves_to.dart';
 import 'package:pokedex_flutter_riverpod/apis/model/pokemon_evolution_chain.dart';
+import 'package:pokedex_flutter_riverpod/utils/extension.dart';
 import 'package:pokedex_flutter_riverpod/utils/typedef.dart';
 
 extension PokemonEvolutionChainExt on PokemonEvolutionChain {
@@ -7,13 +8,9 @@ extension PokemonEvolutionChainExt on PokemonEvolutionChain {
 
   EvolvesToList get stage3Evolutions {
     final stage3Evolutions = <EvolvesTo>[];
-
-    for (final stage2Evolution in stage2Evolutions) {
-      for (final stage3Evolution in stage2Evolution.evolutions) {
-        stage3Evolutions.add(stage3Evolution);
-      }
-    }
-
+    stage2Evolutions.forLoop((stage2Evolution) {
+      stage2Evolution.evolutions.forLoop(stage3Evolutions.add);
+    });
     return stage3Evolutions;
   }
 }

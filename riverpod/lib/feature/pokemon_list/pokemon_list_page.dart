@@ -30,14 +30,13 @@ class PokemonListPage extends ConsumerStatefulWidget {
 class _PokemonListPageState extends ConsumerState<PokemonListPage> {
   late final ScrollController _scrollController;
   late final TextEditingController _textEditingController;
-  late final ValueNotifier<bool> _isSearchingNotifier;
+  late final ValueNotifier<bool> _isSearchingNotifier = ValueNotifier(false);
   Timer? _debouncer;
 
   @override
   void initState() {
     _scrollController = ScrollController()..addListener(_onReachEnd);
     _textEditingController = TextEditingController()..addListener(_onUpdateText);
-    _isSearchingNotifier = ValueNotifier(false);
     super.initState();
   }
 
@@ -125,14 +124,12 @@ class _PokemonListPageState extends ConsumerState<PokemonListPage> {
         ),
         PopupMenuButton(
           onSelected: _onSelectOption,
-          itemBuilder: (_) => [chooseThemeMenuLabel].map(
-            (choice) {
-              return PopupMenuItem(
-                value: choice,
-                child: Text(choice),
-              );
-            },
-          ).toList(),
+          itemBuilder: (_) => [
+            const PopupMenuItem(
+              value: chooseThemeMenuLabel,
+              child: Text(chooseThemeMenuLabel),
+            ),
+          ],
         ),
       ],
       body: RefreshIndicator(

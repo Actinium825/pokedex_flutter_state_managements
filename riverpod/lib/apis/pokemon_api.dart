@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 import 'package:pokedex_flutter_riverpod/apis/apis_client.dart';
 import 'package:pokedex_flutter_riverpod/apis/model/pokemon.dart';
 import 'package:pokedex_flutter_riverpod/apis/model/pokemon_evolution_chain.dart';
@@ -7,6 +6,7 @@ import 'package:pokedex_flutter_riverpod/apis/model/simple_pokemon.dart';
 import 'package:pokedex_flutter_riverpod/apis/model/simple_pokemon_list.dart';
 import 'package:pokedex_flutter_riverpod/extensions/evolves_to_ext.dart';
 import 'package:pokedex_flutter_riverpod/extensions/pokemon_evolution_chain_ext.dart';
+import 'package:pokedex_flutter_riverpod/utils/extension.dart';
 import 'package:pokedex_flutter_riverpod/utils/typedef.dart';
 
 class PokemonApi {
@@ -25,7 +25,7 @@ class PokemonApi {
   Future<List<Pokemon>> getPokemonList({required List<SimplePokemon> simplePokemonList}) async {
     final dio = apiClient.dio;
 
-    final futures = simplePokemonList.map((simplePokemon) {
+    final futures = simplePokemonList.forLoop((simplePokemon) {
       final url = simplePokemon.detailsUrl;
       final response = dio.get<Json>(url);
       return response;
@@ -33,7 +33,7 @@ class PokemonApi {
 
     final responses = await Future.wait(futures);
 
-    return responses.map((response) => Pokemon.fromJson(response.data!)).toList();
+    return responses.forLoop((response) => Pokemon.fromJson(response.data!));
   }
 
   Future<List<Pokemon>> searchPokemon({required String pokemonName}) async {
@@ -61,39 +61,31 @@ class PokemonApi {
   }
 
   Future<List<Pokemon>> getEvolutionList({required PokemonEvolutionChain evolutionChain}) async {
-    final futures = <Future<Response<Json>>>[];
     final dio = apiClient.dio;
     final baseUrl = '${apiClient.baseUrl}/pokemon';
 
-    String fetchUrl = '$baseUrl/${evolutionChain.chain.speciesName}';
-    futures.add(dio.get(fetchUrl));
+    final stage2EvolutionsFutures = evolutionChain.stage2Evolutions.forLoop((stage2Evolution) {
+      final fetchUrl = '$baseUrl/${stage2Evolution.speciesName}';
+      return dio.get<Json>(fetchUrl);
+    });
 
-    for (final stage2Evolution in evolutionChain.stage2Evolutions) {
-      fetchUrl = '$baseUrl/${stage2Evolution.speciesName}';
-      futures.add(dio.get(fetchUrl));
-    }
+    final stage3EvolutionFutures = evolutionChain.stage3Evolutions.forLoop((stage3Evolution) {
+      final fetchUrl = '$baseUrl/${stage3Evolution.speciesName}';
+      return dio.get<Json>(fetchUrl);
+    });
 
-    for (final stage3Evolution in evolutionChain.stage3Evolutions) {
-      fetchUrl = '$baseUrl/${stage3Evolution.speciesName}';
-      futures.add(dio.get(fetchUrl));
-    }
+    final responses = await Future.wait([
+      dio.get<Json>('$baseUrl/${evolutionChain.chain.speciesName}'),
+      ...stage2EvolutionsFutures,
+      ...stage3EvolutionFutures,
+    ]);
 
-    final responses = await Future.wait(futures);
-    final evolutionList = <Pokemon>[];
     final pokemon = Pokemon.fromJson(responses.first.data!);
+    final stage2Evolutions = responses.sublist(1).forLoop((stage2Evolution) => Pokemon.fromJson(stage2Evolution.data!));
+    final stage3Evolutions = responses
+        .sublist(1 + stage2Evolutions.length)
+        .forLoop((stage3Evolution) => Pokemon.fromJson(stage3Evolution.data!));
 
-    evolutionList.add(pokemon);
-
-    for (final stage2Evolution in responses.sublist(1)) {
-      final pokemon = Pokemon.fromJson(stage2Evolution.data!);
-      evolutionList.add(pokemon);
-    }
-
-    for (final stage3Evolution in responses.sublist(evolutionList.length)) {
-      final pokemon = Pokemon.fromJson(stage3Evolution.data!);
-      evolutionList.add(pokemon);
-    }
-
-    return evolutionList;
+    return [pokemon, ...stage2Evolutions, ...stage3Evolutions];
   }
 }

@@ -1,5 +1,6 @@
 import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
+import 'package:pokedex_flutter_async_redux/utils/extension.dart';
 import 'package:pokedex_flutter_async_redux/utils/strings.dart';
 
 class ThemeChoiceDialog extends StatelessWidget {
@@ -23,14 +24,12 @@ class ThemeChoiceDialog extends StatelessWidget {
           onChanged: onSelectTheme,
           child: Column(
             mainAxisSize: MainAxisSize.min,
-            children: ThemeMode.values.map(
-              (themeMode) {
-                return RadioListTile.adaptive(
-                  title: Text(themeMode.name.capitalize()),
-                  value: themeMode,
-                );
-              },
-            ).toList(),
+            children: ThemeMode.values.forLoop(
+              (themeMode) => RadioListTile.adaptive(
+                title: Text(themeMode.name.capitalize()),
+                value: themeMode,
+              ),
+            ),
           ),
         ),
       ),

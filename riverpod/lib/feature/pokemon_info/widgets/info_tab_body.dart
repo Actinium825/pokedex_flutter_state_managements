@@ -29,7 +29,7 @@ class InfoTabBody extends ConsumerWidget {
             labelColor: typeDecorationColor,
             indicatorColor: typeDecorationColor,
             unselectedLabelColor: context.themeData.unselectedWidgetColor,
-            tabs: tabLabels.map((tabLabel) => Tab(text: tabLabel)).toList(),
+            tabs: tabLabels.forLoop((tabLabel) => Tab(text: tabLabel)),
           ),
           Expanded(
             child: TabBarView(

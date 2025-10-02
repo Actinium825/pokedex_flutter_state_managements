@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pokedex_flutter_async_redux/utils/const.dart';
+import 'package:pokedex_flutter_async_redux/utils/extension.dart';
 
 class EeveeArrows extends StatelessWidget {
   const EeveeArrows({
@@ -19,7 +20,7 @@ class EeveeArrows extends StatelessWidget {
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: eeveeArrowsDivisors.map(
+        children: eeveeArrowsDivisors.forLoop(
           (divisor) {
             return Transform.rotate(
               angle: pi / divisor,

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pokedex_flutter_riverpod/apis/model/pokemon.dart';
 import 'package:pokedex_flutter_riverpod/classes/pokemon_color_picker.dart';
-import 'package:pokedex_flutter_riverpod/extensions/pokemon_ability_ext.dart';
 import 'package:pokedex_flutter_riverpod/extensions/pokemon_ext.dart';
 import 'package:pokedex_flutter_riverpod/extensions/pokemon_species_ext.dart';
 import 'package:pokedex_flutter_riverpod/feature/pokemon_info/widgets/table_label.dart';
@@ -28,7 +27,8 @@ class AboutTab extends ConsumerWidget {
     return [
       MapEntry(primaryColor, sprintf(heightValue, [selectedPokemon.heightInDecimeters / 10])),
       MapEntry(lightenColor, sprintf(weightValue, [selectedPokemon.weightInDecimeters / 10])),
-      MapEntry(primaryColor, selectedPokemon.abilityList.map((ability) => ability.name.capitalize()).join(', ')),
+      MapEntry(primaryColor,
+          selectedPokemon.abilityList.forLoop((ability) => ability.abilityInfo.name.capitalize()).join(', ')),
       MapEntry(lightenColor, sprintf(xpValue, [selectedPokemon.baseExperience])),
     ];
   }
@@ -65,20 +65,18 @@ class AboutTab extends ConsumerWidget {
               0: IntrinsicColumnWidth(),
               1: FlexColumnWidth(),
             },
-            children: _table.mapIndexed(
-              (index, entry) {
-                return TableRow(
-                  decoration: BoxDecoration(color: entry.key),
-                  children: [
-                    TableLabel(
-                      label: aboutTableHeaders[index],
-                      textAlign: TextAlign.right,
-                    ),
-                    TableLabel(label: entry.value),
-                  ],
-                );
-              },
-            ).toList(),
+            children: _table.forLoopIndexed(
+              (index, entry) => TableRow(
+                decoration: BoxDecoration(color: entry.key),
+                children: [
+                  TableLabel(
+                    label: aboutTableHeaders[index],
+                    textAlign: TextAlign.right,
+                  ),
+                  TableLabel(label: entry.value),
+                ],
+              ),
+            ),
           ),
         ],
       ),
