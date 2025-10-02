@@ -2,9 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pokedex_flutter_async_redux/feature/pokemon_info/pokemon_info_connector.dart';
-import 'package:pokedex_flutter_async_redux/feature/pokemon_info/pokemon_info_page.dart';
 import 'package:pokedex_flutter_async_redux/feature/pokemon_list/pokemon_list_connector.dart';
-import 'package:pokedex_flutter_async_redux/feature/pokemon_list/pokemon_list_page.dart';
 
 part 'router.g.dart';
 
