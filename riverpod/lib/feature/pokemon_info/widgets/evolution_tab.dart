@@ -5,6 +5,7 @@ import 'package:pokedex_flutter_riverpod/apis/model/pokemon_evolution_chain.dart
 import 'package:pokedex_flutter_riverpod/extensions/pokemon_evolution_chain_ext.dart';
 import 'package:pokedex_flutter_riverpod/feature/pokemon_info/widgets/evolution_card.dart';
 import 'package:pokedex_flutter_riverpod/utils/const.dart';
+import 'package:pokedex_flutter_riverpod/utils/extension.dart';
 
 class EvolutionTab extends StatelessWidget {
   const EvolutionTab({
@@ -18,8 +19,8 @@ class EvolutionTab extends StatelessWidget {
 
   void _replaceWidget(List<Widget> children, List<int> gridIndices, int pokemonIndex) {
     final hasNoEvolution = pokemonEvolutionList.length == 1;
-    for (final gridIndex in gridIndices) {
-      children
+    gridIndices.forLoop(
+      (gridIndex) => children
         ..removeAt(gridIndex)
         ..insert(
           gridIndex,
@@ -27,15 +28,15 @@ class EvolutionTab extends StatelessWidget {
             pokemon: pokemonEvolutionList[pokemonIndex++],
             index: hasNoEvolution ? null : gridIndex,
           ),
-        );
-    }
+        ),
+    );
   }
 
   void _handleEeveeCase(List<Widget> children) => children
     ..replaceRange(
       0,
       pokemonEvolutionList.length,
-      pokemonEvolutionList.sublist(1).map((pokemon) => EvolutionCard(pokemon: pokemon)),
+      pokemonEvolutionList.sublist(1).forLoop((pokemon) => EvolutionCard(pokemon: pokemon)),
     )
     ..insert(
       4,

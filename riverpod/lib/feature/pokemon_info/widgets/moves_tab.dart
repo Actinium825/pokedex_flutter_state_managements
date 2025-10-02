@@ -27,18 +27,16 @@ class MovesTab extends StatelessWidget {
       child: Wrap(
         spacing: movesSpacing,
         runSpacing: movesSpacing,
-        children: selectedPokemon.moveList.map(
-          (move) {
-            return Container(
-              padding: movesPadding,
-              color: selectedPokemon.primaryColor,
-              child: Text(
-                move.moveInfo.name.split('-').map((word) => word.capitalize()).join(' '),
-                style: style,
-              ),
-            );
-          },
-        ).toList(),
+        children: selectedPokemon.moveList.forLoop(
+          (move) => Container(
+            padding: movesPadding,
+            color: selectedPokemon.primaryColor,
+            child: Text(
+              move.moveInfo.name.split('-').forLoop((word) => word.capitalize()).join(' '),
+              style: style,
+            ),
+          ),
+        ),
       ),
     );
   }

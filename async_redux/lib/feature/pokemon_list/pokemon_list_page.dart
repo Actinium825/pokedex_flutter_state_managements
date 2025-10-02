@@ -46,16 +46,15 @@ class PokemonListPage extends StatefulWidget {
 }
 
 class _PokemonListPageState extends State<PokemonListPage> {
-  late final ScrollController _scrollController;
-  late final TextEditingController _textEditingController;
-  late final ValueNotifier<bool> _isSearchingNotifier;
+  late final _scrollController = ScrollController();
+  late final _textEditingController = TextEditingController();
+  late final _isSearchingNotifier = ValueNotifier(false);
   Timer? _debouncer;
 
   @override
   void initState() {
-    _scrollController = ScrollController()..addListener(_onReachEnd);
-    _textEditingController = TextEditingController()..addListener(_onUpdateText);
-    _isSearchingNotifier = ValueNotifier(false);
+    _scrollController.addListener(_onReachEnd);
+    _textEditingController.addListener(_onUpdateText);
     super.initState();
   }
 
@@ -143,14 +142,12 @@ class _PokemonListPageState extends State<PokemonListPage> {
         ),
         PopupMenuButton(
           onSelected: _onSelectOption,
-          itemBuilder: (_) => [chooseThemeMenuLabel].map(
-            (choice) {
-              return PopupMenuItem(
-                value: choice,
-                child: Text(choice),
-              );
-            },
-          ).toList(),
+          itemBuilder: (_) => [
+            const PopupMenuItem(
+              value: chooseThemeMenuLabel,
+              child: Text(chooseThemeMenuLabel),
+            )
+          ],
         ),
       ],
       body: RefreshIndicator(
