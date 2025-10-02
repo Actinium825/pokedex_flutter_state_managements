@@ -4,27 +4,33 @@ import 'package:go_router/go_router.dart';
 import 'package:pokedex_flutter_riverpod/feature/pokemon_info/pokemon_info_page.dart';
 import 'package:pokedex_flutter_riverpod/feature/pokemon_list/pokemon_list_page.dart';
 
-final navigatorKey = GlobalKey<NavigatorState>();
+part 'router.g.dart';
 
 final router = GoRouter(
-  routes: [
-    GoRoute(
-      path: PokemonListPage.route,
-      builder: (_, __) => const PokemonListPage(),
-      routes: [
-        GoRoute(
-          path: PokemonInfoPage.route,
-          name: PokemonInfoPage.route,
-          builder: (_, __) => const PokemonInfoPage(),
-        ),
-      ],
-    ),
-  ],
-  initialLocation: PokemonListPage.route,
+  routes: $appRoutes,
   debugLogDiagnostics: kDebugMode,
   errorBuilder: (_, __) => const PokemonListPage(),
-  observers: [routeObserver],
-  navigatorKey: navigatorKey,
+  observers: [RouteObserver<ModalRoute<void>>()],
 );
 
-final routeObserver = RouteObserver<ModalRoute<void>>();
+@TypedGoRoute<PokemonListRoute>(
+  path: '/',
+  routes: [
+    TypedGoRoute<PokemonInfoRoute>(
+      path: 'pokemon-info',
+    )
+  ],
+)
+class PokemonListRoute extends GoRouteData with $PokemonListRoute {
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return const PokemonListPage();
+  }
+}
+
+class PokemonInfoRoute extends GoRouteData with $PokemonInfoRoute {
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return const PokemonInfoPage();
+  }
+}

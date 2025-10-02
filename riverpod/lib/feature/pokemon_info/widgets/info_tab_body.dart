@@ -19,7 +19,7 @@ class InfoTabBody extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final pokemonInfoPageValue = ref.watch(pokemonInfoPageProvider);
-    final selectedPokemon = ref.read(selectedPokemonProvider);
+    final selectedPokemon = ref.watch(selectedPokemonProvider);
     final typeDecorationColor = PokemonColorPicker.typeDecorationColor(selectedPokemon.primaryColor, isDarkened: true);
 
     return pokemonInfoPageValue.when(

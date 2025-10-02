@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pokedex_flutter_riverpod/apis/model/pokemon.dart';
-import 'package:pokedex_flutter_riverpod/feature/pokemon_info/pokemon_info_page.dart';
 import 'package:pokedex_flutter_riverpod/feature/pokemon_list/widgets/infinite_list.dart';
 import 'package:pokedex_flutter_riverpod/feature/pokemon_list/widgets/list_scaffold.dart';
 import 'package:pokedex_flutter_riverpod/feature/pokemon_list/widgets/search_field.dart';
@@ -16,12 +15,11 @@ import 'package:pokedex_flutter_riverpod/providers/selected_pokemon_provider.dar
 import 'package:pokedex_flutter_riverpod/providers/selected_theme_provider.dart';
 import 'package:pokedex_flutter_riverpod/utils/const.dart';
 import 'package:pokedex_flutter_riverpod/utils/extension.dart';
+import 'package:pokedex_flutter_riverpod/utils/router.dart';
 import 'package:pokedex_flutter_riverpod/utils/strings.dart';
 
 class PokemonListPage extends ConsumerStatefulWidget {
   const PokemonListPage({super.key});
-
-  static const route = '/';
 
   @override
   ConsumerState<PokemonListPage> createState() => _PokemonListPageState();
@@ -95,7 +93,7 @@ class _PokemonListPageState extends ConsumerState<PokemonListPage> {
 
   void _onTapPokemonCard(Pokemon selectedPokemon) {
     ref.watch(selectedPokemonProvider.notifier).state = selectedPokemon;
-    context.pushNamed(PokemonInfoPage.route);
+    PokemonInfoRoute().go(context);
   }
 
   @override

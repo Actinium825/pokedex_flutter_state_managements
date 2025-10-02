@@ -13,8 +13,6 @@ import 'package:pokedex_flutter_riverpod/widgets/pokemon_type_list.dart';
 class PokemonInfoPage extends ConsumerWidget {
   const PokemonInfoPage({super.key});
 
-  static const route = 'pokemon-info';
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final selectedPokemon = ref.read(selectedPokemonProvider);
