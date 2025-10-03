@@ -1,20 +1,20 @@
 targets:
   $default:
     builders:
+      go_router_builder:
+        generate_for:
+          include:
+            - lib/utils/router.dart
+
       json_serializable:
         options:
           explicit_to_json: true
         generate_for:
-          exclude:
-            - lib
           include:
             - lib/apis/model/*
 
       freezed:
-        enabled: true
         generate_for:
-          exclude:
-            - lib
           include:
             - lib/apis/model/*
             - lib/model/dto/*

@@ -113,7 +113,7 @@ class _PokemonListPageState extends State<PokemonListPage> {
 
   void _onTapPokemonCard(Pokemon selectedPokemon) {
     widget.onSelectPokemon(selectedPokemon);
-    PokemonInfoRoute().go(context);
+    PokemonInfoRoute().push<void>(context);
   }
 
   @override
