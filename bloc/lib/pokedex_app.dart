@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pokedex_flutter_bloc/utils/app_router.dart';
+import 'package:pokedex_flutter_bloc/utils/themes.dart';
 
 class PokedexApp extends StatefulWidget {
   const PokedexApp({super.key});
@@ -15,10 +16,7 @@ class _PokedexAppState extends State<PokedexApp> {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
+      theme: PokedexTheme.themeRegular,
       routerConfig: _appRouter.config(
         navigatorObservers: () => [RouteObserver<ModalRoute<void>>()],
       ),
