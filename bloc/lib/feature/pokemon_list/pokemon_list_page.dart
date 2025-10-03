@@ -1,5 +1,6 @@
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
+import 'package:pokedex_flutter_bloc/utils/extension.dart';
 
 @RoutePage()
 class PokemonListPage extends StatelessWidget {
@@ -9,8 +10,10 @@ class PokemonListPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: const Text('Pokedex'),
+        title: Text(
+          'Pokedex',
+          style: context.textTheme.displayMedium,
+        ),
       ),
     );
   }
