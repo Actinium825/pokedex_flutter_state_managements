@@ -93,7 +93,7 @@ class _PokemonListPageState extends ConsumerState<PokemonListPage> {
 
   void _onTapPokemonCard(Pokemon selectedPokemon) {
     ref.watch(selectedPokemonProvider.notifier).state = selectedPokemon;
-    PokemonInfoRoute().go(context);
+    PokemonInfoRoute().push<void>(context);
   }
 
   @override
