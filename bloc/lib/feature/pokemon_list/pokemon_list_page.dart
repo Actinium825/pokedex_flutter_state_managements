@@ -48,7 +48,7 @@ class _PokemonListPageState extends State<PokemonListPage> {
         child: CustomScrollView(
           slivers: [
             BlocBuilder<AppCubit, AppState>(
-              builder: (context, state) {
+              builder: (_, state) {
                 final pokemonList = state.pokemonList;
                 return SliverGrid(
                   gridDelegate: pokemonGridDelegate,
