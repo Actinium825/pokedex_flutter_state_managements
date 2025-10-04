@@ -22,7 +22,7 @@ class PokemonApi {
     return simplePokemonList;
   }
 
-  Future<List<Pokemon>> getPokemonList({required List<SimplePokemon> simplePokemonList}) async {
+  Future<PokemonList> getPokemonList({required List<SimplePokemon> simplePokemonList}) async {
     final dio = apiClient.dio;
 
     final futures = simplePokemonList.forLoop((simplePokemon) {
@@ -36,7 +36,7 @@ class PokemonApi {
     return responses.forLoop((response) => Pokemon.fromJson(response.data!));
   }
 
-  Future<List<Pokemon>> searchPokemon({required String pokemonName}) async {
+  Future<PokemonList> searchPokemon({required String pokemonName}) async {
     final baseUrl = apiClient.baseUrl;
     final fetchUrl = '$baseUrl/pokemon/$pokemonName';
 
@@ -60,7 +60,7 @@ class PokemonApi {
     return evolutionChain;
   }
 
-  Future<List<Pokemon>> getEvolutionList({required PokemonEvolutionChain evolutionChain}) async {
+  Future<PokemonList> getEvolutionList({required PokemonEvolutionChain evolutionChain}) async {
     final dio = apiClient.dio;
     final baseUrl = '${apiClient.baseUrl}/pokemon';
 

@@ -37,4 +37,18 @@ class AppCubit extends Cubit<AppState> {
     final simplePokemonList = await ApiService.pokemonApi.getSimplePokemonList(nextPageUrl: nextPageUrl);
     emit(state.copyWith(simplePokemonList: simplePokemonList));
   }
+
+  Future<void> getPokemonList() async {
+    final receivedPokemonList = await ApiService.pokemonApi.getPokemonList(
+      simplePokemonList: state.simplePokemonList.simplePokemonList,
+    );
+    final updatedPokemonList = state.pokemonList.followedBy(receivedPokemonList).toList();
+
+    emit(state.copyWith(pokemonList: updatedPokemonList));
+  }
+
+  Future<void> initPokemonListPage() async {
+    await getSimplePokemonList();
+    await getPokemonList();
+  }
 }

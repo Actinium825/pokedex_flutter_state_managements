@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:pokedex_flutter_riverpod/apis/model/pokemon.dart';
 import 'package:pokedex_flutter_riverpod/apis/model/pokemon_evolution_chain.dart';
 import 'package:pokedex_flutter_riverpod/extensions/pokemon_evolution_chain_ext.dart';
 import 'package:pokedex_flutter_riverpod/feature/pokemon_info/widgets/evolution_card.dart';
 import 'package:pokedex_flutter_riverpod/utils/const.dart';
 import 'package:pokedex_flutter_riverpod/utils/extension.dart';
+import 'package:pokedex_flutter_riverpod/utils/typedef.dart';
 
 class EvolutionTab extends StatelessWidget {
   const EvolutionTab({
@@ -14,7 +14,7 @@ class EvolutionTab extends StatelessWidget {
     super.key,
   });
 
-  final List<Pokemon> pokemonEvolutionList;
+  final PokemonList pokemonEvolutionList;
   final PokemonEvolutionChain pokemonEvolutionChain;
 
   void _replaceWidget(List<Widget> children, List<int> gridIndices, int pokemonIndex) {

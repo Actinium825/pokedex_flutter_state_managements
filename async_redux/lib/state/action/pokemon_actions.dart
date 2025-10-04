@@ -68,9 +68,8 @@ class GetMorePokemonAction extends LoadingAction {
 
   @override
   Future<AppState> reduce() async {
-    final simplePokemonList = state.simplePokemonList;
-    await dispatchAndWait(GetSimplePokemonListAction(nextPageUrl: simplePokemonList.next));
-    await dispatchAndWait(GetPokemonListAction(simplePokemonList: simplePokemonList.simplePokemonList));
+    await dispatchAndWait(GetSimplePokemonListAction(nextPageUrl: state.simplePokemonList.next));
+    await dispatchAndWait(GetPokemonListAction(simplePokemonList: state.simplePokemonList.simplePokemonList));
     return state;
   }
 }

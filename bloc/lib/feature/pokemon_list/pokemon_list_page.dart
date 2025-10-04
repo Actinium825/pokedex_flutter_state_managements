@@ -6,8 +6,19 @@ import 'package:pokedex_flutter_bloc/utils/extension.dart';
 import 'package:pokedex_flutter_bloc/utils/strings.dart';
 
 @RoutePage()
-class PokemonListPage extends StatelessWidget {
+class PokemonListPage extends StatefulWidget {
   const PokemonListPage({super.key});
+
+  @override
+  State<PokemonListPage> createState() => _PokemonListPageState();
+}
+
+class _PokemonListPageState extends State<PokemonListPage> {
+  @override
+  void initState() {
+    context.read<AppCubit>().initPokemonListPage();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
