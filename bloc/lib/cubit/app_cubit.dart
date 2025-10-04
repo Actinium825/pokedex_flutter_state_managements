@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pokedex_flutter_bloc/apis/api_service.dart';
 import 'package:pokedex_flutter_bloc/cubit/app_state.dart';
 import 'package:pokedex_flutter_bloc/feature/pokemon_list/widgets/theme_choice_dialog.dart';
 import 'package:pokedex_flutter_bloc/repositories/app_router_repo.dart';
@@ -30,5 +31,10 @@ class AppCubit extends Cubit<AppState> {
     emit(state.copyWith(themeMode: themeMode ?? ThemeMode.system));
     SharedPrefsRepo.prefs.setInt(themeSharedPrefsKey, state.themeMode.index);
     AppRouterRepo.context.pop();
+  }
+
+  Future<void> getSimplePokemonList({String? nextPageUrl}) async {
+    final simplePokemonList = await ApiService.pokemonApi.getSimplePokemonList(nextPageUrl: nextPageUrl);
+    emit(state.copyWith(simplePokemonList: simplePokemonList));
   }
 }
