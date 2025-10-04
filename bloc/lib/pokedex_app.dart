@@ -1,18 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pokedex_flutter_bloc/cubit/app_cubit.dart';
-import 'package:pokedex_flutter_bloc/utils/app_router.dart';
+import 'package:pokedex_flutter_bloc/repositories/app_router_repo.dart';
 import 'package:pokedex_flutter_bloc/utils/themes.dart';
 
-class PokedexApp extends StatefulWidget {
+class PokedexApp extends StatelessWidget {
   const PokedexApp({super.key});
-
-  @override
-  State<PokedexApp> createState() => _PokedexAppState();
-}
-
-class _PokedexAppState extends State<PokedexApp> {
-  late final _appRouter = AppRouter();
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +14,7 @@ class _PokedexAppState extends State<PokedexApp> {
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false,
         theme: PokedexTheme.themeRegular,
-        routerConfig: _appRouter.config(
+        routerConfig: AppRouterRepo.appRouter.config(
           navigatorObservers: () => [RouteObserver<ModalRoute<void>>()],
         ),
       ),
