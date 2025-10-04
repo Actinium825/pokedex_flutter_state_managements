@@ -1,12 +1,21 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pokedex_flutter_bloc/cubit/app_state.dart';
 import 'package:pokedex_flutter_bloc/feature/pokemon_list/widgets/theme_choice_dialog.dart';
 import 'package:pokedex_flutter_bloc/repositories/app_router_repo.dart';
+import 'package:pokedex_flutter_bloc/repositories/shared_prefs_repo.dart';
 import 'package:pokedex_flutter_bloc/utils/strings.dart';
 
 class AppCubit extends Cubit<AppState> {
-  AppCubit() : super(const AppState());
+  AppCubit() : super(const AppState()) {
+    loadTheme();
+  }
+
+  void loadTheme() {
+    final themeModeIndex = SharedPrefsRepo.prefs.getInt(themeSharedPrefsKey) ?? ThemeMode.system.index;
+    emit(state.copyWith(themeMode: ThemeMode.values.elementAt(themeModeIndex)));
+  }
 
   void showThemeChoiceDialog() => showDialog<void>(
     context: AppRouterRepo.context,
@@ -15,5 +24,11 @@ class AppCubit extends Cubit<AppState> {
 
   void onSelectOption(String option) {
     if (option == chooseThemeMenuLabel) showThemeChoiceDialog();
+  }
+
+  void onSelectTheme(ThemeMode? themeMode) async {
+    emit(state.copyWith(themeMode: themeMode ?? ThemeMode.system));
+    SharedPrefsRepo.prefs.setInt(themeSharedPrefsKey, state.themeMode.index);
+    AppRouterRepo.context.pop();
   }
 }
