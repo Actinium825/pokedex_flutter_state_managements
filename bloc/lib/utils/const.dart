@@ -1,0 +1,12 @@
+import 'package:flutter/material.dart';
+
+const pokemonCardPadding = EdgeInsets.all(8.0);
+const pokemonNamePadding = EdgeInsets.symmetric(vertical: 8.0);
+const pokemonCardSize = 80.0;
+const colorModifier = 0.1;
+const pokemonTypeNamePadding = EdgeInsets.symmetric(vertical: 4.0, horizontal: 12.0);
+const pokemonTypeNameMargin = EdgeInsets.only(bottom: 4.0, right: 8.0);
+const typeNameRadius = 20.0;
+const pokemonListPagePadding = EdgeInsets.symmetric(horizontal: 12.0);
+const pokemonGridDelegate = SliverGridDelegateWithMaxCrossAxisExtent(maxCrossAxisExtent: 250, childAspectRatio: 3 / 2);
+const pokemonListPageFooterHeight = 100.0;
