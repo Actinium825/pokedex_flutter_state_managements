@@ -13,3 +13,4 @@ targets:
           include:
             - lib/cubit/app_state.dart
             - lib/apis/model/*
+            - lib/model/*

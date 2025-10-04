@@ -4,9 +4,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pokedex_flutter_bloc/cubit/app_cubit.dart';
 import 'package:pokedex_flutter_bloc/cubit/app_state.dart';
 import 'package:pokedex_flutter_bloc/feature/pokemon_list/widgets/pokemon_card.dart';
+import 'package:pokedex_flutter_bloc/model/union_page_state.dart';
 import 'package:pokedex_flutter_bloc/utils/const.dart';
 import 'package:pokedex_flutter_bloc/utils/extension.dart';
 import 'package:pokedex_flutter_bloc/utils/strings.dart';
+import 'package:pokedex_flutter_bloc/utils/typedef.dart';
+import 'package:pokedex_flutter_bloc/widgets/loading_indicator.dart';
 
 @RoutePage()
 class PokemonListPage extends StatefulWidget {
@@ -45,26 +48,27 @@ class _PokemonListPageState extends State<PokemonListPage> {
       ),
       body: Padding(
         padding: pokemonListPagePadding,
-        child: CustomScrollView(
-          slivers: [
-            BlocBuilder<AppCubit, AppState>(
-              builder: (_, state) {
-                final pokemonList = state.pokemonList;
-                return SliverGrid(
+        child: BlocBuilder<AppCubit, AppState>(
+          builder: (context, _) => switch (context.read<AppCubit>().pokemonListState()) {
+            Data<PokemonList>(:final value) => CustomScrollView(
+              slivers: [
+                SliverGrid(
                   gridDelegate: pokemonGridDelegate,
                   delegate: SliverChildBuilderDelegate(
                     (_, index) => PokemonCard(
-                      pokemon: pokemonList[index],
+                      pokemon: value[index],
                       // TODO: Add function
                       onTap: () {},
                     ),
-                    childCount: pokemonList.length,
+                    childCount: value.length,
                   ),
-                );
-              },
+                ),
+                const SliverToBoxAdapter(child: SizedBox(height: pokemonListPageFooterHeight)),
+              ],
             ),
-            const SliverToBoxAdapter(child: SizedBox(height: pokemonListPageFooterHeight)),
-          ],
+            Loading<PokemonList>() => const LoadingIndicator(),
+            Error<PokemonList>(:final message) => AlertDialog(title: Text(message ?? '')),
+          },
         ),
       ),
     );

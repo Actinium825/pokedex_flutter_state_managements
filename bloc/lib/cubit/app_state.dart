@@ -12,5 +12,6 @@ abstract class AppState with _$AppState {
     @Default(ThemeMode.system) ThemeMode themeMode,
     @Default(SimplePokemonList()) SimplePokemonList simplePokemonList,
     @Default(<Pokemon>[]) PokemonList pokemonList,
+    @Default(false) bool isLoading,
   }) = _AppState;
 }
