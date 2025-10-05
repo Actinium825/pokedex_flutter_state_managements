@@ -1,4 +1,4 @@
-# Flutter App for Pokedex with Bloc
+# Flutter App for Pokedex with Get
 
 ## Steps to run
 1. Install latest Flutter version and set in SDK Manager
