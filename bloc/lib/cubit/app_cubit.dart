@@ -145,6 +145,14 @@ class AppCubit extends Cubit<AppState> {
     );
   }
 
+  void getPokemonSpecies(String speciesUrl) => _loadingAction(
+    getPokemonSpeciesKey,
+    () async {
+      final species = await ApiService.pokemonApi.getSpecies(speciesUrl: speciesUrl);
+      emit(state.copyWith(pokemonSpecies: species));
+    },
+  );
+
   Future<void> _loadingAction(String waitKey, AsyncCallback function) async {
     if (state.waitKey == waitKey) return;
 
