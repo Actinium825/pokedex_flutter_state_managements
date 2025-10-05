@@ -6,6 +6,7 @@ import 'package:pokedex_flutter_bloc/classes/pokemon_color_picker.dart';
 import 'package:pokedex_flutter_bloc/extensions/pokemon_ext.dart';
 import 'package:pokedex_flutter_bloc/feature/pokemon_info/cubit/pokemon_info_cubit.dart';
 import 'package:pokedex_flutter_bloc/feature/pokemon_info/widgets/about_tab.dart';
+import 'package:pokedex_flutter_bloc/feature/pokemon_info/widgets/evolution_tab.dart';
 import 'package:pokedex_flutter_bloc/feature/pokemon_info/widgets/info_scaffold.dart';
 import 'package:pokedex_flutter_bloc/utils/const.dart';
 import 'package:pokedex_flutter_bloc/utils/extension.dart';
@@ -90,27 +91,31 @@ class PokemonInfoView extends StatelessWidget {
               padding: infoPageModalPadding,
               child: DefaultTabController(
                 length: tabLabels.length,
-                child: context.select<PokemonInfoCubit, bool>((cubit) => cubit.state.isLoading)
-                    ? LoadingIndicator(color: typeDecorationColor)
-                    : Column(
-                        children: [
-                          TabBar(
-                            labelColor: typeDecorationColor,
-                            indicatorColor: typeDecorationColor,
-                            unselectedLabelColor: themeData.unselectedWidgetColor,
-                            tabs: tabLabels.forLoop((tabLabel) => Tab(text: tabLabel)),
-                          ),
-                          Expanded(
-                            child: TabBarView(
-                              children: [
-                                AboutTab(selectedPokemon: selectedPokemon),
-                                const SizedBox(),
-                                const SizedBox(),
-                              ],
-                            ),
-                          ),
-                        ],
+                child: switch (context.select<PokemonInfoCubit, bool>((cubit) => cubit.state.isLoading)) {
+                  true => LoadingIndicator(color: typeDecorationColor),
+                  false => Column(
+                    children: [
+                      TabBar(
+                        labelColor: typeDecorationColor,
+                        indicatorColor: typeDecorationColor,
+                        unselectedLabelColor: themeData.unselectedWidgetColor,
+                        tabs: tabLabels.forLoop((tabLabel) => Tab(text: tabLabel)),
                       ),
+                      Expanded(
+                        child: TabBarView(
+                          children: [
+                            AboutTab(selectedPokemon: selectedPokemon),
+                            EvolutionTab(
+                              pokemonEvolutionChain: context.read<PokemonInfoCubit>().state.pokemonEvolutionChain,
+                              pokemonEvolutionList: context.read<PokemonInfoCubit>().state.pokemonEvolutionList,
+                            ),
+                            const SizedBox(),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                },
               ),
             ),
           ),
