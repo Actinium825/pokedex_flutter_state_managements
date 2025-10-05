@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pokedex_flutter_bloc/cubit/app_cubit.dart';
 import 'package:pokedex_flutter_bloc/cubit/app_state.dart';
+import 'package:pokedex_flutter_bloc/feature/pokemon_list/widgets/list_footer.dart';
 import 'package:pokedex_flutter_bloc/feature/pokemon_list/widgets/pokemon_card.dart';
 import 'package:pokedex_flutter_bloc/model/union_page_state.dart';
 import 'package:pokedex_flutter_bloc/utils/const.dart';
@@ -20,10 +21,23 @@ class PokemonListPage extends StatefulWidget {
 }
 
 class _PokemonListPageState extends State<PokemonListPage> {
+  late final _scrollController = ScrollController()..addListener(_onReachEnd);
+
   @override
   void initState() {
     context.read<AppCubit>().initPokemonListPage();
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  void _onReachEnd() {
+    final position = _scrollController.position;
+    if (position.pixels == position.maxScrollExtent) context.read<AppCubit>().getMorePokemon();
   }
 
   @override
@@ -46,29 +60,35 @@ class _PokemonListPageState extends State<PokemonListPage> {
           ),
         ],
       ),
-      body: Padding(
-        padding: pokemonListPagePadding,
-        child: BlocBuilder<AppCubit, AppState>(
-          builder: (context, _) => switch (context.read<AppCubit>().pokemonListState()) {
-            Data<PokemonList>(:final value) => CustomScrollView(
-              slivers: [
-                SliverGrid(
-                  gridDelegate: pokemonGridDelegate,
-                  delegate: SliverChildBuilderDelegate(
-                    (_, index) => PokemonCard(
-                      pokemon: value[index],
-                      // TODO: Add function
-                      onTap: () {},
+      body: RefreshIndicator(
+        onRefresh: () async {
+          context.read<AppCubit>().initPokemonListPage();
+        },
+        child: Padding(
+          padding: pokemonListPagePadding,
+          child: BlocBuilder<AppCubit, AppState>(
+            builder: (context, _) => switch (context.read<AppCubit>().pokemonListState()) {
+              Data<PokemonList>(:final value) => CustomScrollView(
+                controller: _scrollController,
+                slivers: [
+                  SliverGrid(
+                    gridDelegate: pokemonGridDelegate,
+                    delegate: SliverChildBuilderDelegate(
+                      (_, index) => PokemonCard(
+                        pokemon: value[index],
+                        // TODO: Add function
+                        onTap: () {},
+                      ),
+                      childCount: value.length,
                     ),
-                    childCount: value.length,
                   ),
-                ),
-                const SliverToBoxAdapter(child: SizedBox(height: pokemonListPageFooterHeight)),
-              ],
-            ),
-            Loading<PokemonList>() => const LoadingIndicator(),
-            Error<PokemonList>(:final message) => AlertDialog(title: Text(message ?? '')),
-          },
+                  const ListFooter(),
+                ],
+              ),
+              Loading<PokemonList>() => const LoadingIndicator(),
+              Error<PokemonList>(:final message) => AlertDialog(title: Text(message ?? '')),
+            },
+          ),
         ),
       ),
     );

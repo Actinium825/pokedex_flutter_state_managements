@@ -27,6 +27,8 @@ class PokemonListRef extends _$PokemonListRef {
   }
 
   void getMorePokemon() async {
+    if (ref.read(loadingProvider) == getMorePokemonKey) return;
+
     ref.read(loadingProvider.notifier).setLoadingKey(getMorePokemonKey);
 
     final nextPageUrl = ref.read(simplePokemonListRefProvider).next;

@@ -26,17 +26,10 @@ class PokemonListPage extends ConsumerStatefulWidget {
 }
 
 class _PokemonListPageState extends ConsumerState<PokemonListPage> {
-  late final _scrollController = ScrollController();
-  late final _textEditingController = TextEditingController();
+  late final _scrollController = ScrollController()..addListener(_onReachEnd);
+  late final _textEditingController = TextEditingController()..addListener(_onUpdateText);
   late final _isSearchingNotifier = ValueNotifier(false);
   Timer? _debouncer;
-
-  @override
-  void initState() {
-    _scrollController.addListener(_onReachEnd);
-    _textEditingController.addListener(_onUpdateText);
-    super.initState();
-  }
 
   @override
   void dispose() {
