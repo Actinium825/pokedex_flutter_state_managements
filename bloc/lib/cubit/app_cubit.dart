@@ -18,6 +18,9 @@ class AppCubit extends Cubit<AppState> {
     loadTheme();
   }
 
+  late final ScrollController scrollController;
+  late final TextEditingController textEditingController;
+
   void loadTheme() {
     final themeModeIndex = SharedPrefsRepo.prefs.getInt(themeSharedPrefsKey) ?? ThemeMode.system.index;
     emit(state.copyWith(themeMode: ThemeMode.values.elementAt(themeModeIndex)));
@@ -38,7 +41,28 @@ class AppCubit extends Cubit<AppState> {
     AppRouterRepo.context.pop();
   }
 
-  void initPokemonListPage() => _loadingAction(
+  void initPokemonListPage() {
+    scrollController = ScrollController()..addListener(_onReachEnd);
+    textEditingController = TextEditingController();
+    getInitialPokemonList();
+  }
+
+  void disposePokemonListPage() {
+    scrollController.dispose();
+    textEditingController.dispose();
+  }
+
+  void onPressSearch() {
+    emit(state.copyWith(isSearching: !state.isSearching));
+    if (textEditingController.text.isNotEmpty) textEditingController.clear();
+  }
+
+  void _onReachEnd() {
+    final position = scrollController.position;
+    if (position.pixels == position.maxScrollExtent) getMorePokemon();
+  }
+
+  void getInitialPokemonList() => _loadingAction(
     initPokemonListKey,
     () async {
       final pokemonApi = ApiService.pokemonApi;

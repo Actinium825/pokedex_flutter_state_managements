@@ -5,6 +5,7 @@ import 'package:pokedex_flutter_bloc/cubit/app_cubit.dart';
 import 'package:pokedex_flutter_bloc/cubit/app_state.dart';
 import 'package:pokedex_flutter_bloc/feature/pokemon_list/widgets/list_footer.dart';
 import 'package:pokedex_flutter_bloc/feature/pokemon_list/widgets/pokemon_card.dart';
+import 'package:pokedex_flutter_bloc/feature/pokemon_list/widgets/search_field.dart';
 import 'package:pokedex_flutter_bloc/model/union_page_state.dart';
 import 'package:pokedex_flutter_bloc/utils/const.dart';
 import 'package:pokedex_flutter_bloc/utils/extension.dart';
@@ -21,8 +22,6 @@ class PokemonListPage extends StatefulWidget {
 }
 
 class _PokemonListPageState extends State<PokemonListPage> {
-  late final _scrollController = ScrollController()..addListener(_onReachEnd);
-
   @override
   void initState() {
     context.read<AppCubit>().initPokemonListPage();
@@ -31,26 +30,36 @@ class _PokemonListPageState extends State<PokemonListPage> {
 
   @override
   void dispose() {
-    _scrollController.dispose();
+    context.read<AppCubit>().disposePokemonListPage();
     super.dispose();
-  }
-
-  void _onReachEnd() {
-    final position = _scrollController.position;
-    if (position.pixels == position.maxScrollExtent) context.read<AppCubit>().getMorePokemon();
   }
 
   @override
   Widget build(BuildContext context) {
+    final appCubit = context.read<AppCubit>();
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          appTitle,
-          style: context.textTheme.displayMedium,
+        title: BlocBuilder<AppCubit, AppState>(
+          builder: (_, state) => state.isSearching
+              ? const SearchField()
+              : Text(
+                  appTitle,
+                  style: context.textTheme.displayMedium,
+                ),
         ),
         actions: [
+          IconButton(
+            onPressed: appCubit.onPressSearch,
+            icon: BlocBuilder<AppCubit, AppState>(
+              builder: (_, state) => Icon(state.isSearching ? Icons.close : Icons.search),
+            ),
+          ),
+          IconButton(
+            onPressed: appCubit.getInitialPokemonList,
+            icon: const Icon(Icons.refresh),
+          ),
           PopupMenuButton(
-            onSelected: context.read<AppCubit>().onSelectOption,
+            onSelected: appCubit.onSelectOption,
             itemBuilder: (_) => [
               const PopupMenuItem(
                 value: chooseThemeMenuLabel,
@@ -62,14 +71,14 @@ class _PokemonListPageState extends State<PokemonListPage> {
       ),
       body: RefreshIndicator(
         onRefresh: () async {
-          context.read<AppCubit>().initPokemonListPage();
+          appCubit.getInitialPokemonList();
         },
         child: Padding(
           padding: pokemonListPagePadding,
           child: BlocBuilder<AppCubit, AppState>(
-            builder: (context, _) => switch (context.read<AppCubit>().pokemonListState()) {
+            builder: (context, _) => switch (appCubit.pokemonListState()) {
               Data<PokemonList>(:final value) => CustomScrollView(
-                controller: _scrollController,
+                controller: appCubit.scrollController,
                 slivers: [
                   SliverGrid(
                     gridDelegate: pokemonGridDelegate,

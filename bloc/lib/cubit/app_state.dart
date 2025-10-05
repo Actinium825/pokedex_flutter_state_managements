@@ -13,5 +13,6 @@ abstract class AppState with _$AppState {
     @Default(SimplePokemonList()) SimplePokemonList simplePokemonList,
     @Default(<Pokemon>[]) PokemonList pokemonList,
     @Default('') String waitKey,
+    @Default(false) bool isSearching,
   }) = _AppState;
 }
