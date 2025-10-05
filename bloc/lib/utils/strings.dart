@@ -10,3 +10,7 @@ const searchPokemonKey = 'search-pokemon';
 const tabLabels = ['About', 'Evolution', 'Moves'];
 const english = 'en';
 const getPokemonSpeciesKey = 'get-pokemon-species';
+const aboutTableHeaders = ['Height', 'Weight', 'Abilities', 'Base Experience'];
+const xpValue = '%s xp';
+const heightValue = '%s m';
+const weightValue = '%s kg';
