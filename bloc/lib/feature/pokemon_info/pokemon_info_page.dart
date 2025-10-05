@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pokedex_flutter_bloc/apis/model/pokemon.dart';
 import 'package:pokedex_flutter_bloc/classes/pokemon_color_picker.dart';
-import 'package:pokedex_flutter_bloc/cubit/app_cubit.dart';
 import 'package:pokedex_flutter_bloc/extensions/pokemon_ext.dart';
+import 'package:pokedex_flutter_bloc/feature/pokemon_info/cubit/pokemon_info_cubit.dart';
 import 'package:pokedex_flutter_bloc/feature/pokemon_info/widgets/about_tab.dart';
 import 'package:pokedex_flutter_bloc/feature/pokemon_info/widgets/info_scaffold.dart';
 import 'package:pokedex_flutter_bloc/utils/const.dart';
@@ -15,7 +15,7 @@ import 'package:pokedex_flutter_bloc/widgets/pokemon_image.dart';
 import 'package:pokedex_flutter_bloc/widgets/pokemon_type_list.dart';
 
 @RoutePage()
-class PokemonInfoPage extends StatefulWidget {
+class PokemonInfoPage extends StatelessWidget {
   const PokemonInfoPage({
     required this.selectedPokemon,
     super.key,
@@ -24,19 +24,25 @@ class PokemonInfoPage extends StatefulWidget {
   final Pokemon selectedPokemon;
 
   @override
-  State<PokemonInfoPage> createState() => _PokemonInfoPageState();
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (_) => PokemonInfoCubit(speciesUrl: selectedPokemon.speciesInfo.detailsUrl),
+      child: PokemonInfoView(selectedPokemon: selectedPokemon),
+    );
+  }
 }
 
-class _PokemonInfoPageState extends State<PokemonInfoPage> {
-  @override
-  void initState() {
-    context.read<AppCubit>().getPokemonSpecies(widget.selectedPokemon.speciesInfo.detailsUrl);
-    super.initState();
-  }
+class PokemonInfoView extends StatelessWidget {
+  const PokemonInfoView({
+    required this.selectedPokemon,
+    super.key,
+  });
+
+  final Pokemon selectedPokemon;
 
   @override
   Widget build(BuildContext context) {
-    final primaryColor = widget.selectedPokemon.primaryColor;
+    final primaryColor = selectedPokemon.primaryColor;
     final typeDecorationColor = PokemonColorPicker.typeDecorationColor(primaryColor, isDarkened: true);
     final textTheme = context.textTheme;
     final themeData = context.themeData;
@@ -50,24 +56,24 @@ class _PokemonInfoPageState extends State<PokemonInfoPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                widget.selectedPokemon.capitalizedNamed,
+                selectedPokemon.capitalizedNamed,
                 style: textTheme.displayLarge,
               ),
               Align(
                 alignment: Alignment.centerRight,
                 child: Text(
-                  widget.selectedPokemon.formatId(),
+                  selectedPokemon.formatId(),
                   style: textTheme.displaySmall,
                 ),
               ),
               PokemonTypeList(
-                pokemon: widget.selectedPokemon,
+                pokemon: selectedPokemon,
                 isDecorationShown: true,
               ),
               Expanded(
                 flex: context.isPortrait ? 0 : 1,
                 child: PokemonImage(
-                  pokemon: widget.selectedPokemon,
+                  pokemon: selectedPokemon,
                   size: infoPageImageSize,
                 ),
               ),
@@ -84,7 +90,7 @@ class _PokemonInfoPageState extends State<PokemonInfoPage> {
               padding: infoPageModalPadding,
               child: DefaultTabController(
                 length: tabLabels.length,
-                child: context.select<AppCubit, String>((cubit) => cubit.state.waitKey) == getPokemonSpeciesKey
+                child: context.select<PokemonInfoCubit, bool>((cubit) => cubit.state.isLoading)
                     ? LoadingIndicator(color: typeDecorationColor)
                     : Column(
                         children: [
@@ -97,7 +103,7 @@ class _PokemonInfoPageState extends State<PokemonInfoPage> {
                           Expanded(
                             child: TabBarView(
                               children: [
-                                AboutTab(selectedPokemon: widget.selectedPokemon),
+                                AboutTab(selectedPokemon: selectedPokemon),
                                 const SizedBox(),
                                 const SizedBox(),
                               ],
