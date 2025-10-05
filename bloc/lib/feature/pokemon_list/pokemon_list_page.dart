@@ -1,4 +1,4 @@
-import 'package:auto_route/annotations.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pokedex_flutter_bloc/cubit/app_cubit.dart';
@@ -7,6 +7,7 @@ import 'package:pokedex_flutter_bloc/feature/pokemon_list/widgets/list_footer.da
 import 'package:pokedex_flutter_bloc/feature/pokemon_list/widgets/pokemon_card.dart';
 import 'package:pokedex_flutter_bloc/feature/pokemon_list/widgets/search_field.dart';
 import 'package:pokedex_flutter_bloc/model/union_page_state.dart';
+import 'package:pokedex_flutter_bloc/utils/app_router.gr.dart';
 import 'package:pokedex_flutter_bloc/utils/const.dart';
 import 'package:pokedex_flutter_bloc/utils/extension.dart';
 import 'package:pokedex_flutter_bloc/utils/strings.dart';
@@ -83,11 +84,13 @@ class _PokemonListPageState extends State<PokemonListPage> {
                   SliverGrid(
                     gridDelegate: pokemonGridDelegate,
                     delegate: SliverChildBuilderDelegate(
-                      (_, index) => PokemonCard(
-                        pokemon: value[index],
-                        // TODO: Add function
-                        onTap: () {},
-                      ),
+                      (_, index) {
+                        final pokemon = value[index];
+                        return PokemonCard(
+                          pokemon: pokemon,
+                          onTap: () => context.router.navigate(PokemonInfoRoute(selectedPokemon: pokemon)),
+                        );
+                      },
                       childCount: value.length,
                     ),
                   ),

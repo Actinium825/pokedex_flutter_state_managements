@@ -12,3 +12,6 @@ const pokemonGridDelegate = SliverGridDelegateWithMaxCrossAxisExtent(maxCrossAxi
 const pokemonListPageFooterHeight = 100.0;
 const progressIndicatorFooterPadding = EdgeInsets.all(12.0);
 const debouncerDelayInMilliseconds = 300;
+const idNumberPadWidth = 3;
+const infoPageHeaderPadding = EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0);
+const infoPageImageSize = 200.0;
