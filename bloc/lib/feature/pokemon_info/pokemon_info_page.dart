@@ -83,43 +83,41 @@ class PokemonInfoView extends StatelessWidget {
           ),
         ),
         Expanded(
-          child: DecoratedBox(
+          child: Container(
             decoration: BoxDecoration(
               color: themeData.primaryColor,
               borderRadius: infoPageModalRadius,
             ),
-            child: Padding(
-              padding: infoPageModalPadding,
-              child: Material(
-                color: Colors.transparent,
-                child: DefaultTabController(
-                  length: tabLabels.length,
-                  child: switch (context.select<PokemonInfoCubit, bool>((cubit) => cubit.state.isLoading)) {
-                    true => LoadingIndicator(color: typeDecorationColor),
-                    false => Column(
-                      children: [
-                        TabBar(
-                          labelColor: typeDecorationColor,
-                          indicatorColor: typeDecorationColor,
-                          unselectedLabelColor: themeData.unselectedWidgetColor,
-                          tabs: tabLabels.forLoop((tabLabel) => Tab(text: tabLabel)),
+            padding: infoPageModalPadding,
+            child: Material(
+              color: Colors.transparent,
+              child: DefaultTabController(
+                length: tabLabels.length,
+                child: switch (context.select<PokemonInfoCubit, bool>((cubit) => cubit.state.isLoading)) {
+                  true => LoadingIndicator(color: typeDecorationColor),
+                  false => Column(
+                    children: [
+                      TabBar(
+                        labelColor: typeDecorationColor,
+                        indicatorColor: typeDecorationColor,
+                        unselectedLabelColor: themeData.unselectedWidgetColor,
+                        tabs: tabLabels.forLoop((tabLabel) => Tab(text: tabLabel)),
+                      ),
+                      Expanded(
+                        child: TabBarView(
+                          children: [
+                            AboutTab(selectedPokemon: selectedPokemon),
+                            EvolutionTab(
+                              pokemonEvolutionChain: context.read<PokemonInfoCubit>().state.pokemonEvolutionChain,
+                              pokemonEvolutionList: context.read<PokemonInfoCubit>().state.pokemonEvolutionList,
+                            ),
+                            MovesTab(selectedPokemon: selectedPokemon),
+                          ],
                         ),
-                        Expanded(
-                          child: TabBarView(
-                            children: [
-                              AboutTab(selectedPokemon: selectedPokemon),
-                              EvolutionTab(
-                                pokemonEvolutionChain: context.read<PokemonInfoCubit>().state.pokemonEvolutionChain,
-                                pokemonEvolutionList: context.read<PokemonInfoCubit>().state.pokemonEvolutionList,
-                              ),
-                              MovesTab(selectedPokemon: selectedPokemon),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  },
-                ),
+                      ),
+                    ],
+                  ),
+                },
               ),
             ),
           ),

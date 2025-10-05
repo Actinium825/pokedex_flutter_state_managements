@@ -74,46 +74,44 @@ class PokemonInfoPage extends StatelessWidget {
           ),
         ),
         Expanded(
-          child: DecoratedBox(
+          child: Container(
             decoration: BoxDecoration(
               color: themeData.primaryColor,
               borderRadius: infoPageModalRadius,
             ),
-            child: Padding(
-              padding: infoPageModalPadding,
-              child: Material(
-                color: Colors.transparent,
-                child: DefaultTabController(
-                  length: tabLabels.length,
-                  child: switch (isLoading) {
-                    true => LoadingIndicator(color: typeDecorationColor),
-                    false => Column(
-                      children: [
-                        TabBar(
-                          labelColor: typeDecorationColor,
-                          indicatorColor: typeDecorationColor,
-                          unselectedLabelColor: themeData.unselectedWidgetColor,
-                          tabs: tabLabels.forLoop((tabLabel) => Tab(text: tabLabel)),
+            padding: infoPageModalPadding,
+            child: Material(
+              color: Colors.transparent,
+              child: DefaultTabController(
+                length: tabLabels.length,
+                child: switch (isLoading) {
+                  true => LoadingIndicator(color: typeDecorationColor),
+                  false => Column(
+                    children: [
+                      TabBar(
+                        labelColor: typeDecorationColor,
+                        indicatorColor: typeDecorationColor,
+                        unselectedLabelColor: themeData.unselectedWidgetColor,
+                        tabs: tabLabels.forLoop((tabLabel) => Tab(text: tabLabel)),
+                      ),
+                      Expanded(
+                        child: TabBarView(
+                          children: [
+                            AboutTab(
+                              selectedPokemon: selectedPokemon,
+                              flavorTextEnglish: pokemonSpecies.flavorTextEnglish,
+                            ),
+                            EvolutionTab(
+                              pokemonEvolutionChain: pokemonEvolutionChain,
+                              pokemonEvolutionList: pokemonEvolutionList,
+                            ),
+                            MovesTab(selectedPokemon: selectedPokemon),
+                          ],
                         ),
-                        Expanded(
-                          child: TabBarView(
-                            children: [
-                              AboutTab(
-                                selectedPokemon: selectedPokemon,
-                                flavorTextEnglish: pokemonSpecies.flavorTextEnglish,
-                              ),
-                              EvolutionTab(
-                                pokemonEvolutionChain: pokemonEvolutionChain,
-                                pokemonEvolutionList: pokemonEvolutionList,
-                              ),
-                              MovesTab(selectedPokemon: selectedPokemon),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  },
-                ),
+                      ),
+                    ],
+                  ),
+                },
               ),
             ),
           ),
