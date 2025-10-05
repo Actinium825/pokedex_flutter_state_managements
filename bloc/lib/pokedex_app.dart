@@ -13,6 +13,7 @@ class PokedexApp extends StatelessWidget {
     return BlocProvider<AppCubit>(
       create: (_) => AppCubit(),
       child: BlocBuilder<AppCubit, AppState>(
+        buildWhen: (previous, current) => previous.themeMode != current.themeMode,
         builder: (_, state) => MaterialApp.router(
           debugShowCheckedModeBanner: false,
           themeMode: state.themeMode,
