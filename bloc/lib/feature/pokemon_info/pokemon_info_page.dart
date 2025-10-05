@@ -1,10 +1,12 @@
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:pokedex_flutter_bloc/apis/model/pokemon.dart';
+import 'package:pokedex_flutter_bloc/classes/pokemon_color_picker.dart';
 import 'package:pokedex_flutter_bloc/extensions/pokemon_ext.dart';
 import 'package:pokedex_flutter_bloc/feature/pokemon_info/widgets/info_scaffold.dart';
 import 'package:pokedex_flutter_bloc/utils/const.dart';
 import 'package:pokedex_flutter_bloc/utils/extension.dart';
+import 'package:pokedex_flutter_bloc/utils/strings.dart';
 import 'package:pokedex_flutter_bloc/widgets/pokemon_image.dart';
 import 'package:pokedex_flutter_bloc/widgets/pokemon_type_list.dart';
 
@@ -20,7 +22,9 @@ class PokemonInfoPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final primaryColor = selectedPokemon.primaryColor;
+    final typeDecorationColor = PokemonColorPicker.typeDecorationColor(primaryColor, isDarkened: true);
     final textTheme = context.textTheme;
+    final themeData = context.themeData;
 
     return InfoScaffold(
       color: primaryColor,
@@ -53,6 +57,39 @@ class PokemonInfoPage extends StatelessWidget {
                 ),
               ),
             ],
+          ),
+        ),
+        Expanded(
+          child: DecoratedBox(
+            decoration: BoxDecoration(
+              color: themeData.primaryColor,
+              borderRadius: infoPageModalRadius,
+            ),
+            child: Padding(
+              padding: infoPageModalPadding,
+              child: DefaultTabController(
+                length: tabLabels.length,
+                child: Column(
+                  children: [
+                    TabBar(
+                      labelColor: typeDecorationColor,
+                      indicatorColor: typeDecorationColor,
+                      unselectedLabelColor: themeData.unselectedWidgetColor,
+                      tabs: tabLabels.forLoop((tabLabel) => Tab(text: tabLabel)),
+                    ),
+                    const Expanded(
+                      child: TabBarView(
+                        children: [
+                          SizedBox(),
+                          SizedBox(),
+                          SizedBox(),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
           ),
         ),
       ],

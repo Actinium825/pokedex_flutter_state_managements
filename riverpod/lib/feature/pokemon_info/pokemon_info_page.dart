@@ -52,17 +52,19 @@ class PokemonInfoPage extends ConsumerWidget {
           ),
         ),
         Expanded(
-          child: Container(
-            padding: infoPageModalPadding,
+          child: DecoratedBox(
             decoration: BoxDecoration(
               color: context.themeData.primaryColor,
               borderRadius: infoPageModalRadius,
             ),
-            child: DefaultTabController(
-              length: tabLabels.length,
-              child: const Material(
-                color: Colors.transparent,
-                child: InfoTabBody(),
+            child: Padding(
+              padding: infoPageModalPadding,
+              child: DefaultTabController(
+                length: tabLabels.length,
+                child: const Material(
+                  color: Colors.transparent,
+                  child: InfoTabBody(),
+                ),
               ),
             ),
           ),
