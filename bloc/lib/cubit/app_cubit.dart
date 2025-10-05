@@ -38,41 +38,55 @@ class AppCubit extends Cubit<AppState> {
     AppRouterRepo.context.pop();
   }
 
-  Future<void> getSimplePokemonList({String? nextPageUrl}) async {
-    await _loadingAction(
-      () async {
-        final simplePokemonList = await ApiService.pokemonApi.getSimplePokemonList(nextPageUrl: nextPageUrl);
-        emit(state.copyWith(simplePokemonList: simplePokemonList));
-      },
-    );
-  }
+  void initPokemonListPage() => _loadingAction(
+    initPokemonListKey,
+    () async {
+      final pokemonApi = ApiService.pokemonApi;
+      final simplePokemonList = await pokemonApi.getSimplePokemonList();
+      final receivedPokemonList = await pokemonApi.getPokemonList(
+        simplePokemonList: simplePokemonList.simplePokemonList,
+      );
 
-  Future<void> getPokemonList() async {
-    await _loadingAction(
-      () async {
-        final receivedPokemonList = await ApiService.pokemonApi.getPokemonList(
-          simplePokemonList: state.simplePokemonList.simplePokemonList,
-        );
-        final updatedPokemonList = state.pokemonList.followedBy(receivedPokemonList).toList();
+      emit(
+        state.copyWith(
+          simplePokemonList: simplePokemonList,
+          pokemonList: receivedPokemonList,
+        ),
+      );
+    },
+  );
 
-        emit(state.copyWith(pokemonList: updatedPokemonList));
-      },
-    );
-  }
+  void getMorePokemon() => _loadingAction(
+    getMorePokemonKey,
+    () async {
+      final pokemonApi = ApiService.pokemonApi;
+      final simplePokemonList = await pokemonApi.getSimplePokemonList(
+        nextPageUrl: state.simplePokemonList.next,
+      );
+      final receivedPokemonList = await pokemonApi.getPokemonList(
+        simplePokemonList: simplePokemonList.simplePokemonList,
+      );
 
-  Future<void> initPokemonListPage() async {
-    await getSimplePokemonList();
-    await getPokemonList();
-  }
+      emit(
+        state.copyWith(
+          simplePokemonList: simplePokemonList,
+          pokemonList: state.pokemonList.followedBy(receivedPokemonList).toList(),
+        ),
+      );
+    },
+  );
 
   UnionPageState<PokemonList> pokemonListState() {
-    if (state.isLoading) return const UnionPageState.loading();
+    if (state.waitKey == initPokemonListKey) return const UnionPageState.loading();
     if (state.pokemonList.isEmpty) return const UnionPageState.error(emptyPokemonLabel);
     return UnionPageState(state.pokemonList);
   }
 
-  Future<void> _loadingAction(AsyncCallback function) async {
-    emit(state.copyWith(isLoading: true));
+  Future<void> _loadingAction(String waitKey, AsyncCallback function) async {
+    if (state.waitKey == waitKey) return;
+
+    emit(state.copyWith(waitKey: waitKey));
+
     await function()
         .onError(
           (error, _) {
@@ -86,6 +100,6 @@ class AppCubit extends Cubit<AppState> {
             );
           },
         )
-        .whenComplete(() => emit(state.copyWith(isLoading: false)));
+        .whenComplete(() => emit(state.copyWith(waitKey: '')));
   }
 }
