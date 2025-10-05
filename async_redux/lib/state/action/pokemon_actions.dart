@@ -160,9 +160,9 @@ class GetPokemonEvolutionListAction extends ReduxAction<AppState> {
 class ClearPokemonInfoPageAction extends ReduxAction<AppState> {
   @override
   AppState reduce() => state.copyWith(
-        selectedPokemon: null,
-        pokemonSpecies: null,
-        pokemonEvolutionChain: null,
-        pokemonEvolutionList: [],
-      );
+    selectedPokemon: null,
+    pokemonSpecies: null,
+    pokemonEvolutionChain: null,
+    pokemonEvolutionList: [],
+  );
 }

@@ -26,8 +26,10 @@ class AboutTab extends StatelessWidget {
     return [
       MapEntry(primaryColor, sprintf(heightValue, [selectedPokemon.heightInDecimeters / 10])),
       MapEntry(lightenColor, sprintf(weightValue, [selectedPokemon.weightInDecimeters / 10])),
-      MapEntry(primaryColor,
-          selectedPokemon.abilityList.forLoop((ability) => ability.abilityInfo.name.capitalize()).join(', ')),
+      MapEntry(
+        primaryColor,
+        selectedPokemon.abilityList.forLoop((ability) => ability.abilityInfo.name.capitalize()).join(', '),
+      ),
       MapEntry(lightenColor, sprintf(xpValue, [selectedPokemon.baseExperience])),
     ];
   }

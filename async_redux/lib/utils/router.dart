@@ -9,7 +9,7 @@ part 'router.g.dart';
 final router = GoRouter(
   routes: $appRoutes,
   debugLogDiagnostics: kDebugMode,
-  errorBuilder: (_, __) => const PokemonListConnector(),
+  errorBuilder: (_, _) => const PokemonListConnector(),
   observers: [RouteObserver<ModalRoute<void>>()],
 );
 
@@ -18,7 +18,7 @@ final router = GoRouter(
   routes: [
     TypedGoRoute<PokemonInfoRoute>(
       path: 'pokemon-info',
-    )
+    ),
   ],
 )
 class PokemonListRoute extends GoRouteData with $PokemonListRoute {

@@ -60,12 +60,12 @@ class _PokemonListPageState extends State<PokemonListPage> {
   }
 
   void _showThemeChoiceDialog() => showDialog<void>(
-        context: context,
-        builder: (_) => ThemeChoiceDialog(
-          savedThemeMode: widget.savedThemeMode,
-          onSelectTheme: _onSelectTheme,
-        ),
-      );
+    context: context,
+    builder: (_) => ThemeChoiceDialog(
+      savedThemeMode: widget.savedThemeMode,
+      onSelectTheme: _onSelectTheme,
+    ),
+  );
 
   void _onSelectOption(String option) {
     if (option == chooseThemeMenuLabel) _showThemeChoiceDialog();
@@ -114,19 +114,20 @@ class _PokemonListPageState extends State<PokemonListPage> {
     return ListScaffold(
       appBarLeading: ValueListenableBuilder<bool>(
         valueListenable: _isSearchingNotifier,
-        builder: (_, isSearching, __) => isSearching
-            ? SearchField(textEditingController: _textEditingController)
-            : Text(
-                appTitle,
-                style: context.textTheme.displayMedium,
-              ),
+        builder: (_, isSearching, _) => switch (isSearching) {
+          true => SearchField(textEditingController: _textEditingController),
+          false => Text(
+            appTitle,
+            style: context.textTheme.displayMedium,
+          ),
+        },
       ),
       appBarActions: [
         IconButton(
           onPressed: _onPressSearch,
           icon: ValueListenableBuilder<bool>(
             valueListenable: _isSearchingNotifier,
-            builder: (_, isSearching, __) => Icon(isSearching ? Icons.close : Icons.search),
+            builder: (_, isSearching, _) => Icon(isSearching ? Icons.close : Icons.search),
           ),
         ),
         IconButton(
@@ -139,7 +140,7 @@ class _PokemonListPageState extends State<PokemonListPage> {
             const PopupMenuItem(
               value: chooseThemeMenuLabel,
               child: Text(chooseThemeMenuLabel),
-            )
+            ),
           ],
         ),
       ],
@@ -149,32 +150,32 @@ class _PokemonListPageState extends State<PokemonListPage> {
           padding: pokemonListPagePadding,
           child: switch (_textEditingController.text.isNotEmpty ? widget.unionSearchPageState : widget.unionPageState) {
             Data<PokemonList>(:final value) => CustomScrollView(
-                controller: _scrollController,
-                slivers: [
-                  SliverGrid(
-                    gridDelegate: pokemonGridDelegate,
-                    delegate: SliverChildBuilderDelegate(
-                      (_, index) {
-                        final pokemon = value[index];
-                        return PokemonCard(
-                          pokemon: pokemon,
-                          onTap: () => _onTapPokemonCard(pokemon),
-                        );
-                      },
-                      childCount: value.length,
-                    ),
+              controller: _scrollController,
+              slivers: [
+                SliverGrid(
+                  gridDelegate: pokemonGridDelegate,
+                  delegate: SliverChildBuilderDelegate(
+                    (_, index) {
+                      final pokemon = value[index];
+                      return PokemonCard(
+                        pokemon: pokemon,
+                        onTap: () => _onTapPokemonCard(pokemon),
+                      );
+                    },
+                    childCount: value.length,
                   ),
-                  if (widget.isGettingMorePokemon)
-                    const SliverToBoxAdapter(
-                      child: Padding(
-                        padding: progressIndicatorFooterPadding,
-                        child: LoadingIndicator(),
-                      ),
-                    )
-                  else
-                    const SliverToBoxAdapter(child: SizedBox(height: pokemonListPageFooterHeight))
-                ],
-              ),
+                ),
+                if (widget.isGettingMorePokemon)
+                  const SliverToBoxAdapter(
+                    child: Padding(
+                      padding: progressIndicatorFooterPadding,
+                      child: LoadingIndicator(),
+                    ),
+                  )
+                else
+                  const SliverToBoxAdapter(child: SizedBox(height: pokemonListPageFooterHeight)),
+              ],
+            ),
             Loading<PokemonList>() => const LoadingIndicator(),
             Error<PokemonList>(:final message) => AlertDialog(title: Text(message ?? '')),
           },

@@ -40,12 +40,12 @@ class _PokemonListPageState extends ConsumerState<PokemonListPage> {
   }
 
   void _showThemeChoiceDialog() => showDialog<void>(
-        context: context,
-        builder: (_) => ThemeChoiceDialog(
-          savedThemeMode: ref.read(selectedThemeProvider),
-          onSelectTheme: _onSelectTheme,
-        ),
-      );
+    context: context,
+    builder: (_) => ThemeChoiceDialog(
+      savedThemeMode: ref.read(selectedThemeProvider),
+      onSelectTheme: _onSelectTheme,
+    ),
+  );
 
   void _onSelectOption(String option) {
     if (option == chooseThemeMenuLabel) _showThemeChoiceDialog();
@@ -94,19 +94,20 @@ class _PokemonListPageState extends ConsumerState<PokemonListPage> {
     return ListScaffold(
       appBarLeading: ValueListenableBuilder<bool>(
         valueListenable: _isSearchingNotifier,
-        builder: (_, isSearching, __) => isSearching
-            ? SearchField(textEditingController: _textEditingController)
-            : Text(
-                appTitle,
-                style: context.textTheme.displayMedium,
-              ),
+        builder: (_, isSearching, _) => switch (isSearching) {
+          true => SearchField(textEditingController: _textEditingController),
+          false => Text(
+            appTitle,
+            style: context.textTheme.displayMedium,
+          ),
+        },
       ),
       appBarActions: [
         IconButton(
           onPressed: _onPressSearch,
           icon: ValueListenableBuilder<bool>(
             valueListenable: _isSearchingNotifier,
-            builder: (_, isSearching, __) => Icon(isSearching ? Icons.close : Icons.search),
+            builder: (_, isSearching, _) => Icon(isSearching ? Icons.close : Icons.search),
           ),
         ),
         IconButton(

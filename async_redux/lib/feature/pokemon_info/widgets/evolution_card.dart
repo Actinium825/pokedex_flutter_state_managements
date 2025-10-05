@@ -22,10 +22,10 @@ class EvolutionCard extends StatelessWidget {
   final int? index;
 
   CrossAxisAlignment get _crossAxisAlignment => switch (index) {
-        1 || 2 => CrossAxisAlignment.end,
-        7 || 8 => CrossAxisAlignment.start,
-        _ => CrossAxisAlignment.center,
-      };
+    1 || 2 => CrossAxisAlignment.end,
+    7 || 8 => CrossAxisAlignment.start,
+    _ => CrossAxisAlignment.center,
+  };
 
   @override
   Widget build(BuildContext context) {
