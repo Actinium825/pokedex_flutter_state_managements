@@ -8,6 +8,7 @@ on:
       - 'bloc/**'
       - 'async_redux/**'
       - 'riverpod/**'
+      - 'getx/**'
 
   workflow_dispatch:
 
@@ -23,6 +24,7 @@ jobs:
       bloc: ${{ steps.filter.outputs.bloc }}
       async_redux: ${{ steps.filter.outputs.async_redux }}
       riverpod: ${{ steps.filter.outputs.riverpod }}
+      getx: ${{ steps.filter.outputs.getx }}
 
     steps:
       - name: Checkout
@@ -41,6 +43,8 @@ jobs:
               - 'async_redux/**'
             riverpod:
               - 'riverpod/**'
+            getx:
+              - 'getx/**'
 
   review:
     needs: changes
@@ -59,6 +63,9 @@ jobs:
           - folder_name: 'Riverpod'
             run_check: ${{ needs.changes.outputs.riverpod }}
             working_dir: 'riverpod'
+          - folder_name: 'Get'
+            run_check: ${{ needs.changes.outputs.getx }}
+            working_dir: 'getx'
 
     defaults:
       run:
