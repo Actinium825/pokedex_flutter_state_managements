@@ -14,3 +14,4 @@ targets:
             - lib/cubit/app_state.dart
             - lib/apis/model/*
             - lib/model/*
+            - lib/feature/pokemon_info/cubit/*
