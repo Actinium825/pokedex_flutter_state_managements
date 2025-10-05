@@ -12,6 +12,7 @@ abstract class AppState with _$AppState {
     @Default(ThemeMode.system) ThemeMode themeMode,
     @Default(SimplePokemonList()) SimplePokemonList simplePokemonList,
     @Default(<Pokemon>[]) PokemonList pokemonList,
+    @Default(<Pokemon>[]) PokemonList searchResultList,
     @Default('') String waitKey,
     @Default(false) bool isSearching,
   }) = _AppState;

@@ -76,7 +76,9 @@ class _PokemonListPageState extends State<PokemonListPage> {
         child: Padding(
           padding: pokemonListPagePadding,
           child: BlocBuilder<AppCubit, AppState>(
-            builder: (context, _) => switch (appCubit.pokemonListState()) {
+            builder: (context, _) => switch (appCubit.textEditingController.text.isNotEmpty
+                ? appCubit.searchingState()
+                : appCubit.pokemonListState()) {
               Data<PokemonList>(:final value) => CustomScrollView(
                 controller: appCubit.scrollController,
                 slivers: [
