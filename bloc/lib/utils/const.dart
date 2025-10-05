@@ -26,3 +26,6 @@ const evolutionGridCrossAxisCount = 3;
 const evolutionGridMainAxisSpacing = 40.0;
 const evolutionTabMargin = EdgeInsets.symmetric(vertical: 32.0);
 const evolutionGridCount = 9;
+const movesTabPadding = EdgeInsets.symmetric(vertical: 8.0, horizontal: 4.0);
+const movesSpacing = 3.0;
+const movesPadding = EdgeInsets.all(8.0);

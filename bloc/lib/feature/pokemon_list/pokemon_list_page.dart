@@ -39,15 +39,13 @@ class _PokemonListPageState extends State<PokemonListPage> {
   Widget build(BuildContext context) {
     final appCubit = context.read<AppCubit>();
     return ListScaffold(
-      appBarLeading: AppBar(
-        title: switch (context.select<AppCubit, bool>((cubit) => cubit.state.isSearching)) {
-          true => const SearchField(),
-          false => Text(
-            appTitle,
-            style: context.textTheme.displayMedium,
-          ),
-        },
-      ),
+      appBarLeading: switch (context.select<AppCubit, bool>((cubit) => cubit.state.isSearching)) {
+        true => const SearchField(),
+        false => Text(
+          appTitle,
+          style: context.textTheme.displayMedium,
+        ),
+      },
       appBarActions: [
         IconButton(
           onPressed: appCubit.onPressSearch,
