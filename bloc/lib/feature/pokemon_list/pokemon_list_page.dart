@@ -55,7 +55,7 @@ class _PokemonListPageState extends State<PokemonListPage> {
             ),
           ),
           IconButton(
-            onPressed: appCubit.getInitialPokemonList,
+            onPressed: appCubit.onRefresh,
             icon: const Icon(Icons.refresh),
           ),
           PopupMenuButton(
@@ -70,9 +70,7 @@ class _PokemonListPageState extends State<PokemonListPage> {
         ],
       ),
       body: RefreshIndicator(
-        onRefresh: () async {
-          appCubit.getInitialPokemonList();
-        },
+        onRefresh: () async => appCubit.onRefresh(),
         child: Padding(
           padding: pokemonListPagePadding,
           child: BlocBuilder<AppCubit, AppState>(

@@ -57,7 +57,7 @@ class AppCubit extends Cubit<AppState> {
 
   void onPressSearch() {
     emit(state.copyWith(isSearching: !state.isSearching));
-    if (textEditingController.text.isNotEmpty) textEditingController.clear();
+    _onClearText();
   }
 
   void _onReachEnd() {
@@ -126,6 +126,16 @@ class AppCubit extends Cubit<AppState> {
       emit(state.copyWith(searchResultList: searchResultList));
     },
   );
+
+  void onRefresh() {
+    _onClearText();
+    if (state.isSearching) emit(state.copyWith(isSearching: false));
+    getInitialPokemonList();
+  }
+
+  void _onClearText() {
+    if (textEditingController.text.isNotEmpty) textEditingController.clear();
+  }
 
   void _onUpdateText() {
     _debouncer?.cancel();
