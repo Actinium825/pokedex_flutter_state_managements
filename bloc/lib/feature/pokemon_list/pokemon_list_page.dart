@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pokedex_flutter_bloc/cubit/app_cubit.dart';
 import 'package:pokedex_flutter_bloc/cubit/app_state.dart';
-import 'package:pokedex_flutter_bloc/feature/pokemon_list/widgets/list_footer.dart';
 import 'package:pokedex_flutter_bloc/feature/pokemon_list/widgets/pokemon_card.dart';
 import 'package:pokedex_flutter_bloc/feature/pokemon_list/widgets/search_field.dart';
 import 'package:pokedex_flutter_bloc/model/union_page_state.dart';
@@ -40,20 +39,16 @@ class _PokemonListPageState extends State<PokemonListPage> {
     final appCubit = context.read<AppCubit>();
     return Scaffold(
       appBar: AppBar(
-        title: BlocBuilder<AppCubit, AppState>(
-          builder: (_, state) => state.isSearching
-              ? const SearchField()
-              : Text(
-                  appTitle,
-                  style: context.textTheme.displayMedium,
-                ),
-        ),
+        title: context.select<AppCubit, bool>((cubit) => cubit.state.isSearching)
+            ? const SearchField()
+            : Text(
+                appTitle,
+                style: context.textTheme.displayMedium,
+              ),
         actions: [
           IconButton(
             onPressed: appCubit.onPressSearch,
-            icon: BlocBuilder<AppCubit, AppState>(
-              builder: (_, state) => Icon(state.isSearching ? Icons.close : Icons.search),
-            ),
+            icon: Icon(context.select<AppCubit, bool>((cubit) => cubit.state.isSearching) ? Icons.close : Icons.search),
           ),
           IconButton(
             onPressed: appCubit.onRefresh,
@@ -94,7 +89,15 @@ class _PokemonListPageState extends State<PokemonListPage> {
                       childCount: value.length,
                     ),
                   ),
-                  const ListFooter(),
+                  if (context.select<AppCubit, String>((cubit) => cubit.state.waitKey) == getMorePokemonKey)
+                    const SliverToBoxAdapter(
+                      child: Padding(
+                        padding: progressIndicatorFooterPadding,
+                        child: LoadingIndicator(),
+                      ),
+                    )
+                  else
+                    const SliverToBoxAdapter(child: SizedBox(height: pokemonListPageFooterHeight)),
                 ],
               ),
               Loading<PokemonList>() => const LoadingIndicator(),
