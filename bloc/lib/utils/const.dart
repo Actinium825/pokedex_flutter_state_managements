@@ -15,3 +15,5 @@ const debouncerDelayInMilliseconds = 300;
 const idNumberPadWidth = 3;
 const infoPageHeaderPadding = EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0);
 const infoPageImageSize = 200.0;
+const infoPageModalPadding = EdgeInsets.symmetric(horizontal: 4.0);
+const infoPageModalRadius = BorderRadius.vertical(top: Radius.circular(20.0));
