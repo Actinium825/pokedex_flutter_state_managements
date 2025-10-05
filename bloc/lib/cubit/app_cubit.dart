@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:auto_route/auto_route.dart';
+import 'package:dartx/dartx.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -10,6 +11,7 @@ import 'package:pokedex_flutter_bloc/feature/pokemon_list/widgets/theme_choice_d
 import 'package:pokedex_flutter_bloc/model/union_page_state.dart';
 import 'package:pokedex_flutter_bloc/repositories/app_router_repo.dart';
 import 'package:pokedex_flutter_bloc/repositories/shared_prefs_repo.dart';
+import 'package:pokedex_flutter_bloc/utils/const.dart';
 import 'package:pokedex_flutter_bloc/utils/strings.dart';
 import 'package:pokedex_flutter_bloc/utils/typedef.dart';
 
@@ -20,6 +22,7 @@ class AppCubit extends Cubit<AppState> {
 
   late final ScrollController scrollController;
   late final TextEditingController textEditingController;
+  Timer? _debouncer;
 
   void loadTheme() {
     final themeModeIndex = SharedPrefsRepo.prefs.getInt(themeSharedPrefsKey) ?? ThemeMode.system.index;
@@ -43,7 +46,7 @@ class AppCubit extends Cubit<AppState> {
 
   void initPokemonListPage() {
     scrollController = ScrollController()..addListener(_onReachEnd);
-    textEditingController = TextEditingController();
+    textEditingController = TextEditingController()..addListener(_onUpdateText);
     getInitialPokemonList();
   }
 
@@ -54,7 +57,7 @@ class AppCubit extends Cubit<AppState> {
 
   void onPressSearch() {
     emit(state.copyWith(isSearching: !state.isSearching));
-    if (textEditingController.text.isNotEmpty) textEditingController.clear();
+    _onClearText();
   }
 
   void _onReachEnd() {
@@ -102,8 +105,44 @@ class AppCubit extends Cubit<AppState> {
 
   UnionPageState<PokemonList> pokemonListState() {
     if (state.waitKey == initPokemonListKey) return const UnionPageState.loading();
-    if (state.pokemonList.isEmpty) return const UnionPageState.error(emptyPokemonLabel);
-    return UnionPageState(state.pokemonList);
+    final pokemonList = state.pokemonList;
+    return pokemonList.isEmpty ? const UnionPageState.error(emptyPokemonLabel) : UnionPageState(pokemonList);
+  }
+
+  UnionPageState<PokemonList> searchingState() {
+    if (state.waitKey == searchPokemonKey) return const UnionPageState.loading();
+    final searchResultList = state.searchResultList;
+    return searchResultList.isEmpty ? const UnionPageState.error(emptyPokemonLabel) : UnionPageState(searchResultList);
+  }
+
+  void searchPokemon() => _loadingAction(
+    searchPokemonKey,
+    () async {
+      final searchText = textEditingController.text;
+
+      if (searchText.isEmpty) return emit(state.copyWith(searchResultList: []));
+
+      final searchResultList = await ApiService.pokemonApi.searchPokemon(pokemonName: searchText.trim());
+      emit(state.copyWith(searchResultList: searchResultList));
+    },
+  );
+
+  void onRefresh() {
+    _onClearText();
+    if (state.isSearching) emit(state.copyWith(isSearching: false));
+    getInitialPokemonList();
+  }
+
+  void _onClearText() {
+    if (textEditingController.text.isNotEmpty) textEditingController.clear();
+  }
+
+  void _onUpdateText() {
+    _debouncer?.cancel();
+    _debouncer = Timer(
+      debouncerDelayInMilliseconds.milliseconds,
+      searchPokemon,
+    );
   }
 
   Future<void> _loadingAction(String waitKey, AsyncCallback function) async {

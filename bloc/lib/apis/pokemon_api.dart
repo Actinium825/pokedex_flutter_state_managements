@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:pokedex_flutter_bloc/apis/api_client.dart';
 import 'package:pokedex_flutter_bloc/apis/model/pokemon.dart';
 import 'package:pokedex_flutter_bloc/apis/model/simple_pokemon.dart';
@@ -30,5 +31,19 @@ class PokemonApi {
     final responses = await Future.wait(futures);
 
     return responses.forLoop((response) => Pokemon.fromJson(response.data!));
+  }
+
+  Future<PokemonList> searchPokemon({required String pokemonName}) async {
+    final baseUrl = apiClient.baseUrl;
+    final fetchUrl = '$baseUrl/pokemon/$pokemonName';
+
+    try {
+      final response = await apiClient.dio.get<Json>(fetchUrl);
+      final pokemon = Pokemon.fromJson(response.data!);
+
+      return [pokemon];
+    } on DioException catch (_) {
+      return List.empty();
+    }
   }
 }
