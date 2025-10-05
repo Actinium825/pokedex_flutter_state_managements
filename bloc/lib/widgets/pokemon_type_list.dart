@@ -33,11 +33,12 @@ class PokemonTypeList extends StatelessWidget {
         ),
     ];
 
-    return isDecorationShown
-        ? Row(children: children)
-        : Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: children,
-          );
+    return switch (isDecorationShown) {
+      true => Row(children: children),
+      false => Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: children,
+      ),
+    };
   }
 }

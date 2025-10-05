@@ -45,7 +45,7 @@ class InfoTabBody extends ConsumerWidget {
           ),
         ],
       ),
-      error: (_, __) => const SizedBox(),
+      error: (_, _) => const SizedBox(),
       loading: () => LoadingIndicator(color: typeDecorationColor),
     );
   }

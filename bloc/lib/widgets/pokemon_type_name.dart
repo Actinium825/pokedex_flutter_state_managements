@@ -19,12 +19,13 @@ class PokemonTypeName extends StatelessWidget {
     return Container(
       padding: pokemonTypeNamePadding,
       margin: pokemonTypeNameMargin,
-      decoration: primaryColor == null
-          ? null
-          : BoxDecoration(
-              color: PokemonColorPicker.typeDecorationColor(primaryColor!),
-              borderRadius: BorderRadius.circular(typeNameRadius),
-            ),
+      decoration: switch (primaryColor == null) {
+        true => null,
+        false => BoxDecoration(
+          color: PokemonColorPicker.typeDecorationColor(primaryColor!),
+          borderRadius: BorderRadius.circular(typeNameRadius),
+        ),
+      },
       child: Text(
         name.capitalize(),
         style: context.textTheme.headlineMedium,

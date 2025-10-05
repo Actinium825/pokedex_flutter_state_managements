@@ -10,12 +10,12 @@ import 'package:pokedex_flutter_async_redux/utils/typedef.dart';
 class PokemonInfoVmFactory extends VmFactory<AppState, PokemonInfoConnector, PokemonInfoVm> {
   @override
   PokemonInfoVm fromStore() => PokemonInfoVm(
-        selectedPokemon: state.selectedPokemon ?? const Pokemon(),
-        isLoading: state.wait.isWaiting(InitPokemonInfoPageAction.waitKey),
-        pokemonSpecies: state.pokemonSpecies ?? const PokemonSpecies(),
-        pokemonEvolutionChain: state.pokemonEvolutionChain ?? const PokemonEvolutionChain(),
-        pokemonEvolutionList: state.pokemonEvolutionList,
-      );
+    selectedPokemon: state.selectedPokemon ?? const Pokemon(),
+    isLoading: state.wait.isWaiting(InitPokemonInfoPageAction.waitKey),
+    pokemonSpecies: state.pokemonSpecies ?? const PokemonSpecies(),
+    pokemonEvolutionChain: state.pokemonEvolutionChain ?? const PokemonEvolutionChain(),
+    pokemonEvolutionList: state.pokemonEvolutionList,
+  );
 }
 
 class PokemonInfoVm extends Vm {
@@ -32,12 +32,12 @@ class PokemonInfoVm extends Vm {
     required this.pokemonEvolutionChain,
     required this.pokemonEvolutionList,
   }) : super(
-          equals: [
-            selectedPokemon,
-            pokemonSpecies,
-            isLoading,
-            pokemonEvolutionChain,
-            pokemonEvolutionList,
-          ],
-        );
+         equals: [
+           selectedPokemon,
+           pokemonSpecies,
+           isLoading,
+           pokemonEvolutionChain,
+           pokemonEvolutionList,
+         ],
+       );
 }

@@ -13,16 +13,16 @@ import 'package:pokedex_flutter_async_redux/utils/typedef.dart';
 class PokemonListVmFactory extends VmFactory<AppState, PokemonListConnector, PokemonListVm> {
   @override
   PokemonListVm fromStore() => PokemonListVm(
-        savedThemeMode: state.savedThemeMode,
-        onSetTheme: _onSetTheme,
-        unionPageState: _getLoadingState(),
-        unionSearchPageState: _getSearchingState(),
-        onGetMorePokemon: _onGetMorePokemon,
-        isGettingMorePokemon: state.wait.isWaiting(GetMorePokemonAction.waitKey),
-        onRefreshPage: _onRefreshPage,
-        onSearchPokemon: _onSearchPokemon,
-        onSelectPokemon: _onSelectPokemon,
-      );
+    savedThemeMode: state.savedThemeMode,
+    onSetTheme: _onSetTheme,
+    unionPageState: _getLoadingState(),
+    unionSearchPageState: _getSearchingState(),
+    onGetMorePokemon: _onGetMorePokemon,
+    isGettingMorePokemon: state.wait.isWaiting(GetMorePokemonAction.waitKey),
+    onRefreshPage: _onRefreshPage,
+    onSearchPokemon: _onSearchPokemon,
+    onSelectPokemon: _onSelectPokemon,
+  );
 
   void _onSetTheme(ThemeMode themeMode) => dispatch(SetThemeAction(themeMode));
 
@@ -69,11 +69,11 @@ class PokemonListVm extends Vm {
     required this.onSearchPokemon,
     required this.onSelectPokemon,
   }) : super(
-          equals: [
-            savedThemeMode,
-            unionPageState,
-            isGettingMorePokemon,
-            unionSearchPageState,
-          ],
-        );
+         equals: [
+           savedThemeMode,
+           unionPageState,
+           isGettingMorePokemon,
+           unionSearchPageState,
+         ],
+       );
 }

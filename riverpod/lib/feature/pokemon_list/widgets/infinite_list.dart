@@ -23,8 +23,9 @@ class InfiniteList extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final searchText = ref.watch(searchTextProvider);
-    final pokemonListValue =
-        searchText.isEmpty ? ref.watch(pokemonListRefProvider) : ref.watch(searchResultListProvider(searchText));
+    final pokemonListValue = searchText.isEmpty
+        ? ref.watch(pokemonListRefProvider)
+        : ref.watch(searchResultListProvider(searchText));
 
     return pokemonListValue.when(
       data: (pokemonList) => CustomScrollView(
@@ -47,7 +48,7 @@ class InfiniteList extends ConsumerWidget {
         ],
       ),
       loading: LoadingIndicator.new,
-      error: (_, __) => const AlertDialog(title: Text(emptyPokemonLabel)),
+      error: (_, _) => const AlertDialog(title: Text(emptyPokemonLabel)),
     );
   }
 }
