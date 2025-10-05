@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pokedex_flutter_bloc/cubit/app_cubit.dart';
 import 'package:pokedex_flutter_bloc/cubit/app_state.dart';
+import 'package:pokedex_flutter_bloc/feature/pokemon_list/widgets/list_scaffold.dart';
 import 'package:pokedex_flutter_bloc/feature/pokemon_list/widgets/pokemon_card.dart';
 import 'package:pokedex_flutter_bloc/feature/pokemon_list/widgets/search_field.dart';
 import 'package:pokedex_flutter_bloc/model/union_page_state.dart';
@@ -37,34 +38,35 @@ class _PokemonListPageState extends State<PokemonListPage> {
   @override
   Widget build(BuildContext context) {
     final appCubit = context.read<AppCubit>();
-    return Scaffold(
-      appBar: AppBar(
-        title: context.select<AppCubit, bool>((cubit) => cubit.state.isSearching)
-            ? const SearchField()
-            : Text(
-                appTitle,
-                style: context.textTheme.displayMedium,
-              ),
-        actions: [
-          IconButton(
-            onPressed: appCubit.onPressSearch,
-            icon: Icon(context.select<AppCubit, bool>((cubit) => cubit.state.isSearching) ? Icons.close : Icons.search),
+    return ListScaffold(
+      appBarLeading: AppBar(
+        title: switch (context.select<AppCubit, bool>((cubit) => cubit.state.isSearching)) {
+          true => const SearchField(),
+          false => Text(
+            appTitle,
+            style: context.textTheme.displayMedium,
           ),
-          IconButton(
-            onPressed: appCubit.onRefresh,
-            icon: const Icon(Icons.refresh),
-          ),
-          PopupMenuButton(
-            onSelected: appCubit.onSelectOption,
-            itemBuilder: (_) => [
-              const PopupMenuItem(
-                value: chooseThemeMenuLabel,
-                child: Text(chooseThemeMenuLabel),
-              ),
-            ],
-          ),
-        ],
+        },
       ),
+      appBarActions: [
+        IconButton(
+          onPressed: appCubit.onPressSearch,
+          icon: Icon(context.select<AppCubit, bool>((cubit) => cubit.state.isSearching) ? Icons.close : Icons.search),
+        ),
+        IconButton(
+          onPressed: appCubit.onRefresh,
+          icon: const Icon(Icons.refresh),
+        ),
+        PopupMenuButton(
+          onSelected: appCubit.onSelectOption,
+          itemBuilder: (_) => [
+            const PopupMenuItem(
+              value: chooseThemeMenuLabel,
+              child: Text(chooseThemeMenuLabel),
+            ),
+          ],
+        ),
+      ],
       body: RefreshIndicator(
         onRefresh: () async => appCubit.onRefresh(),
         child: Padding(
