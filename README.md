@@ -4,8 +4,8 @@ Just a simple Flutter Mobile App for showing Pokemon from the RESTful PokeAPI li
 Initially gets a group of Pokemon with infinite scroll feature for getting additional pokemon, with
 also an ability for searching an individual Pokemon.
 Each Pokemon's card can be clicked upon to view additional details, evolution chain, and moves.
-Shared Preferences with either Async Redux or Riverpod are utilized for state management and saving the selected theme mode.
-Go Router is used for routing.
+Shared Preferences with either Async Redux, Riverpod, Bloc, or Get are utilized for state management and saving the selected theme mode.
+Go Router or Auto Route is used for routing.
 
 ## Contents
 - [Features](#features)
@@ -17,12 +17,12 @@ Go Router is used for routing.
 - Infinite scrolling for additional Pokemon
 - Search individual Pokemon
 - View individual Pokemon's details, evolution chain, and moves
-- Shared Preferences with either Async Redux / Riverpod state management
+- Shared Preferences with either Async Redux / Riverpod / Bloc / Get state managements
 - Dark/Light theme mode
 - Landscape/Portrait responsiveness
 - iOS/Android widgets adaptiveness
 - Freezed
-- Go Router
+- Go Router or Auto Route
 - Cached Network Image
 
 ## Credits
