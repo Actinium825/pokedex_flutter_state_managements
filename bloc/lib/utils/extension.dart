@@ -28,4 +28,15 @@ extension ListExt<T> on List<T> {
 
     throw StateError('No element');
   }
+
+  List<E> forLoopIndexed<E>(E Function(int index, T element) callback) {
+    final result = <E>[];
+
+    for (int index = 0; index < length; index++) {
+      final mappedValue = callback(index, this[index]);
+      result.add(mappedValue);
+    }
+
+    return result;
+  }
 }
