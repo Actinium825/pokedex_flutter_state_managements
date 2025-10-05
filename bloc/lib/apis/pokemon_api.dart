@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:pokedex_flutter_bloc/apis/api_client.dart';
 import 'package:pokedex_flutter_bloc/apis/model/pokemon.dart';
+import 'package:pokedex_flutter_bloc/apis/model/pokemon_species.dart';
 import 'package:pokedex_flutter_bloc/apis/model/simple_pokemon.dart';
 import 'package:pokedex_flutter_bloc/apis/model/simple_pokemon_list.dart';
 import 'package:pokedex_flutter_bloc/utils/extension.dart';
@@ -45,5 +46,12 @@ class PokemonApi {
     } on DioException catch (_) {
       return List.empty();
     }
+  }
+
+  Future<PokemonSpecies> getSpecies({required String speciesUrl}) async {
+    final response = await apiClient.dio.get<Json>(speciesUrl);
+    final pokemonSpecies = PokemonSpecies.fromJson(response.data!);
+
+    return pokemonSpecies;
   }
 }

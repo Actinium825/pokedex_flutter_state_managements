@@ -1,17 +1,21 @@
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pokedex_flutter_bloc/apis/model/pokemon.dart';
 import 'package:pokedex_flutter_bloc/classes/pokemon_color_picker.dart';
+import 'package:pokedex_flutter_bloc/cubit/app_cubit.dart';
 import 'package:pokedex_flutter_bloc/extensions/pokemon_ext.dart';
+import 'package:pokedex_flutter_bloc/feature/pokemon_info/widgets/about_tab.dart';
 import 'package:pokedex_flutter_bloc/feature/pokemon_info/widgets/info_scaffold.dart';
 import 'package:pokedex_flutter_bloc/utils/const.dart';
 import 'package:pokedex_flutter_bloc/utils/extension.dart';
 import 'package:pokedex_flutter_bloc/utils/strings.dart';
+import 'package:pokedex_flutter_bloc/widgets/loading_indicator.dart';
 import 'package:pokedex_flutter_bloc/widgets/pokemon_image.dart';
 import 'package:pokedex_flutter_bloc/widgets/pokemon_type_list.dart';
 
 @RoutePage()
-class PokemonInfoPage extends StatelessWidget {
+class PokemonInfoPage extends StatefulWidget {
   const PokemonInfoPage({
     required this.selectedPokemon,
     super.key,
@@ -20,8 +24,19 @@ class PokemonInfoPage extends StatelessWidget {
   final Pokemon selectedPokemon;
 
   @override
+  State<PokemonInfoPage> createState() => _PokemonInfoPageState();
+}
+
+class _PokemonInfoPageState extends State<PokemonInfoPage> {
+  @override
+  void initState() {
+    context.read<AppCubit>().getPokemonSpecies(widget.selectedPokemon.speciesInfo.detailsUrl);
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final primaryColor = selectedPokemon.primaryColor;
+    final primaryColor = widget.selectedPokemon.primaryColor;
     final typeDecorationColor = PokemonColorPicker.typeDecorationColor(primaryColor, isDarkened: true);
     final textTheme = context.textTheme;
     final themeData = context.themeData;
@@ -35,24 +50,24 @@ class PokemonInfoPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                selectedPokemon.capitalizedNamed,
+                widget.selectedPokemon.capitalizedNamed,
                 style: textTheme.displayLarge,
               ),
               Align(
                 alignment: Alignment.centerRight,
                 child: Text(
-                  selectedPokemon.formatId(),
+                  widget.selectedPokemon.formatId(),
                   style: textTheme.displaySmall,
                 ),
               ),
               PokemonTypeList(
-                pokemon: selectedPokemon,
+                pokemon: widget.selectedPokemon,
                 isDecorationShown: true,
               ),
               Expanded(
                 flex: context.isPortrait ? 0 : 1,
                 child: PokemonImage(
-                  pokemon: selectedPokemon,
+                  pokemon: widget.selectedPokemon,
                   size: infoPageImageSize,
                 ),
               ),
@@ -69,25 +84,27 @@ class PokemonInfoPage extends StatelessWidget {
               padding: infoPageModalPadding,
               child: DefaultTabController(
                 length: tabLabels.length,
-                child: Column(
-                  children: [
-                    TabBar(
-                      labelColor: typeDecorationColor,
-                      indicatorColor: typeDecorationColor,
-                      unselectedLabelColor: themeData.unselectedWidgetColor,
-                      tabs: tabLabels.forLoop((tabLabel) => Tab(text: tabLabel)),
-                    ),
-                    const Expanded(
-                      child: TabBarView(
+                child: context.select<AppCubit, String>((cubit) => cubit.state.waitKey) == getPokemonSpeciesKey
+                    ? LoadingIndicator(color: typeDecorationColor)
+                    : Column(
                         children: [
-                          SizedBox(),
-                          SizedBox(),
-                          SizedBox(),
+                          TabBar(
+                            labelColor: typeDecorationColor,
+                            indicatorColor: typeDecorationColor,
+                            unselectedLabelColor: themeData.unselectedWidgetColor,
+                            tabs: tabLabels.forLoop((tabLabel) => Tab(text: tabLabel)),
+                          ),
+                          Expanded(
+                            child: TabBarView(
+                              children: [
+                                AboutTab(selectedPokemon: widget.selectedPokemon),
+                                const SizedBox(),
+                                const SizedBox(),
+                              ],
+                            ),
+                          ),
                         ],
                       ),
-                    ),
-                  ],
-                ),
               ),
             ),
           ),

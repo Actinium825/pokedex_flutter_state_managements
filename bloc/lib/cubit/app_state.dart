@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:pokedex_flutter_bloc/apis/model/pokemon.dart';
+import 'package:pokedex_flutter_bloc/apis/model/pokemon_species.dart';
 import 'package:pokedex_flutter_bloc/apis/model/simple_pokemon_list.dart';
 import 'package:pokedex_flutter_bloc/utils/typedef.dart';
 
@@ -15,5 +16,6 @@ abstract class AppState with _$AppState {
     @Default(<Pokemon>[]) PokemonList searchResultList,
     @Default('') String waitKey,
     @Default(false) bool isSearching,
+    @Default(PokemonSpecies()) PokemonSpecies pokemonSpecies,
   }) = _AppState;
 }

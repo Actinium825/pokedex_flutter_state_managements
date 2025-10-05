@@ -8,3 +8,5 @@ const initPokemonListKey = 'init-pokemon-list';
 const searchFieldHintText = 'Search Pokemon';
 const searchPokemonKey = 'search-pokemon';
 const tabLabels = ['About', 'Evolution', 'Moves'];
+const english = 'en';
+const getPokemonSpeciesKey = 'get-pokemon-species';
