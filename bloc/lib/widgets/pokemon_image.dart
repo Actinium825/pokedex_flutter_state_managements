@@ -22,14 +22,12 @@ class PokemonImage extends StatelessWidget {
       alignment: alignment,
       child: Hero(
         tag: tag ?? pokemon.id,
-        child: SizedBox(
+        child: Container(
           width: size,
           height: size,
-          child: DecoratedBox(
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: CachedNetworkImageProvider(pokemon.sprites.otherSprites.officialArtwork.imageUrl),
-              ),
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: CachedNetworkImageProvider(pokemon.sprites.otherSprites.officialArtwork.imageUrl),
             ),
           ),
         ),

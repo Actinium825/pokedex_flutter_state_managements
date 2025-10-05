@@ -28,14 +28,12 @@ class MovesTab extends StatelessWidget {
         spacing: movesSpacing,
         runSpacing: movesSpacing,
         children: selectedPokemon.moveList.forLoop(
-          (move) => ColoredBox(
+          (move) => Container(
             color: selectedPokemon.primaryColor,
-            child: Padding(
-              padding: movesPadding,
-              child: Text(
-                move.moveInfo.name.split('-').forLoop((word) => word.capitalize()).join(' '),
-                style: style,
-              ),
+            padding: movesPadding,
+            child: Text(
+              move.moveInfo.name.split('-').forLoop((word) => word.capitalize()).join(' '),
+              style: style,
             ),
           ),
         ),
