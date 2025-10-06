@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:pokedex_getx/apis/model/pokemon_evolution_chain.dart';
 import 'package:pokedex_getx/extensions/pokemon_evolution_chain_ext.dart';
-import 'package:pokedex_getx/pokemon_info/widgets/evolution_card.dart';
+import 'package:pokedex_getx/feature/pokemon_info/widgets/evolution_card.dart';
 import 'package:pokedex_getx/utils/const.dart';
 import 'package:pokedex_getx/utils/extension.dart';
 import 'package:pokedex_getx/utils/typedef.dart';

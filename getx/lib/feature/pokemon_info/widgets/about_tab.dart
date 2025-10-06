@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:pokedex_getx/apis/model/pokemon.dart';
 import 'package:pokedex_getx/classes/pokemon_color_picker.dart';
 import 'package:pokedex_getx/extensions/pokemon_ext.dart';
-import 'package:pokedex_getx/pokemon_info/widgets/table_label.dart';
+import 'package:pokedex_getx/feature/pokemon_info/widgets/table_label.dart';
 import 'package:pokedex_getx/utils/const.dart';
 import 'package:pokedex_getx/utils/extension.dart';
 import 'package:pokedex_getx/utils/strings.dart';
