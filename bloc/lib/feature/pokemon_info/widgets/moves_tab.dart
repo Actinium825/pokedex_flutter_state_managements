@@ -21,6 +21,7 @@ class MovesTab extends StatelessWidget {
           ? PokedexTheme.textColorWhite
           : PokedexTheme.textColorDarkMode,
     );
+    final primaryColor = selectedPokemon.primaryColor;
 
     return SingleChildScrollView(
       padding: movesTabPadding,
@@ -29,7 +30,7 @@ class MovesTab extends StatelessWidget {
         runSpacing: movesSpacing,
         children: selectedPokemon.moveList.forLoop(
           (move) => Container(
-            color: selectedPokemon.primaryColor,
+            color: primaryColor,
             padding: movesPadding,
             child: Text(
               move.moveInfo.name.split('-').forLoop((word) => word.capitalize()).join(' '),
