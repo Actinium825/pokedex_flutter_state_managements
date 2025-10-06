@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:getx/controller/app_controller.dart';
 import 'package:getx/model/union_page_state.dart';
+import 'package:getx/pokemon_info/pokemon_info_page.dart';
 import 'package:getx/pokemon_list/widgets/list_scaffold.dart';
 import 'package:getx/pokemon_list/widgets/pokemon_card.dart';
 import 'package:getx/pokemon_list/widgets/search_field.dart';
@@ -77,11 +78,13 @@ class _PokemonListPageState extends State<PokemonListPage> {
                   SliverGrid(
                     gridDelegate: pokemonGridDelegate,
                     delegate: SliverChildBuilderDelegate(
-                      (_, index) => PokemonCard(
-                        pokemon: value[index],
-                        // TODO: Add function
-                        onTap: () {},
-                      ),
+                      (_, index) {
+                        final pokemon = value[index];
+                        return PokemonCard(
+                          pokemon: pokemon,
+                          onTap: () => Get.to(PokemonInfoPage(selectedPokemon: pokemon)),
+                        );
+                      },
                       childCount: value.length,
                     ),
                   ),

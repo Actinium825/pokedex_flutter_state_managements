@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:getx/apis/model/pokemon.dart';
 import 'package:getx/classes/pokemon_color_picker.dart';
 import 'package:getx/extensions/pokemon_type_ext.dart';
+import 'package:getx/utils/const.dart';
 
 extension PokemonExt on Pokemon {
   Color get primaryColor => PokemonColorPicker.getColor(primaryTypeName);
@@ -10,4 +11,6 @@ extension PokemonExt on Pokemon {
   String get primaryTypeName => typeList.firstOrNull?.name ?? '';
 
   String get capitalizedNamed => name.capitalizeFirst ?? '';
+
+  String formatId() => '#${id.toString().padLeft(idNumberPadWidth, '0')}';
 }
