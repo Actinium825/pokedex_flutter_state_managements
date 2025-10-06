@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -15,8 +17,10 @@ class AppController extends GetxController {
   late Rx<SimplePokemonList> simplePokemonList = const SimplePokemonList().obs;
   late RxList<Pokemon> pokemonList = <Pokemon>[].obs;
   late RxString waitKey = ''.obs;
+  late RxBool isSearching = false.obs;
 
   late final ScrollController scrollController;
+  late final TextEditingController textEditingController;
 
   @override
   void onInit() {
@@ -26,11 +30,13 @@ class AppController extends GetxController {
 
   void initPokemonListPage() {
     scrollController = ScrollController()..addListener(_onReachEnd);
+    textEditingController = TextEditingController();
     getInitialPokemonList();
   }
 
   void disposePokemonListPage() {
     scrollController.dispose();
+    textEditingController.dispose();
   }
 
   void _onReachEnd() {
@@ -69,6 +75,11 @@ class AppController extends GetxController {
 
   void onSelectOption(String option) {
     if (option == chooseThemeMenuLabel) Get.dialog(const ThemeChoiceDialog());
+  }
+
+  void onPressSearch() {
+    isSearching.toggle();
+    if (textEditingController.text.isNotEmpty) textEditingController.clear();
   }
 
   void getInitialPokemonList() => _loadingAction(
