@@ -8,7 +8,7 @@ part 'pokemon_move.g.dart';
 @freezed
 abstract class PokemonMove with _$PokemonMove {
   const factory PokemonMove({
-    @Default(PokemonInfo()) @JsonKey(name: 'move') moveInfo,
+    @Default(PokemonInfo()) @JsonKey(name: 'move') PokemonInfo moveInfo,
   }) = _PokemonMove;
 
   factory PokemonMove.fromJson(Json json) => _$PokemonMoveFromJson(json);
