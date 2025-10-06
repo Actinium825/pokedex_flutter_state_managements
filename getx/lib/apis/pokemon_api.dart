@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:getx/apis/model/pokemon.dart';
+import 'package:getx/apis/model/pokemon_species.dart';
 import 'package:getx/apis/model/simple_pokemon.dart';
 import 'package:getx/apis/model/simple_pokemon_list.dart';
 import 'package:getx/utils/extension.dart';
@@ -38,5 +39,12 @@ class PokemonApi extends GetConnect {
     } catch (_) {
       return List.empty();
     }
+  }
+
+  Future<PokemonSpecies> getSpecies({required String speciesUrl}) async {
+    final response = await get<Json>(speciesUrl);
+    final pokemonSpecies = PokemonSpecies.fromJson(response.body!);
+
+    return pokemonSpecies;
   }
 }

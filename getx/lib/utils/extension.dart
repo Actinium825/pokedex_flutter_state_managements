@@ -9,4 +9,13 @@ extension ListExt<T> on List<T> {
 
     return result;
   }
+
+  T firstWhereForLoop(bool Function(T element) test) {
+    for (int i = 0; i < length; i++) {
+      final element = this[i];
+      if (test(element)) return element;
+    }
+
+    throw StateError('No element');
+  }
 }
