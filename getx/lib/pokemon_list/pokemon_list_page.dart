@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:getx/controller/app_controller.dart';
 import 'package:getx/model/union_page_state.dart';
+import 'package:getx/pokemon_list/widgets/list_scaffold.dart';
 import 'package:getx/pokemon_list/widgets/pokemon_card.dart';
+import 'package:getx/pokemon_list/widgets/search_field.dart';
 import 'package:getx/utils/const.dart';
 import 'package:getx/utils/strings.dart';
 import 'package:getx/utils/typedef.dart';
@@ -32,24 +34,35 @@ class _PokemonListPageState extends State<PokemonListPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          appTitle,
-          style: context.textTheme.displayMedium,
-        ),
-        actions: [
-          PopupMenuButton(
-            onSelected: _appController.onSelectOption,
-            itemBuilder: (_) => [
-              const PopupMenuItem(
-                value: chooseThemeMenuLabel,
-                child: Text(chooseThemeMenuLabel),
-              ),
-            ],
+    return ListScaffold(
+      appBarLeading: Obx(
+        () => switch (_appController.isSearching.value) {
+          true => const SearchField(),
+          false => Text(
+            appTitle,
+            style: context.textTheme.displayMedium,
           ),
-        ],
+        },
       ),
+      appBarActions: [
+        IconButton(
+          onPressed: _appController.onPressSearch,
+          icon: Obx(() => Icon(_appController.isSearching.value ? Icons.close : Icons.search)),
+        ),
+        IconButton(
+          onPressed: _appController.getInitialPokemonList,
+          icon: const Icon(Icons.refresh),
+        ),
+        PopupMenuButton(
+          onSelected: _appController.onSelectOption,
+          itemBuilder: (_) => [
+            const PopupMenuItem(
+              value: chooseThemeMenuLabel,
+              child: Text(chooseThemeMenuLabel),
+            ),
+          ],
+        ),
+      ],
       body: RefreshIndicator(
         onRefresh: () async {
           _appController.getInitialPokemonList();

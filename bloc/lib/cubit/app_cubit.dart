@@ -115,7 +115,7 @@ class AppCubit extends Cubit<AppState> {
     return searchResultList.isEmpty ? const UnionPageState.error(emptyPokemonLabel) : UnionPageState(searchResultList);
   }
 
-  void searchPokemon() => _loadingAction(
+  void _searchPokemon() => _loadingAction(
     searchPokemonKey,
     () async {
       final searchText = textEditingController.text;
@@ -141,7 +141,7 @@ class AppCubit extends Cubit<AppState> {
     _debouncer?.cancel();
     _debouncer = Timer(
       debouncerDelayInMilliseconds.milliseconds,
-      searchPokemon,
+      _searchPokemon,
     );
   }
 
