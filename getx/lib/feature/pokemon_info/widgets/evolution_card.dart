@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pokedex_getx/apis/model/pokemon.dart';
 import 'package:pokedex_getx/extensions/pokemon_ext.dart';
-import 'package:pokedex_getx/pokemon_info/widgets/eevee_arrows.dart';
+import 'package:pokedex_getx/feature/pokemon_info/widgets/eevee_arrows.dart';
 import 'package:pokedex_getx/utils/const.dart';
 import 'package:pokedex_getx/widgets/pokemon_image.dart';
 
