@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:getx/utils/typedefs.dart';
+import 'package:getx/utils/typedef.dart';
 
 part 'simple_pokemon.freezed.dart';
 part 'simple_pokemon.g.dart';
