@@ -16,11 +16,42 @@ class AppController extends GetxController {
   late RxList<Pokemon> pokemonList = <Pokemon>[].obs;
   late RxString waitKey = ''.obs;
 
+  late final ScrollController scrollController;
+
   @override
   void onInit() {
     _loadTheme();
     super.onInit();
   }
+
+  void initPokemonListPage() {
+    scrollController = ScrollController()..addListener(_onReachEnd);
+    getInitialPokemonList();
+  }
+
+  void disposePokemonListPage() {
+    scrollController.dispose();
+  }
+
+  void _onReachEnd() {
+    final position = scrollController.position;
+    if (position.pixels == position.maxScrollExtent) _getMorePokemon();
+  }
+
+  void _getMorePokemon() => _loadingAction(
+    getMorePokemonKey,
+    () async {
+      final receivedSimplePokemonList = await PokemonApi().getSimplePokemonList(
+        nextPageUrl: simplePokemonList.value.next,
+      );
+      final receivedPokemonList = await PokemonApi().getPokemonList(
+        simplePokemonList: receivedSimplePokemonList.simplePokemonList,
+      );
+
+      simplePokemonList.value = receivedSimplePokemonList;
+      pokemonList.addAll(receivedPokemonList);
+    },
+  );
 
   void _loadTheme() {
     final themeModeIndex = SharedPrefsRepo.prefs.getInt(themeSharedPrefsKey) ?? ThemeMode.system.index;
