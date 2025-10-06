@@ -17,3 +17,5 @@ const infoPageImageSize = 200.0;
 const idNumberPadWidth = 3;
 const infoPageModalPadding = EdgeInsets.symmetric(horizontal: 4.0);
 const infoPageModalRadius = BorderRadius.vertical(top: Radius.circular(20.0));
+const aboutTabPadding = EdgeInsets.all(16.0);
+const flavorTextPadding = EdgeInsets.only(top: 8.0, bottom: 16.0);
