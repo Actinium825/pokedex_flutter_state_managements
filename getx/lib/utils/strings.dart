@@ -9,3 +9,7 @@ const searchFieldHintText = 'Search Pokemon';
 const searchPokemonKey = 'search-pokemon';
 const tabLabels = ['About', 'Evolution', 'Moves'];
 const english = 'en';
+const xpValue = '%s xp';
+const heightValue = '%s m';
+const weightValue = '%s kg';
+const aboutTableHeaders = ['Height', 'Weight', 'Abilities', 'Base Experience'];
