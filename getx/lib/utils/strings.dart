@@ -7,3 +7,4 @@ const emptyPokemonLabel = 'No Pokemon Found';
 const getMorePokemonKey = 'get-more-pokemon';
 const searchFieldHintText = 'Search Pokemon';
 const searchPokemonKey = 'search-pokemon';
+const tabLabels = ['About', 'Evolution', 'Moves'];
