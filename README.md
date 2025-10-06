@@ -5,7 +5,7 @@ Initially gets a group of Pokemon with infinite scroll feature for getting addit
 also an ability for searching an individual Pokemon.
 Each Pokemon's card can be clicked upon to view additional details, evolution chain, and moves.
 Shared Preferences with either Async Redux, Riverpod, Bloc, or Get are utilized for state management and saving the selected theme mode.
-Go Router or Auto Route is used for routing.
+Go Router, Auto Route, or just Get is used for routing.
 
 ## Contents
 - [Features](#features)
@@ -22,7 +22,7 @@ Go Router or Auto Route is used for routing.
 - Landscape/Portrait responsiveness
 - iOS/Android widgets adaptiveness
 - Freezed
-- Go Router or Auto Route
+- Go Router, Auto Route, Get (routing)
 - Cached Network Image
 
 ## Credits
