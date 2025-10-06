@@ -8,6 +8,7 @@ import 'package:pokedex_getx/extensions/pokemon_species_ext.dart';
 import 'package:pokedex_getx/feature/pokemon_info/widgets/about_tab.dart';
 import 'package:pokedex_getx/feature/pokemon_info/widgets/evolution_tab.dart';
 import 'package:pokedex_getx/feature/pokemon_info/widgets/info_scaffold.dart';
+import 'package:pokedex_getx/feature/pokemon_info/widgets/moves_tab.dart';
 import 'package:pokedex_getx/utils/const.dart';
 import 'package:pokedex_getx/utils/extension.dart';
 import 'package:pokedex_getx/utils/strings.dart';
@@ -99,7 +100,7 @@ class PokemonInfoPage extends StatelessWidget {
                                 pokemonEvolutionChain: pokemonInfoController.pokemonEvolutionChain.value,
                                 pokemonEvolutionList: pokemonInfoController.pokemonEvolutionList,
                               ),
-                              const SizedBox(),
+                              MovesTab(selectedPokemon: selectedPokemon),
                             ],
                           ),
                         ),

@@ -1,10 +1,10 @@
-import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
-import 'package:pokedex_flutter_bloc/apis/model/pokemon.dart';
-import 'package:pokedex_flutter_bloc/extensions/pokemon_ext.dart';
-import 'package:pokedex_flutter_bloc/utils/const.dart';
-import 'package:pokedex_flutter_bloc/utils/extension.dart';
-import 'package:pokedex_flutter_bloc/utils/themes.dart';
+import 'package:get/get.dart';
+import 'package:pokedex_getx/apis/model/pokemon.dart';
+import 'package:pokedex_getx/extensions/pokemon_ext.dart';
+import 'package:pokedex_getx/utils/const.dart';
+import 'package:pokedex_getx/utils/extension.dart';
+import 'package:pokedex_getx/utils/themes.dart';
 
 class MovesTab extends StatelessWidget {
   const MovesTab({
@@ -17,9 +17,7 @@ class MovesTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final style = context.textTheme.bodyLarge?.copyWith(
-      color: context.themeData.brightness == Brightness.light
-          ? PokedexTheme.textColorWhite
-          : PokedexTheme.textColorDarkMode,
+      color: !context.isDarkMode ? PokedexTheme.textColorWhite : PokedexTheme.textColorDarkMode,
     );
     final primaryColor = selectedPokemon.primaryColor;
 
@@ -33,7 +31,7 @@ class MovesTab extends StatelessWidget {
             color: primaryColor,
             padding: movesPadding,
             child: Text(
-              move.moveInfo.name.split('-').forLoop((word) => word.capitalize()).join(' '),
+              move.moveInfo.name.split('-').forLoop((word) => word.capitalizeFirst).join(' '),
               style: style,
             ),
           ),
