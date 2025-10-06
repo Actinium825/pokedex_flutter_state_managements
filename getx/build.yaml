@@ -12,3 +12,4 @@ targets:
         generate_for:
           include:
             - lib/apis/model/*
+            - lib/model/*

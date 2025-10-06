@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:getx/controller/app_controller.dart';
+import 'package:getx/model/union_page_state.dart';
 import 'package:getx/pokemon_list/widgets/pokemon_card.dart';
 import 'package:getx/utils/const.dart';
 import 'package:getx/utils/strings.dart';
+import 'package:getx/utils/typedef.dart';
+import 'package:getx/widgets/loading_indicator.dart';
 
 class PokemonListPage extends StatefulWidget {
   const PokemonListPage({super.key});
@@ -13,9 +16,11 @@ class PokemonListPage extends StatefulWidget {
 }
 
 class _PokemonListPageState extends State<PokemonListPage> {
+  late final _appController = Get.find<AppController>();
+
   @override
   void initState() {
-    Get.find<AppController>().getInitialPokemonList();
+    _appController.getInitialPokemonList();
     super.initState();
   }
 
@@ -29,7 +34,7 @@ class _PokemonListPageState extends State<PokemonListPage> {
         ),
         actions: [
           PopupMenuButton(
-            onSelected: Get.find<AppController>().onSelectOption,
+            onSelected: _appController.onSelectOption,
             itemBuilder: (_) => [
               const PopupMenuItem(
                 value: chooseThemeMenuLabel,
@@ -41,26 +46,27 @@ class _PokemonListPageState extends State<PokemonListPage> {
       ),
       body: Padding(
         padding: pokemonListPagePadding,
-        child: CustomScrollView(
-          slivers: [
-            Obx(
-              () {
-                final pokemonList = Get.find<AppController>().pokemonList;
-                return SliverGrid(
+        child: Obx(
+          () => switch (_appController.pokemonListState()) {
+            Data<PokemonList>(:final value) => CustomScrollView(
+              slivers: [
+                SliverGrid(
                   gridDelegate: pokemonGridDelegate,
                   delegate: SliverChildBuilderDelegate(
                     (_, index) => PokemonCard(
-                      pokemon: pokemonList[index],
+                      pokemon: value[index],
                       // TODO: Add function
                       onTap: () {},
                     ),
-                    childCount: pokemonList.length,
+                    childCount: value.length,
                   ),
-                );
-              },
+                ),
+                const SliverToBoxAdapter(child: SizedBox(height: pokemonListPageFooterHeight)),
+              ],
             ),
-            const SliverToBoxAdapter(child: SizedBox(height: pokemonListPageFooterHeight)),
-          ],
+            Loading<PokemonList>() => const LoadingIndicator(),
+            Error<PokemonList>(:final message) => AlertDialog(title: Text(message ?? '')),
+          },
         ),
       ),
     );
