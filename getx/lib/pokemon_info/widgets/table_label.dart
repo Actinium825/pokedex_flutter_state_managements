@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:getx/utils/const.dart';
+import 'package:pokedex_getx/utils/const.dart';
 
 class TableLabel extends StatelessWidget {
   const TableLabel({

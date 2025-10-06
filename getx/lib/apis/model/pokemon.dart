@@ -1,11 +1,11 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:getx/apis/model/pokemon_ability.dart';
-import 'package:getx/apis/model/pokemon_base_stat.dart';
-import 'package:getx/apis/model/pokemon_info.dart';
-import 'package:getx/apis/model/pokemon_move.dart';
-import 'package:getx/apis/model/pokemon_sprites.dart';
-import 'package:getx/apis/model/pokemon_type.dart';
-import 'package:getx/utils/typedef.dart';
+import 'package:pokedex_getx/apis/model/pokemon_ability.dart';
+import 'package:pokedex_getx/apis/model/pokemon_base_stat.dart';
+import 'package:pokedex_getx/apis/model/pokemon_info.dart';
+import 'package:pokedex_getx/apis/model/pokemon_move.dart';
+import 'package:pokedex_getx/apis/model/pokemon_sprites.dart';
+import 'package:pokedex_getx/apis/model/pokemon_type.dart';
+import 'package:pokedex_getx/utils/typedef.dart';
 
 part 'pokemon.freezed.dart';
 part 'pokemon.g.dart';

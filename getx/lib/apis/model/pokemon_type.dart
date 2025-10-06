@@ -1,6 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:getx/apis/model/pokemon_info.dart';
-import 'package:getx/utils/typedef.dart';
+import 'package:pokedex_getx/apis/model/pokemon_info.dart';
+import 'package:pokedex_getx/utils/typedef.dart';
 
 part 'pokemon_type.freezed.dart';
 part 'pokemon_type.g.dart';

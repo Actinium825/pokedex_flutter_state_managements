@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:getx/classes/adaptive_stateless_widget.dart';
+import 'package:pokedex_getx/classes/adaptive_stateless_widget.dart';
 
 class ListScaffold extends AdaptiveStatelessWidget {
   const ListScaffold({

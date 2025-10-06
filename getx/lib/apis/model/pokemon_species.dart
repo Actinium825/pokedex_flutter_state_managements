@@ -1,7 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:getx/apis/model/evolution_chain_info.dart';
-import 'package:getx/apis/model/flavor_text_entry.dart';
-import 'package:getx/utils/typedef.dart';
+import 'package:pokedex_getx/apis/model/evolution_chain_info.dart';
+import 'package:pokedex_getx/apis/model/flavor_text_entry.dart';
+import 'package:pokedex_getx/utils/typedef.dart';
 
 part 'pokemon_species.freezed.dart';
 part 'pokemon_species.g.dart';

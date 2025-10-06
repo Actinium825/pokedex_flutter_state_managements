@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:getx/apis/model/pokemon.dart';
-import 'package:getx/classes/pokemon_color_picker.dart';
-import 'package:getx/controller/pokemon_info_controller.dart';
-import 'package:getx/extensions/pokemon_ext.dart';
-import 'package:getx/extensions/pokemon_species_ext.dart';
-import 'package:getx/pokemon_info/widgets/about_tab.dart';
-import 'package:getx/pokemon_info/widgets/info_scaffold.dart';
-import 'package:getx/utils/const.dart';
-import 'package:getx/utils/extension.dart';
-import 'package:getx/utils/strings.dart';
-import 'package:getx/widgets/loading_indicator.dart';
-import 'package:getx/widgets/pokemon_image.dart';
-import 'package:getx/widgets/pokemon_type_list.dart';
+import 'package:pokedex_getx/apis/model/pokemon.dart';
+import 'package:pokedex_getx/classes/pokemon_color_picker.dart';
+import 'package:pokedex_getx/controller/pokemon_info_controller.dart';
+import 'package:pokedex_getx/extensions/pokemon_ext.dart';
+import 'package:pokedex_getx/extensions/pokemon_species_ext.dart';
+import 'package:pokedex_getx/pokemon_info/widgets/about_tab.dart';
+import 'package:pokedex_getx/pokemon_info/widgets/info_scaffold.dart';
+import 'package:pokedex_getx/utils/const.dart';
+import 'package:pokedex_getx/utils/extension.dart';
+import 'package:pokedex_getx/utils/strings.dart';
+import 'package:pokedex_getx/widgets/loading_indicator.dart';
+import 'package:pokedex_getx/widgets/pokemon_image.dart';
+import 'package:pokedex_getx/widgets/pokemon_type_list.dart';
 
 class PokemonInfoPage extends StatelessWidget {
   const PokemonInfoPage({

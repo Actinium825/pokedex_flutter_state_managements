@@ -1,7 +1,7 @@
-import 'package:getx/apis/model/evolves_to.dart';
-import 'package:getx/apis/model/pokemon_evolution_chain.dart';
-import 'package:getx/utils/extension.dart';
-import 'package:getx/utils/typedef.dart';
+import 'package:pokedex_getx/apis/model/evolves_to.dart';
+import 'package:pokedex_getx/apis/model/pokemon_evolution_chain.dart';
+import 'package:pokedex_getx/utils/extension.dart';
+import 'package:pokedex_getx/utils/typedef.dart';
 
 extension PokemonEvolutionChainExt on PokemonEvolutionChain {
   EvolvesToList get stage2Evolutions => chain.evolutions;

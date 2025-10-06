@@ -3,15 +3,15 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:getx/apis/model/pokemon.dart';
-import 'package:getx/apis/model/simple_pokemon_list.dart';
-import 'package:getx/apis/pokemon_api.dart';
-import 'package:getx/classes/shared_prefs_repo.dart';
-import 'package:getx/model/union_page_state.dart';
-import 'package:getx/pokemon_list/widgets/theme_choice_dialog.dart';
-import 'package:getx/utils/const.dart';
-import 'package:getx/utils/strings.dart';
-import 'package:getx/utils/typedef.dart';
+import 'package:pokedex_getx/apis/model/pokemon.dart';
+import 'package:pokedex_getx/apis/model/simple_pokemon_list.dart';
+import 'package:pokedex_getx/apis/pokemon_api.dart';
+import 'package:pokedex_getx/classes/shared_prefs_repo.dart';
+import 'package:pokedex_getx/model/union_page_state.dart';
+import 'package:pokedex_getx/pokemon_list/widgets/theme_choice_dialog.dart';
+import 'package:pokedex_getx/utils/const.dart';
+import 'package:pokedex_getx/utils/strings.dart';
+import 'package:pokedex_getx/utils/typedef.dart';
 
 class AppController extends GetxController {
   late Rx<ThemeMode> themeMode = ThemeMode.system.obs;

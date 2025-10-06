@@ -1,5 +1,5 @@
-import 'package:getx/apis/model/evolves_to.dart';
-import 'package:getx/apis/model/pokemon.dart';
+import 'package:pokedex_getx/apis/model/evolves_to.dart';
+import 'package:pokedex_getx/apis/model/pokemon.dart';
 
 typedef Json = Map<String, dynamic>;
 

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:getx/controller/app_controller.dart';
-import 'package:getx/utils/extension.dart';
-import 'package:getx/utils/strings.dart';
+import 'package:pokedex_getx/controller/app_controller.dart';
+import 'package:pokedex_getx/utils/extension.dart';
+import 'package:pokedex_getx/utils/strings.dart';
 
 class ThemeChoiceDialog extends StatelessWidget {
   const ThemeChoiceDialog({super.key});
