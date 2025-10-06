@@ -1,11 +1,3 @@
-import 'package:flutter/material.dart';
-
-extension BuildContextExt on BuildContext {
-  TextTheme get textTheme => themeData.textTheme;
-
-  ThemeData get themeData => Theme.of(this);
-}
-
 extension ListExt<T> on List<T> {
   List<E> forLoop<E>(E Function(T element) callback) {
     final result = <E>[];
