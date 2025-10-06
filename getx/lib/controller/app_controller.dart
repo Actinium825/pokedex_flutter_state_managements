@@ -9,6 +9,7 @@ import 'package:getx/apis/pokemon_api.dart';
 import 'package:getx/classes/shared_prefs_repo.dart';
 import 'package:getx/model/union_page_state.dart';
 import 'package:getx/pokemon_list/widgets/theme_choice_dialog.dart';
+import 'package:getx/utils/const.dart';
 import 'package:getx/utils/strings.dart';
 import 'package:getx/utils/typedef.dart';
 
@@ -16,11 +17,13 @@ class AppController extends GetxController {
   late Rx<ThemeMode> themeMode = ThemeMode.system.obs;
   late Rx<SimplePokemonList> simplePokemonList = const SimplePokemonList().obs;
   late RxList<Pokemon> pokemonList = <Pokemon>[].obs;
+  late RxList<Pokemon> searchResultList = <Pokemon>[].obs;
   late RxString waitKey = ''.obs;
   late RxBool isSearching = false.obs;
 
   late final ScrollController scrollController;
   late final TextEditingController textEditingController;
+  Timer? _debouncer;
 
   @override
   void onInit() {
@@ -30,7 +33,7 @@ class AppController extends GetxController {
 
   void initPokemonListPage() {
     scrollController = ScrollController()..addListener(_onReachEnd);
-    textEditingController = TextEditingController();
+    textEditingController = TextEditingController()..addListener(_onUpdateText);
     getInitialPokemonList();
   }
 
@@ -59,6 +62,20 @@ class AppController extends GetxController {
     },
   );
 
+  void onRefresh() {
+    _onClearText();
+    if (isSearching.value) isSearching.value = false;
+    getInitialPokemonList();
+  }
+
+  void _onUpdateText() {
+    _debouncer?.cancel();
+    _debouncer = Timer(
+      debouncerDelayInMilliseconds.milliseconds,
+      _searchPokemon,
+    );
+  }
+
   void _loadTheme() {
     final themeModeIndex = SharedPrefsRepo.prefs.getInt(themeSharedPrefsKey) ?? ThemeMode.system.index;
     themeMode.value = ThemeMode.values.elementAt(themeModeIndex);
@@ -79,8 +96,24 @@ class AppController extends GetxController {
 
   void onPressSearch() {
     isSearching.toggle();
+    _onClearText();
+  }
+
+  void _onClearText() {
     if (textEditingController.text.isNotEmpty) textEditingController.clear();
   }
+
+  void _searchPokemon() => _loadingAction(
+    searchPokemonKey,
+    () async {
+      final searchText = textEditingController.text;
+
+      if (searchText.isEmpty) return searchResultList.clear();
+
+      final receivedSearchResultList = await PokemonApi().searchPokemon(pokemonName: searchText.trim());
+      searchResultList.assignAll(receivedSearchResultList);
+    },
+  );
 
   void getInitialPokemonList() => _loadingAction(
     initPokemonListKey,
@@ -98,6 +131,11 @@ class AppController extends GetxController {
   UnionPageState<PokemonList> pokemonListState() {
     if (waitKey.value == initPokemonListKey) return const UnionPageState.loading();
     return pokemonList.isEmpty ? const UnionPageState.error(emptyPokemonLabel) : UnionPageState(pokemonList);
+  }
+
+  UnionPageState<PokemonList> searchingState() {
+    if (waitKey.value == searchPokemonKey) return const UnionPageState.loading();
+    return searchResultList.isEmpty ? const UnionPageState.error(emptyPokemonLabel) : UnionPageState(searchResultList);
   }
 
   Future<void> _loadingAction(String waitKey, AsyncCallback function) async {

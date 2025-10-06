@@ -26,4 +26,17 @@ class PokemonApi extends GetConnect {
 
     return responses.forLoop((response) => Pokemon.fromJson(response.body!));
   }
+
+  Future<PokemonList> searchPokemon({required String pokemonName}) async {
+    final fetchUrl = '$pokeApiBaseUrl/pokemon/$pokemonName';
+
+    try {
+      final response = await get<Json>(fetchUrl);
+      final pokemon = Pokemon.fromJson(response.body!);
+
+      return [pokemon];
+    } catch (_) {
+      return List.empty();
+    }
+  }
 }

@@ -50,7 +50,7 @@ class _PokemonListPageState extends State<PokemonListPage> {
           icon: Obx(() => Icon(_appController.isSearching.value ? Icons.close : Icons.search)),
         ),
         IconButton(
-          onPressed: _appController.getInitialPokemonList,
+          onPressed: _appController.onRefresh,
           icon: const Icon(Icons.refresh),
         ),
         PopupMenuButton(
@@ -64,13 +64,13 @@ class _PokemonListPageState extends State<PokemonListPage> {
         ),
       ],
       body: RefreshIndicator(
-        onRefresh: () async {
-          _appController.getInitialPokemonList();
-        },
+        onRefresh: () async => _appController.onRefresh(),
         child: Padding(
           padding: pokemonListPagePadding,
           child: Obx(
-            () => switch (_appController.pokemonListState()) {
+            () => switch (_appController.textEditingController.text.isNotEmpty
+                ? _appController.searchingState()
+                : _appController.pokemonListState()) {
               Data<PokemonList>(:final value) => CustomScrollView(
                 controller: _appController.scrollController,
                 slivers: [
