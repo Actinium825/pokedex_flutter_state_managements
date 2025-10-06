@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:getx/controller/app_controller.dart';
 import 'package:getx/pokemon_list/pokemon_list_page.dart';
 import 'package:getx/utils/themes.dart';
 
@@ -7,11 +9,15 @@ class PokedexApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: PokedexTheme.themeRegular,
-      darkTheme: PokedexTheme.themeDark,
-      home: const PokemonListPage(),
+    final appController = Get.put(AppController());
+    return Obx(
+      () => GetMaterialApp(
+        debugShowCheckedModeBanner: false,
+        themeMode: appController.themeMode.value,
+        theme: PokedexTheme.themeRegular,
+        darkTheme: PokedexTheme.themeDark,
+        home: const PokemonListPage(),
+      ),
     );
   }
 }
