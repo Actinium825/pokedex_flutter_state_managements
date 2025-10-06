@@ -1,0 +1,16 @@
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:getx/apis/model/pokemon_info.dart';
+import 'package:getx/utils/typedef.dart';
+
+part 'evolves_to.freezed.dart';
+part 'evolves_to.g.dart';
+
+@freezed
+abstract class EvolvesTo with _$EvolvesTo {
+  const factory EvolvesTo({
+    @Default(PokemonInfo()) @JsonKey(name: 'species') PokemonInfo speciesInfo,
+    @Default(<EvolvesTo>[]) @JsonKey(name: 'evolves_to') EvolvesToList evolutions,
+  }) = _EvolvesTo;
+
+  factory EvolvesTo.fromJson(Json json) => _$EvolvesToFromJson(json);
+}

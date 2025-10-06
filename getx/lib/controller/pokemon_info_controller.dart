@@ -1,5 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
+import 'package:getx/apis/model/pokemon.dart';
+import 'package:getx/apis/model/pokemon_evolution_chain.dart';
 import 'package:getx/apis/model/pokemon_species.dart';
 import 'package:getx/apis/pokemon_api.dart';
 
@@ -9,6 +11,8 @@ class PokemonInfoController extends GetxController {
   final String speciesUrl;
 
   late Rx<PokemonSpecies> pokemonSpecies = const PokemonSpecies().obs;
+  late Rx<PokemonEvolutionChain> pokemonEvolutionChain = const PokemonEvolutionChain().obs;
+  late RxList<Pokemon> pokemonEvolutionList = <Pokemon>[].obs;
   late RxBool isLoading = false.obs;
 
   @override
@@ -20,7 +24,15 @@ class PokemonInfoController extends GetxController {
   void _initPokemonInfoPage() => _loadingAction(
     () async {
       final species = await PokemonApi().getSpecies(speciesUrl: speciesUrl);
+
+      final evolutionChainUrl = species.evolutionChainInfo.url;
+      final evolutionChain = await PokemonApi().getEvolutionChain(evolutionChainUrl: evolutionChainUrl);
+
+      final evolutionList = await PokemonApi().getEvolutionList(evolutionChain: evolutionChain);
+
       pokemonSpecies.value = species;
+      pokemonEvolutionChain.value = evolutionChain;
+      pokemonEvolutionList.assignAll(evolutionList);
     },
   );
 
