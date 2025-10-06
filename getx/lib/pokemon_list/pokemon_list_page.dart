@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:getx/controller/app_controller.dart';
+import 'package:getx/pokemon_list/widgets/pokemon_card.dart';
+import 'package:getx/utils/const.dart';
 import 'package:getx/utils/strings.dart';
 
 class PokemonListPage extends StatefulWidget {
@@ -36,6 +38,30 @@ class _PokemonListPageState extends State<PokemonListPage> {
             ],
           ),
         ],
+      ),
+      body: Padding(
+        padding: pokemonListPagePadding,
+        child: CustomScrollView(
+          slivers: [
+            Obx(
+              () {
+                final pokemonList = Get.find<AppController>().pokemonList;
+                return SliverGrid(
+                  gridDelegate: pokemonGridDelegate,
+                  delegate: SliverChildBuilderDelegate(
+                    (_, index) => PokemonCard(
+                      pokemon: pokemonList[index],
+                      // TODO: Add function
+                      onTap: () {},
+                    ),
+                    childCount: pokemonList.length,
+                  ),
+                );
+              },
+            ),
+            const SliverToBoxAdapter(child: SizedBox(height: pokemonListPageFooterHeight)),
+          ],
+        ),
       ),
     );
   }
