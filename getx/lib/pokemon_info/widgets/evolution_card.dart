@@ -1,12 +1,12 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:pokedex_flutter_bloc/apis/model/pokemon.dart';
-import 'package:pokedex_flutter_bloc/extensions/pokemon_ext.dart';
-import 'package:pokedex_flutter_bloc/feature/pokemon_info/widgets/eevee_arrows.dart';
-import 'package:pokedex_flutter_bloc/utils/const.dart';
-import 'package:pokedex_flutter_bloc/utils/extension.dart';
-import 'package:pokedex_flutter_bloc/widgets/pokemon_image.dart';
+import 'package:get/get.dart';
+import 'package:pokedex_getx/apis/model/pokemon.dart';
+import 'package:pokedex_getx/extensions/pokemon_ext.dart';
+import 'package:pokedex_getx/pokemon_info/widgets/eevee_arrows.dart';
+import 'package:pokedex_getx/utils/const.dart';
+import 'package:pokedex_getx/widgets/pokemon_image.dart';
 
 class EvolutionCard extends StatelessWidget {
   const EvolutionCard({

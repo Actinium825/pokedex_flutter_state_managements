@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:pokedex_flutter_bloc/utils/const.dart';
-import 'package:pokedex_flutter_bloc/utils/extension.dart';
+import 'package:pokedex_getx/utils/const.dart';
+import 'package:pokedex_getx/utils/extension.dart';
 
 class EeveeArrows extends StatelessWidget {
   const EeveeArrows({
