@@ -1,6 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:getx/apis/model/official_artwork.dart';
-import 'package:getx/utils/typedef.dart';
+import 'package:pokedex_getx/apis/model/official_artwork.dart';
+import 'package:pokedex_getx/utils/typedef.dart';
 
 part 'other_sprites.freezed.dart';
 part 'other_sprites.g.dart';

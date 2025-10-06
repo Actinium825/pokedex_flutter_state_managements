@@ -1,14 +1,14 @@
 import 'package:get/get.dart';
-import 'package:getx/apis/model/pokemon.dart';
-import 'package:getx/apis/model/pokemon_evolution_chain.dart';
-import 'package:getx/apis/model/pokemon_species.dart';
-import 'package:getx/apis/model/simple_pokemon.dart';
-import 'package:getx/apis/model/simple_pokemon_list.dart';
-import 'package:getx/extensions/evolves_to_ext.dart';
-import 'package:getx/extensions/pokemon_evolution_chain_ext.dart';
-import 'package:getx/utils/extension.dart';
-import 'package:getx/utils/strings.dart';
-import 'package:getx/utils/typedef.dart';
+import 'package:pokedex_getx/apis/model/pokemon.dart';
+import 'package:pokedex_getx/apis/model/pokemon_evolution_chain.dart';
+import 'package:pokedex_getx/apis/model/pokemon_species.dart';
+import 'package:pokedex_getx/apis/model/simple_pokemon.dart';
+import 'package:pokedex_getx/apis/model/simple_pokemon_list.dart';
+import 'package:pokedex_getx/extensions/evolves_to_ext.dart';
+import 'package:pokedex_getx/extensions/pokemon_evolution_chain_ext.dart';
+import 'package:pokedex_getx/utils/extension.dart';
+import 'package:pokedex_getx/utils/strings.dart';
+import 'package:pokedex_getx/utils/typedef.dart';
 
 class PokemonApi extends GetConnect {
   Future<SimplePokemonList> getSimplePokemonList({String? nextPageUrl}) async {

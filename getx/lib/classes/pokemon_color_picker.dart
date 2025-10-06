@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:getx/utils/const.dart';
+import 'package:pokedex_getx/utils/const.dart';
 
 class PokemonColorPicker {
   static Color getColor(String type) => switch (type) {

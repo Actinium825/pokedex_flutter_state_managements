@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:getx/utils/typedef.dart';
+import 'package:pokedex_getx/utils/typedef.dart';
 
 part 'official_artwork.freezed.dart';
 part 'official_artwork.g.dart';

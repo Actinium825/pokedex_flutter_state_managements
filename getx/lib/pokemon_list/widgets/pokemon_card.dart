@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:getx/apis/model/pokemon.dart';
-import 'package:getx/extensions/pokemon_ext.dart';
-import 'package:getx/utils/const.dart';
-import 'package:getx/widgets/pokemon_image.dart';
-import 'package:getx/widgets/pokemon_type_list.dart';
+import 'package:pokedex_getx/apis/model/pokemon.dart';
+import 'package:pokedex_getx/extensions/pokemon_ext.dart';
+import 'package:pokedex_getx/utils/const.dart';
+import 'package:pokedex_getx/widgets/pokemon_image.dart';
+import 'package:pokedex_getx/widgets/pokemon_type_list.dart';
 
 class PokemonCard extends StatelessWidget {
   const PokemonCard({

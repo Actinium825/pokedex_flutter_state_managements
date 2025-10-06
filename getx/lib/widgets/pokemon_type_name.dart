@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:getx/classes/pokemon_color_picker.dart';
-import 'package:getx/utils/const.dart';
+import 'package:pokedex_getx/classes/pokemon_color_picker.dart';
+import 'package:pokedex_getx/utils/const.dart';
 
 class PokemonTypeName extends StatelessWidget {
   const PokemonTypeName({

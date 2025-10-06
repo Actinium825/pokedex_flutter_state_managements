@@ -1,4 +1,4 @@
-package com.example.pokedex_flutter_get.getx
+package com.example.pokedex_flutter_get.pokedex_getx
 
 import io.flutter.embedding.android.FlutterActivity
 

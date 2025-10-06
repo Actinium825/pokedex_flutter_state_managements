@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:getx/apis/model/pokemon.dart';
-import 'package:getx/classes/pokemon_color_picker.dart';
-import 'package:getx/extensions/pokemon_ext.dart';
-import 'package:getx/extensions/pokemon_type_ext.dart';
-import 'package:getx/widgets/pokemon_type_name.dart';
+import 'package:pokedex_getx/apis/model/pokemon.dart';
+import 'package:pokedex_getx/classes/pokemon_color_picker.dart';
+import 'package:pokedex_getx/extensions/pokemon_ext.dart';
+import 'package:pokedex_getx/extensions/pokemon_type_ext.dart';
+import 'package:pokedex_getx/widgets/pokemon_type_name.dart';
 
 class PokemonTypeList extends StatelessWidget {
   const PokemonTypeList({

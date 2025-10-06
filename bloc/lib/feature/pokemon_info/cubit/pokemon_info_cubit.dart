@@ -14,12 +14,13 @@ class PokemonInfoCubit extends Cubit<PokemonInfoState> {
 
   void _initPokemonInfoPage() => _loadingAction(
     () async {
-      final species = await ApiService.pokemonApi.getSpecies(speciesUrl: speciesUrl);
+      final pokemonApi = ApiService.pokemonApi;
+      final species = await pokemonApi.getSpecies(speciesUrl: speciesUrl);
 
       final evolutionChainUrl = species.evolutionChainInfo.url;
-      final evolutionChain = await ApiService.pokemonApi.getEvolutionChain(evolutionChainUrl: evolutionChainUrl);
+      final evolutionChain = await pokemonApi.getEvolutionChain(evolutionChainUrl: evolutionChainUrl);
 
-      final evolutionList = await ApiService.pokemonApi.getEvolutionList(evolutionChain: evolutionChain);
+      final evolutionList = await pokemonApi.getEvolutionList(evolutionChain: evolutionChain);
 
       emit(
         state.copyWith(

@@ -1,9 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
-import 'package:getx/apis/model/pokemon.dart';
-import 'package:getx/apis/model/pokemon_evolution_chain.dart';
-import 'package:getx/apis/model/pokemon_species.dart';
-import 'package:getx/apis/pokemon_api.dart';
+import 'package:pokedex_getx/apis/model/pokemon.dart';
+import 'package:pokedex_getx/apis/model/pokemon_evolution_chain.dart';
+import 'package:pokedex_getx/apis/model/pokemon_species.dart';
+import 'package:pokedex_getx/apis/pokemon_api.dart';
 
 class PokemonInfoController extends GetxController {
   PokemonInfoController({required this.speciesUrl});

@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:getx/controller/app_controller.dart';
-import 'package:getx/model/union_page_state.dart';
-import 'package:getx/pokemon_info/pokemon_info_page.dart';
-import 'package:getx/pokemon_list/widgets/list_scaffold.dart';
-import 'package:getx/pokemon_list/widgets/pokemon_card.dart';
-import 'package:getx/pokemon_list/widgets/search_field.dart';
-import 'package:getx/utils/const.dart';
-import 'package:getx/utils/strings.dart';
-import 'package:getx/utils/typedef.dart';
-import 'package:getx/widgets/loading_indicator.dart';
+import 'package:pokedex_getx/controller/app_controller.dart';
+import 'package:pokedex_getx/model/union_page_state.dart';
+import 'package:pokedex_getx/pokemon_info/pokemon_info_page.dart';
+import 'package:pokedex_getx/pokemon_list/widgets/list_scaffold.dart';
+import 'package:pokedex_getx/pokemon_list/widgets/pokemon_card.dart';
+import 'package:pokedex_getx/pokemon_list/widgets/search_field.dart';
+import 'package:pokedex_getx/utils/const.dart';
+import 'package:pokedex_getx/utils/strings.dart';
+import 'package:pokedex_getx/utils/typedef.dart';
+import 'package:pokedex_getx/widgets/loading_indicator.dart';
 
 class PokemonListPage extends StatefulWidget {
   const PokemonListPage({super.key});
