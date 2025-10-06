@@ -20,8 +20,14 @@ class _PokemonListPageState extends State<PokemonListPage> {
 
   @override
   void initState() {
-    _appController.getInitialPokemonList();
+    _appController.initPokemonListPage();
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _appController.disposePokemonListPage();
+    super.dispose();
   }
 
   @override
@@ -44,29 +50,43 @@ class _PokemonListPageState extends State<PokemonListPage> {
           ),
         ],
       ),
-      body: Padding(
-        padding: pokemonListPagePadding,
-        child: Obx(
-          () => switch (_appController.pokemonListState()) {
-            Data<PokemonList>(:final value) => CustomScrollView(
-              slivers: [
-                SliverGrid(
-                  gridDelegate: pokemonGridDelegate,
-                  delegate: SliverChildBuilderDelegate(
-                    (_, index) => PokemonCard(
-                      pokemon: value[index],
-                      // TODO: Add function
-                      onTap: () {},
+      body: RefreshIndicator(
+        onRefresh: () async {
+          _appController.getInitialPokemonList();
+        },
+        child: Padding(
+          padding: pokemonListPagePadding,
+          child: Obx(
+            () => switch (_appController.pokemonListState()) {
+              Data<PokemonList>(:final value) => CustomScrollView(
+                controller: _appController.scrollController,
+                slivers: [
+                  SliverGrid(
+                    gridDelegate: pokemonGridDelegate,
+                    delegate: SliverChildBuilderDelegate(
+                      (_, index) => PokemonCard(
+                        pokemon: value[index],
+                        // TODO: Add function
+                        onTap: () {},
+                      ),
+                      childCount: value.length,
                     ),
-                    childCount: value.length,
                   ),
-                ),
-                const SliverToBoxAdapter(child: SizedBox(height: pokemonListPageFooterHeight)),
-              ],
-            ),
-            Loading<PokemonList>() => const LoadingIndicator(),
-            Error<PokemonList>(:final message) => AlertDialog(title: Text(message ?? '')),
-          },
+                  if (_appController.waitKey.value == getMorePokemonKey)
+                    const SliverToBoxAdapter(
+                      child: Padding(
+                        padding: progressIndicatorFooterPadding,
+                        child: LoadingIndicator(),
+                      ),
+                    )
+                  else
+                    const SliverToBoxAdapter(child: SizedBox(height: pokemonListPageFooterHeight)),
+                ],
+              ),
+              Loading<PokemonList>() => const LoadingIndicator(),
+              Error<PokemonList>(:final message) => AlertDialog(title: Text(message ?? '')),
+            },
+          ),
         ),
       ),
     );

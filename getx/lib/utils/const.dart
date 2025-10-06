@@ -10,3 +10,4 @@ const pokemonTypeNamePadding = EdgeInsets.symmetric(vertical: 4.0, horizontal: 1
 const pokemonTypeNameMargin = EdgeInsets.only(bottom: 4.0, right: 8.0);
 const typeNameRadius = 20.0;
 const colorModifier = 0.1;
+const progressIndicatorFooterPadding = EdgeInsets.all(12.0);

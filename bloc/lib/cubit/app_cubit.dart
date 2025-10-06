@@ -62,7 +62,7 @@ class AppCubit extends Cubit<AppState> {
 
   void _onReachEnd() {
     final position = scrollController.position;
-    if (position.pixels == position.maxScrollExtent) getMorePokemon();
+    if (position.pixels == position.maxScrollExtent) _getMorePokemon();
   }
 
   void getInitialPokemonList() => _loadingAction(
@@ -83,7 +83,7 @@ class AppCubit extends Cubit<AppState> {
     },
   );
 
-  void getMorePokemon() => _loadingAction(
+  void _getMorePokemon() => _loadingAction(
     getMorePokemonKey,
     () async {
       final pokemonApi = ApiService.pokemonApi;
