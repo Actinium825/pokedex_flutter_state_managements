@@ -1,6 +1,5 @@
 import 'dart:math';
 
-import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
 import 'package:pokedex_flutter_riverpod/apis/model/pokemon.dart';
 import 'package:pokedex_flutter_riverpod/extensions/pokemon_ext.dart';
@@ -65,7 +64,7 @@ class EvolutionCard extends StatelessWidget {
                     style: style,
                   ),
                   Text(
-                    pokemon.name.capitalize(),
+                    pokemon.capitalizedNamed,
                     style: style,
                   ),
                 ],

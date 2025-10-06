@@ -21,13 +21,11 @@ class EeveeArrows extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: eeveeArrowsDivisors.forLoop(
-          (divisor) {
-            return Transform.rotate(
-              angle: pi / divisor,
-              child: const Icon(Icons.arrow_circle_right),
-            );
-          },
-        ).toList(),
+          (divisor) => Transform.rotate(
+            angle: pi / divisor,
+            child: const Icon(Icons.arrow_circle_right),
+          ),
+        ),
       ),
     );
   }
